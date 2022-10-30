@@ -45,4 +45,4 @@ For installing the webserver, please follow the steps in the link below:
 
 `For accessing the Web GeoNode  usee: http://localhost`
 
-For further information find below a playlist videos for advanced GeoNode installation: [Geonode Advanced Installation](https://www.youtube.com/watch?v=ZcRx1fRliOw&list=PLIET7uEHqcqjvYzOyvVCuUHenytFDLFq6)
+For further information find below a playlist videos for advanced GeoNode installation: [Advanced Geonode Installation](https://www.youtube.com/watch?v=ZcRx1fRliOw&list=PLIET7uEHqcqjvYzOyvVCuUHenytFDLFq6)
