@@ -34,14 +34,14 @@ GeoNode server requires  Apache Tomcat 9 and Java 8 to be installed, catch up Ge
 
     https://docs.geonode.org/en/master/install/advanced/core/index.html#install-geoserver
 
-`For accessing the Apache Tomcat 9 use: http://localhost:8000/`
+`For accessing the Apache Tomcat 9 use: http://localhost:8080/`
 
 ### 5. Web Server
 For installing the webserver, please follow the steps in the link below:
 
     https://docs.geonode.org/en/master/install/advanced/core/index.html#web-server
 
-`For accessing the WebServer use: http://localhost:8000/geoserver`
+`For accessing the WebServer use: http://localhost:8080/geoserver`
 
 `For accessing the Web GeoNode  usee: http://localhost`
 
