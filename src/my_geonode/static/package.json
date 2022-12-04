@@ -8,14 +8,16 @@
   ],
   "scripts": {
     "test": "jshint **.js",
-    "dev":"gulp watch"
+    "dev": "gulp watch",
+    "tailwind-watch": "tailwindcss -i ./css/tailwind.css -o ./css/site_base.css --watch",
+    "tailwind-build": "tailwindcss -i ./css/tailwind.css  -o ./css/site_base.css --minify"
   },
   "license": "BSD",
   "private": "false",
   "dependencies": {},
   "devDependencies": {
-    "del": "*",
-    "gulp": "^3.9.0",
+    "del": "6.1.0",
+    "gulp": "^3.9.1",
     "gulp-concat": "*",
     "gulp-less": "*",
     "gulp-util": "*",

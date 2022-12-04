@@ -1,0 +1,54 @@
+{% load static %}
+
+{% block extra_head %}
+    <link href="{% static 'css/site_base.css' %}" rel="stylesheet" />    
+{% endblock %}
+
+<footer class="border-t-2 px-16 py-16 text-black ">
+     <div class="flex flex-col md:flex-row justify-between">
+          
+          <div class="mb-14 md:mb-0">
+               <img src="../../../static/img/usaid_logo.png" alt="USAID-LOGO" class="max-w-full h-auto">
+          </div>
+          
+
+          <div class="grid grid-cols-2 md:grid-cols-4 md:ml-10 gap-16 ">
+               <ul class="flex-col ">
+                    <li class="font-bold text-base">Data</li>
+                    <li >Datasets</li>
+                    <li> Documents</li>
+               </ul>
+               <ul class="flex-col ">
+                    <li class="font-bold text-base">About</li>
+                    <li>People</li>
+                    <li>Groups</li>
+                    <li>Invite People</li>
+               </ul>
+               <ul class="flex-col">
+                    <li class="font-bold text-base">iMMAP</li>
+                    <li>About US</li>
+                    <li>Contact US</li>
+                    <li>History</li>
+               </ul> 
+               <ul class="flex flex-col text-white space-y-3">
+                    <button class="bg-gray-800 px-8 py-2 text-white">Register</button>
+                    <button class="bg-gray-800 px-8 py-2 ">Login</button>
+               </ul>
+          </div>
+     </div>
+     <div class="py-5">
+          <hr class="">
+     </div>
+    <div class="flex flex-col md:flex-row justify-between text-center md:text-left">
+       <p>@iMMAP, 2022, ASDC platform</p>
+       <div class="flex gap-4 justify-center md:justify-start pt-5">
+          <p class="font-medium">Follow US</p>
+          <p>
+               <!-- <i class="fa fa-facebook" class="bg-gray-900 p-5"> </i>  -->
+               Facebook
+          </p>
+          <p>Youtube</p>
+          <p>Twitter</p>
+       </div>
+    </div>
+</footer>

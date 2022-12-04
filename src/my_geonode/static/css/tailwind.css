@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.gn-footer{
+
+    /* display: unset !important; */
+    /* padding: 22px !important; */
+    /* position: unset !important; */
+
+    align-items: unset !important;
+    bottom: unset !important;
+    display: unset !important;
+    padding: unset !important;
+    position: unset !important;
+    width: unset;
+    z-index: unset !important;
+
+}
+
+li{
+    text-align: inherit !important;
+}

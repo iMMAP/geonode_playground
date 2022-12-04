@@ -1,3 +1,3 @@
 set -a
-source .override_dev_env
+. ./.override_dev_env
 paver $@
