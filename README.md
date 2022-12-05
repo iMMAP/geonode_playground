@@ -152,3 +152,12 @@ sh ./paver_dev.sh sync
 
 sh ./paver_dev.sh start
 ```
+
+## Generate STATIC Assets
+
+```bash
+# Inside the src folder
+cd my_geonode/static
+npm install
+npm run tailwind-watch
+```
