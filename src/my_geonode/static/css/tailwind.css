@@ -2,22 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    .my_input {
+      @apply block w-full px-4 py-10 text-2xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-sm transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none;
+    }
 
-.gn-footer{
+    .my_primary_btn{
+        @apply inline-block w-64 py-9 bg-gray-800 text-white font-medium text-xl leading-snug uppercase rounded-sm shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ;
+    }
 
-    /* display: unset !important; */
-    /* padding: 22px !important; */
-    /* position: unset !important; */
-
-    align-items: unset !important;
-    bottom: unset !important;
-    display: unset !important;
-    padding: unset !important;
-    position: unset !important;
-    width: unset;
-    z-index: unset !important;
-
+    .input_error_state{
+        @apply border-2 border-red-200;
+    }
 }
+
+
+body {
+    background: #eee !important;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    padding-top: 0px;
+}
+
+#wrap{
+    margin-top: 0px;
+    padding-top:0px;
+}
+
 
 li{
     text-align: inherit !important;
