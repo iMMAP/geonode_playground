@@ -433,8 +433,8 @@ video {
   background-clip: padding-box;
   padding-left: 1rem;
   padding-right: 1rem;
-  padding-top: 2.5rem;
-  padding-bottom: 2.5rem;
+  padding-top: 24px;
+  padding-bottom: 24px;
   font-size: 1.5rem;
   line-height: 2rem;
   font-weight: 400;
@@ -464,8 +464,8 @@ video {
   border-radius: 0.125rem;
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
-  padding-top: 2.25rem;
-  padding-bottom: 2.25rem;
+  padding-top: 20px;
+  padding-bottom: 20px;
   font-size: 1.25rem;
   line-height: 1.75rem;
   font-weight: 500;
@@ -502,57 +502,6 @@ video {
 }
 
 .my_primary_btn:active {
-  --tw-bg-opacity: 1;
-  background-color: rgb(248 113 113 / var(--tw-bg-opacity));
-  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.my_secondary_btn {
-  display: inline-block;
-  width: 16rem;
-  border-radius: 0.125rem;
-  border-width: 1px;
-  --tw-border-opacity: 1;
-  border-color: rgb(31 41 55 / var(--tw-border-opacity));
-  background-color: transparent;
-  padding-top: 2.25rem;
-  padding-bottom: 2.25rem;
-  font-size: 1.25rem;
-  line-height: 1.75rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  line-height: 1.375;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
-  transition-duration: 150ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.my_secondary_btn:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(248 113 113 / var(--tw-bg-opacity));
-  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.my_secondary_btn:focus {
-  --tw-bg-opacity: 1;
-  background-color: rgb(29 78 216 / var(--tw-bg-opacity));
-  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-}
-
-.my_secondary_btn:active {
   --tw-bg-opacity: 1;
   background-color: rgb(248 113 113 / var(--tw-bg-opacity));
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
@@ -837,8 +786,8 @@ video {
   width: auto !important;
 }
 
-.w-64 {
-  width: 16rem !important;
+.w-60 {
+  width: 15rem !important;
 }
 
 .max-w-full {
@@ -935,11 +884,6 @@ video {
   border-top-width: 2px !important;
 }
 
-.border-red-500 {
-  --tw-border-opacity: 1 !important;
-  border-color: rgb(239 68 68 / var(--tw-border-opacity)) !important;
-}
-
 .border-gray-800 {
   --tw-border-opacity: 1 !important;
   border-color: rgb(31 41 55 / var(--tw-border-opacity)) !important;
@@ -948,6 +892,11 @@ video {
 .bg-blue-600 {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(37 99 235 / var(--tw-bg-opacity)) !important;
+}
+
+.bg-red-300 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(252 165 165 / var(--tw-bg-opacity)) !important;
 }
 
 .bg-gray-800 {
@@ -960,21 +909,20 @@ video {
   background-color: rgb(17 24 39 / var(--tw-bg-opacity)) !important;
 }
 
-.bg-red-200 {
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(254 202 202 / var(--tw-bg-opacity)) !important;
-}
-
-.bg-transparent {
-  background-color: transparent !important;
-}
-
 .p-3 {
   padding: 0.75rem !important;
 }
 
+.p-20 {
+  padding: 5rem !important;
+}
+
 .p-5 {
   padding: 1.25rem !important;
+}
+
+.p-10 {
+  padding: 2.5rem !important;
 }
 
 .px-6 {
@@ -1007,27 +955,27 @@ video {
   padding-bottom: 1.25rem !important;
 }
 
-.px-5 {
-  padding-left: 1.25rem !important;
-  padding-right: 1.25rem !important;
-}
-
-.py-9 {
-  padding-top: 2.25rem !important;
-  padding-bottom: 2.25rem !important;
-}
-
 .px-9 {
   padding-left: 2.25rem !important;
   padding-right: 2.25rem !important;
 }
 
-.pt-5 {
-  padding-top: 1.25rem !important;
+.py-20 {
+  padding-top: 5rem !important;
+  padding-bottom: 5rem !important;
+}
+
+.py-10 {
+  padding-top: 2.5rem !important;
+  padding-bottom: 2.5rem !important;
 }
 
 .pt-1 {
   padding-top: 0.25rem !important;
+}
+
+.pt-5 {
+  padding-top: 1.25rem !important;
 }
 
 .pl-16 {
@@ -1055,14 +1003,14 @@ video {
   line-height: 1rem !important;
 }
 
+.text-lg {
+  font-size: 1.125rem !important;
+  line-height: 1.75rem !important;
+}
+
 .text-base {
   font-size: 1rem !important;
   line-height: 1.5rem !important;
-}
-
-.text-xl {
-  font-size: 1.25rem !important;
-  line-height: 1.75rem !important;
 }
 
 .font-extrabold {
@@ -1089,15 +1037,6 @@ video {
   line-height: 1.25 !important;
 }
 
-.leading-snug {
-  line-height: 1.375 !important;
-}
-
-.text-black {
-  --tw-text-opacity: 1 !important;
-  color: rgb(0 0 0 / var(--tw-text-opacity)) !important;
-}
-
 .text-gray-800 {
   --tw-text-opacity: 1 !important;
   color: rgb(31 41 55 / var(--tw-text-opacity)) !important;
@@ -1116,6 +1055,11 @@ video {
 .text-red-600 {
   --tw-text-opacity: 1 !important;
   color: rgb(220 38 38 / var(--tw-text-opacity)) !important;
+}
+
+.text-black {
+  --tw-text-opacity: 1 !important;
+  color: rgb(0 0 0 / var(--tw-text-opacity)) !important;
 }
 
 .shadow-md {
@@ -1223,11 +1167,6 @@ li{
   background-color: rgb(29 78 216 / var(--tw-bg-opacity)) !important;
 }
 
-.hover\:bg-red-400:hover {
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(248 113 113 / var(--tw-bg-opacity)) !important;
-}
-
 .hover\:text-red-700:hover {
   --tw-text-opacity: 1 !important;
   color: rgb(185 28 28 / var(--tw-text-opacity)) !important;
@@ -1277,11 +1216,6 @@ li{
   background-color: rgb(30 64 175 / var(--tw-bg-opacity)) !important;
 }
 
-.active\:bg-red-400:active {
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(248 113 113 / var(--tw-bg-opacity)) !important;
-}
-
 .active\:shadow-lg:active {
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1) !important;
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color) !important;
@@ -1327,6 +1261,28 @@ li{
 
   .md\:justify-start {
     justify-content: flex-start !important;
+  }
+
+  .md\:p-20 {
+    padding: 5rem !important;
+  }
+
+  .md\:p-28 {
+    padding: 7rem !important;
+  }
+
+  .md\:p-32 {
+    padding: 8rem !important;
+  }
+
+  .md\:px-32 {
+    padding-left: 8rem !important;
+    padding-right: 8rem !important;
+  }
+
+  .md\:px-36 {
+    padding-left: 9rem !important;
+    padding-right: 9rem !important;
   }
 
   .md\:text-left {
