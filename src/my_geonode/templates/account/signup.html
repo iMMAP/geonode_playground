@@ -1,0 +1,185 @@
+{% extends "basic_base.html" %}
+
+{% load i18n %}
+{% load bootstrap_tags %}
+{% load account socialaccount %}
+
+{% block title %}{% trans "Sign up" %}{% endblock %}
+
+{% block body_outer %}
+    
+<section class="h-screen">
+    <div class="px-6 h-full text-gray-800">
+      <div
+        class="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full gap-20"
+      >
+        
+        <div class="mt-10 xl:mt-0 xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
+          
+          <div class=" mb-24">
+
+            <div class="flex items-center mb-16 justify-between">
+              <div class="flex items-center">
+                <a href="https://immap.org" target="_blank">
+                  <img src="../../static/img/immap_logo.png" class="h-auto w-24"  alt="iMMAP LOGO" srcset="">
+                </a>
+                <h1 class="font-extrabold text-[16px] ml-5">iMMAP</h1>
+              </div>
+              <!-- <h1 class="font-extrabold text-[16px] ml-5">
+                ASDC
+              </h1> -->
+              
+            </div>
+            
+            
+  
+            <h2 class="font-extrabold text-[36px] uppercase mb-5">
+              <!-- Afghanistan Spatial Data Center -->
+              Create an Account
+            </h2>
+            
+          </div>
+
+          <div class="row">
+            {% get_providers as socialaccount_providers %}
+            {% if socialaccount_providers %}
+                <p>{% blocktrans with site.name as site_name %}Sign up with one
+                    of your existing third party accounts{% endblocktrans %}</p>
+                {% include "socialaccount/snippets/provider_list.html" with process="signup" %}
+                {% include "socialaccount/snippets/login_extra.html" %}
+                <hr>
+            {% endif %}
+          </div>
+
+          {% if account_geonode_local_signup %}
+          <form id="signup_form" method="post" action="{% url "account_signup" %}" autocapitalize="off" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+            {% csrf_token %}
+  
+            {% if form.non_field_errors  %}
+                <div class="alert alert-danger">
+                  {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+  
+            <!-- Email input -->
+            <div class="mb-10">
+              <label for="email" class="mb-5">Email</label>
+              <input
+                type="text"
+                class="my_input {% if form.login.errors %} input_error_state {% endif %}"
+                id="email"
+                placeholder="Email"
+                name="email"
+                id="id_email"
+              />
+              {% if form.email.errors %}
+                <span class=" alert-danger">
+                    {{ form.email.errors }}
+                </span>
+              {% endif %}
+            
+            </div>
+
+             <!-- Username input -->
+             <div class="mb-10">
+                <label for="email" class="mb-5">Username</label>
+                <input
+                  type="text"
+                  class="my_input {% if form.login.errors %} input_error_state {% endif %}"
+                  id="username"
+                  placeholder="Username"
+                  name="username"
+                  id="id_username"
+                />
+                {% if form.username.errors %}
+                  <span class=" alert-danger">
+                      {{ form.username.errors }}
+                  </span>
+                {% endif %}
+              
+              </div>
+  
+            <!-- Password input -->
+            <div class="mb-10">
+              <label for="password" class="mb-5">Password</label>
+              <input
+                type="password"
+                class="my_input {% if form.password.errors %} input_error_state {% endif %}"
+                placeholder="Password"
+                id="id_password1"
+                name="password1"
+              />
+              {% if form.password1.errors %}
+                <span class=" alert-danger">
+                    {{ form.password1.errors }}
+                </span>
+              {% endif %}
+            </div>
+
+            <!-- Confirm Password input -->
+            <div class="mb-10">
+                <label for="password" class="mb-5">Confirm Password</label>
+                <input
+                  type="password"
+                  class="my_input {% if form.password.errors %} input_error_state {% endif %}"
+                  placeholder="Confirm Password"
+                  id="id_password2"
+                  name="password2"
+                />
+                {% if form.password2.errors %}
+                  <span class=" alert-danger">
+                      {{ form.password2.errors }}
+                  </span>
+                {% endif %}
+              </div>
+  
+  
+            <div class="lg:text-left ">
+              
+              <button
+                type="submit"
+                class=" my_primary_btn mb-10 w-full md:w-1/3"
+              >
+                {% trans "Register" %}
+              </button>
+             
+              <p class="font-semibold mt-2 pt-1" >
+                Already have an account?
+                <a
+                  href="/account/login/?next=/"
+                  class="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out ml-5"
+                  >{% trans "Sign In" %}</a
+                >
+              </p>
+            </div>
+            {% if redirect_field_value %}
+              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+          </form>
+          {% endif %}
+        </div>
+  
+        <div
+          class="hidden md:flex grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0"
+        >
+        
+          <img
+            src="../../static//img/map_test.png"
+            class="w-full"
+            alt="Sample image"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+   
+{% endblock %}
+
+{% block extra_script %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#id_username').focus();
+        });
+    </script>
+{% endblock %}

@@ -1,9 +1,9 @@
 export DEBUG=True
-
+export DEBUG_STATIC=True
 export SECRET_KEY="myv-y4#7j-d*p-__@j#*3z@!y24fz8%^z2v6atuy4bo9vqr1_a"
 
 export SITEURL=http://localhost:8000/
-export ALLOWED_HOSTS="['localhost','0.0.0.0']"
+export ALLOWED_HOSTS="['localhost','0.0.0.0','127.0.0.1']"
 
 export GEONODE_INSTANCE_NAME=geonode
 export DJANGO_SETTINGS_MODULE=my_geonode.settings
@@ -13,7 +13,7 @@ export GEONODE_GEODATABASE=my_geonode_data
 export GEONODE_GEODATABASE_PASSWORD=geonode
 
 export DATABASE_URL=postgis://my_geonode:geonode@localhost:5432/my_geonode
-export GEODATABASE_URL=postgis://my_geonode_data:geonode@localhost:5432/my_geonode_data
+export GEODATABASE_URL=postgis://my_geonode:geonode@localhost:5432/my_geonode_data
 export DEFAULT_BACKEND_DATASTORE=datastore
 
 export GEOSERVER_WEB_UI_LOCATION=http://localhost:8080/geoserver/
