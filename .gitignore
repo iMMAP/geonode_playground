@@ -61,6 +61,10 @@ development.db
 development.db-journal
 local_settings.py
 
+
+
+
+
 .idea/
 .vscode/
 .vagrant/
@@ -68,5 +72,6 @@ Vagrantfile
 /.env
 
 src/.override_dev_env
+src/geoserver
 
 
