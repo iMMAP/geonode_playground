@@ -509,6 +509,57 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.my_secondary_btn {
+  display: inline-block;
+  width: 16rem;
+  border-radius: 0.125rem;
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(31 41 55 / var(--tw-border-opacity));
+  background-color: transparent;
+  padding-top: 2.25rem;
+  padding-bottom: 2.25rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 1.375;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.my_secondary_btn:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 113 113 / var(--tw-bg-opacity));
+  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.my_secondary_btn:focus {
+  --tw-bg-opacity: 1;
+  background-color: rgb(29 78 216 / var(--tw-bg-opacity));
+  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.my_secondary_btn:active {
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 113 113 / var(--tw-bg-opacity));
+  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
 .input_error_state {
   border-width: 2px;
   --tw-border-opacity: 1;
@@ -674,6 +725,11 @@ video {
   margin-right: 1rem !important;
 }
 
+.my-10 {
+  margin-top: 2.5rem !important;
+  margin-bottom: 2.5rem !important;
+}
+
 .mt-10 {
   margin-top: 2.5rem !important;
 }
@@ -766,6 +822,26 @@ video {
   height: 4rem !important;
 }
 
+.h-5\/6 {
+  height: 83.333333% !important;
+}
+
+.h-1\/2 {
+  height: 50% !important;
+}
+
+.h-52 {
+  height: 13rem !important;
+}
+
+.h-96 {
+  height: 24rem !important;
+}
+
+.h-\[500px\] {
+  height: 500px !important;
+}
+
 .w-24 {
   width: 6rem !important;
 }
@@ -786,8 +862,8 @@ video {
   width: auto !important;
 }
 
-.w-60 {
-  width: 15rem !important;
+.w-2\/3 {
+  width: 66.666667% !important;
 }
 
 .max-w-full {
@@ -862,6 +938,10 @@ video {
   gap: 1.25rem !important;
 }
 
+.gap-10 {
+  gap: 2.5rem !important;
+}
+
 .space-y-3 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0 !important;
   margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse))) !important;
@@ -894,11 +974,6 @@ video {
   background-color: rgb(37 99 235 / var(--tw-bg-opacity)) !important;
 }
 
-.bg-red-300 {
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(252 165 165 / var(--tw-bg-opacity)) !important;
-}
-
 .bg-gray-800 {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity)) !important;
@@ -909,25 +984,32 @@ video {
   background-color: rgb(17 24 39 / var(--tw-bg-opacity)) !important;
 }
 
-.p-3 {
-  padding: 0.75rem !important;
+.bg-green-900 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(20 83 45 / var(--tw-bg-opacity)) !important;
 }
 
-.p-20 {
-  padding: 5rem !important;
+.p-3 {
+  padding: 0.75rem !important;
 }
 
 .p-5 {
   padding: 1.25rem !important;
 }
 
-.p-10 {
-  padding: 2.5rem !important;
-}
-
 .px-6 {
   padding-left: 1.5rem !important;
   padding-right: 1.5rem !important;
+}
+
+.py-20 {
+  padding-top: 5rem !important;
+  padding-bottom: 5rem !important;
+}
+
+.py-5 {
+  padding-top: 1.25rem !important;
+  padding-bottom: 1.25rem !important;
 }
 
 .px-16 {
@@ -950,19 +1032,9 @@ video {
   padding-bottom: 0.5rem !important;
 }
 
-.py-5 {
-  padding-top: 1.25rem !important;
-  padding-bottom: 1.25rem !important;
-}
-
 .px-9 {
   padding-left: 2.25rem !important;
   padding-right: 2.25rem !important;
-}
-
-.py-20 {
-  padding-top: 5rem !important;
-  padding-bottom: 5rem !important;
 }
 
 .py-10 {
@@ -980,6 +1052,10 @@ video {
 
 .pl-16 {
   padding-left: 4rem !important;
+}
+
+.text-left {
+  text-align: left !important;
 }
 
 .text-center {
@@ -1011,6 +1087,16 @@ video {
 .text-base {
   font-size: 1rem !important;
   line-height: 1.5rem !important;
+}
+
+.text-3xl {
+  font-size: 1.875rem !important;
+  line-height: 2.25rem !important;
+}
+
+.text-5xl {
+  font-size: 3rem !important;
+  line-height: 1 !important;
 }
 
 .font-extrabold {
@@ -1060,6 +1146,11 @@ video {
 .text-black {
   --tw-text-opacity: 1 !important;
   color: rgb(0 0 0 / var(--tw-text-opacity)) !important;
+}
+
+.text-green-900 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(20 83 45 / var(--tw-text-opacity)) !important;
 }
 
 .shadow-md {
@@ -1247,6 +1338,10 @@ li{
     width: 75% !important;
   }
 
+  .md\:w-2\/3 {
+    width: 66.666667% !important;
+  }
+
   .md\:shrink-0 {
     flex-shrink: 0 !important;
   }
@@ -1261,23 +1356,6 @@ li{
 
   .md\:justify-start {
     justify-content: flex-start !important;
-  }
-
-  .md\:p-20 {
-    padding: 5rem !important;
-  }
-
-  .md\:p-28 {
-    padding: 7rem !important;
-  }
-
-  .md\:p-32 {
-    padding: 8rem !important;
-  }
-
-  .md\:px-32 {
-    padding-left: 8rem !important;
-    padding-right: 8rem !important;
   }
 
   .md\:px-36 {
