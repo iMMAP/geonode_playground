@@ -4,19 +4,19 @@
 
 @layer base {
     .my_input {
-      @apply block w-full px-4 py-[24px] text-2xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-sm transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none;
+      @apply block w-full px-4 py-[24px] text-2xl font-semibold text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-sm transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none;
     }
 
     .my_primary_btn{
-        @apply inline-block w-64 py-[20px] bg-gray-800 text-white font-medium text-xl leading-snug uppercase rounded-sm  hover:bg-red-400 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-400 active:shadow-lg transition duration-150 ease-in-out ;
+        @apply inline-block w-64 py-[20px] bg-gray-800 text-white font-semibold text-xl leading-snug uppercase rounded-sm  hover:bg-red-400 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-400 active:shadow-lg transition duration-150 ease-in-out ;
     }
 
     .my_secondary_btn{
-        @apply inline-block w-64 py-9 bg-transparent border border-gray-800  font-medium text-xl leading-snug uppercase rounded-sm  hover:bg-red-400 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-400 active:shadow-lg transition duration-150 ease-in-out ;
+        @apply inline-block w-64 py-[20px] bg-transparent border border-gray-800 active:border-red-400 text-xl uppercase rounded-sm  hover:bg-red-400 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-600 active:shadow-lg transition duration-150 ease-in-out ;
     }
 
     .input_error_state{
-        @apply border-2 border-red-200;
+        @apply border-1 border-red-200;
     }
 }
 
