@@ -1,0 +1,18 @@
+{% extends "geonode_base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Account Pending Approval" %}{% endblock %}
+
+{% block body %}
+
+<div class="flex items-center gap-10 h-[500px]  py-20 ">
+    <i class="fa fa-info-circle text-yellow-500 p-5 text-5xl"></i>
+    <div>
+        <h1 class="font-extrabold text-[36px] uppercase mb-5"> {% trans "Account Pending Approval" %}</h1>
+        <p  class="text-lg text-gray-700">
+            {% blocktrans %}We have sent the administrators a notice to approve your account associated with <b>{{ email }}</b>. If the account is approved, you will receive a confirmation notice.{% endblocktrans %}
+        </p>
+    </div>
+</div> 
+{% endblock %}

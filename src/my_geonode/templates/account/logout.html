@@ -1,0 +1,26 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Log out" %}{% endblock %}
+
+{% block body %}
+<div class="flex items-center gap-10 h-[500px] p-5 py-20">
+    <i class="fa fa-sign-out text-red-500 p-5 text-5xl"> </i>
+    <div>
+      
+        <h1 class="font-extrabold text-[36px] uppercase mb-5"> {% trans "Log out" %}</h1>
+        <p  class="text-lg text-gray-700">
+            {% trans "Are you sure you want to log out?" %}
+        </p>
+
+        <form method="POST" action="{% url 'account_logout' %}" >
+            {% csrf_token %}
+            <button type="submit" class="my_primary_btn mt-10 md:w-2/3 text-white font-semibold" >
+                {% trans "Log out" %}
+            </button>
+        </form>
+
+    </div>
+</div>
+{% endblock %}
