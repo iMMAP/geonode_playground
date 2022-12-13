@@ -16,7 +16,7 @@
     }
 
     .input_error_state{
-        @apply border-1 border-red-200;
+        @apply border-red-200;
     }
 }
 
