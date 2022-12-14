@@ -1,7 +1,23 @@
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@700&display=swap');
     {% block extra_css %}
         {{ custom_theme.extra_css }}
+
+        .msgapi .gn-theme {
+            /* this variables should be generated from lesscss files */
+            --gn-font-family-sans-serif: 'Barlow', sans-serif;
+            --gn-font-family-serif: 'Barlow', Times, serif;
+            --gn-font-family-monospace:'Barlow', monospace;
+            --gn-font-family-base: 'Barlow', sans-serif;
+        }
+
+        .msgapi .gn-hero .jumbotron .gn-hero-description h1 {
+            font-weight: lighter;
+            word-break: break-word;
+            font-style: none;
+            font-family: Barlow, sans-serif;
+        }
         
         /*HOME CUSTOMIZATION==================================================================================================================*/
 
@@ -202,13 +218,43 @@
             background-color: #a72824;
             border: none;
         }
+
+        .msgapi .widget-container .mapstore-widget-card {
+            -webkit-box-shadow: 0;
+            -moz-box-shadow: 0;
+            box-shadow: none;
+        }
+
+        .msgapi .gn-viewer-layout-center{
+            background-color: #f5f5f5;
+        }
+
+                   
+        .msgapi .gn-footer{
+            display:none;
+        }
         
+        .msgapi .counter-widget-view span{
+            color: #a72824;
+            font-weight: bold;
+            padding: 10px 5px 10px 10px;
+        }
 
-    
+        /*DELETION MODAL CUSTOMIZATION==================================================================================================================*/
 
+        .msgapi .modal-header {
+            background-color: #a72824;
+        }
 
-       
-        
+        /*GEONODE LOADER CUSTOMIZATION==================================================================================================================*/
+
+        .msgapi .gn-main-loader {
+            border-left: 1em solid #a72824;
+        }
+
+        .msgapi .mapstore-full-size-loader{
+            border-left: 1em solid #a72824;
+        }
 
     {% endblock %}
 </style>
