@@ -2,7 +2,22 @@
 <style>
     {% block extra_css %}
         {{ custom_theme.extra_css }}
-        
+
+        .msgapi .gn-theme {
+            /* this variables should be generated from lesscss files */
+            --gn-font-family-sans-serif: 'Barlow', sans-serif;
+            --gn-font-family-serif: 'Barlow', Times, serif;
+            --gn-font-family-monospace:'Barlow', monospace;
+            --gn-font-family-base: 'Barlow', sans-serif;
+        }
+
+        .msgapi .gn-hero .jumbotron .gn-hero-description h1 {
+            font-weight: lighter;
+            word-break: break-word;
+            font-style: none;
+            font-family: Barlow, sans-serif;
+        }
+
         .gn-resource-card {
             
        
@@ -102,6 +117,7 @@
             background-color: #A72824;
         }
 
+
         .msgapi a {
             color: unset;
         }
@@ -118,6 +134,135 @@
         }
 
 
+        .msgapi .gn-resource-card .card-title a {
+            color: #a72824;
+        }
+
+        .msgapi .gn-resource-card .card-title a:hover {
+            color: #75110e;
+        }
+        .msgapi .gn-resource-card .ng-card-title a {
+            color: #a72824;
+        }
+
+        .msgapi .gn-resource-card .ng-card-title a:hover {
+            color: #75110e;
+        }
+
+
+
+        .msgapi .gn-menu.gn-primary{
+            background-color: #a72824;
+        }
+
+        .msgapi .gn-action-navbar-title {
+            background-color: #75110e;
+        }
+
+        .msgapi .gn-menu-content .gn-menu-content-side .gn-menu-list .btn-primary {
+            background-color: #a72824;
+            border: none;
+        }
+
+        .msgapi .gn-menu-content .gn-menu-content-side .gn-menu-list .btn-primary:hover {
+            background-color: #75110e;
+        }
+
+        .gn-menu-content-right .gn-menu-list .btn-primary{
+           background-color: #a72824;
+           border: none;
+
+        }
+
+        .gn-menu-content-right .gn-menu-list .btn-primary:hover{
+           background-color: #a72824;
+        }
+
+        .msgapi .btn-group-vertical .btn-primary {
+            background-color: #a72824 !important;
+            border: none;
+        }
+
+        .msgapi .btn-group-vertical .btn-primary:hover {
+            background-color: #75110e;
+        }
+
+        .msgapi .btn-group-vertical .btn-success{
+            background-color: #bb4940;
+        }
+
+        .msgapi .btn-group-vertical .btn-success:hover{
+            background-color: #a72824;
+        }
+
+        .msgapi .widget-container .mapstore-widget-card .mapstore-widget-header .widget-icons{
+            display: none;
+        }
+
+        .msgapi .widget-container .mapstore-widget-card .mapstore-widget-header .widget-title{
+            font-weight: bold;
+            color: #999;
+            padding: 0px;
+        }
+
+        .msgapi .widget-container .mapstore-widget-card .mapstore-widget-header{
+            text-align: left;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .msgapi .text-center .no-border .text-primary{
+            color: #a72824;
+        }
+
+        .apstore-side-card .ms-head .mapstore-side-preview .glyphicon-stats{
+            color: #808285;
+        }
+
+        .mapstore-side-card-info .mapstore-side-card-title{
+            color: #808285;
+        }
+
+        .mapstore-side-card-info .mapstore-side-card-caption{
+            color: #999;
+        }
+
+        .widgets-builder-header .btn-group .btn-primary{
+            background-color: #a72824;
+            border: none;
+        }
+
+        .msgapi .widget-container .mapstore-widget-card {
+            -webkit-box-shadow: 0;
+            -moz-box-shadow: 0;
+            box-shadow: none;
+        }
+
+        .msgapi .gn-viewer-layout-center{
+            background-color: #f5f5f5;
+        }
+
+                   
+        .msgapi .gn-footer{
+            display:none;
+        }
+        
+        .msgapi .counter-widget-view span{
+            color: #a72824;
+            font-weight: bold;
+            padding: 10px 5px 10px 10px;
+        }
+
+      
+
+        .msgapi .gn-main-loader {
+            border-left: 1em solid #a72824;
+        }
+
+        .msgapi .mapstore-full-size-loader{
+            border-left: 1em solid #a72824;
+        }
 
     {% endblock %}
 </style>
