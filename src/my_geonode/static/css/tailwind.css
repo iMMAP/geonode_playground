@@ -1,6 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800&display=swap');
+
+@import url(./variables.css);
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
 
 @layer base {
     .my_input {
@@ -8,18 +15,21 @@
     }
 
     .my_primary_btn{
-        @apply inline-block w-64 py-[20px] bg-gray-800 text-white font-semibold text-xl leading-snug uppercase rounded-sm  hover:bg-red-400 hover:shadow-lg focus:shadow-lg active:bg-red-400 active:shadow-lg transition duration-150 ease-in-out ;
+        @apply inline-block  w-64 py-[20px] bg-primary-900 text-white font-semibold text-xl uppercase rounded hover:shadow-lg focus:shadow-lg active:bg-primary-600 active:shadow-lg transition duration-150 ease-in-out ;
     }
 
     .my_secondary_btn{
-        @apply inline-block w-64 py-[20px] bg-transparent border border-gray-800 text-xl uppercase rounded-sm  hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out ;
+        @apply inline-block w-64 py-[20px] bg-transparent border border-primary-900 text-xl uppercase rounded  hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out  text-primary-900 font-semibold;
     }
 
     .input_error_state{
-        @apply border-2 border-red-200;
+        @apply border-2 border-red-300;
     }
 }
 
+*{
+    font-family: 'Barlow', Montserrat;
+}
 
 body {
     background: #eee !important;
@@ -36,4 +46,22 @@ body {
 
 li{
     text-align: inherit !important;
+}
+
+.msgapi .gn-action-navbar-title{
+    @apply bg-black-900 !important;
+    padding: 4px 8px ;
+}
+
+.gn-details-panel-meta-text{
+    @apply flex;
+}
+
+.gn-details-panel-meta-text .gn-details-panel-origin{
+    margin-right: 4px;
+}
+
+.gn-details-panel-meta-text > a {
+    font-weight: 600;
+    color: theme('colors.magenta.700');
 }

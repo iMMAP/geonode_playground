@@ -16,7 +16,7 @@
     
         <i class="fa fa-info-circle text-yellow-500 p-5 text-5xl"></i>
         <div>
-            <h1 class="font-extrabold text-[36px] uppercase mb-5"> {% trans "Confirm E-mail Address" %}</h1>
+            <h1 class="font-extrabold text-[36px] uppercase mb-5 text-primary-900"> {% trans "Confirm E-mail Address" %}</h1>
             <p  class="text-lg text-gray-700">
                 {% blocktrans with confirmation.email_address.email as email %}Please confirm that <a href="mailto:{{ email }}">{{ email }}</a> is an e-mail address for user {{ user_display }}.{% endblocktrans %}
             </p>
