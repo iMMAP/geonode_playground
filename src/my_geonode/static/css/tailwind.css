@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800&display=swap');
 
+
+
 @import url(./variables.css);
 @import url(./_resource_card.css);
 
@@ -27,6 +29,8 @@
         @apply border-2 border-red-300;
     }
 }
+
+
 
 *{
     font-family: 'Barlow', Montserrat;
@@ -73,5 +77,5 @@ li{
 }
 
 .msgapi .gn-fixed-card-grid {
-    height: unset !important;
+    /* height: unset !important; */
 }
