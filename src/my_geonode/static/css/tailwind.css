@@ -3,6 +3,7 @@
 
 
 @import url(./variables.css);
+@import url(./Dashboard_view.css);
 @import url(./_resource_card.css);
 
 @tailwind base;
@@ -71,6 +72,10 @@ li{
     color: theme('colors.magenta.700');
 }
 
+.msgapi .gn-menu .gn-menu-list li a:hover{
+    color: #a72824;
+}
+=======
 .msgapi .gn-catalogue, .msgapi .gn-embed {
     display: unset !important;
 
