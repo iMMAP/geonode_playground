@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800&display=swap');
 
+
+
 @import url(./variables.css);
 @import url(./Dashboard_view.css);
+@import url(./_resource_card.css);
 
 @tailwind base;
 @tailwind components;
@@ -27,6 +30,8 @@
         @apply border-2 border-red-300;
     }
 }
+
+
 
 *{
     font-family: 'Barlow', Montserrat;
@@ -69,4 +74,13 @@ li{
 
 .msgapi .gn-menu .gn-menu-list li a:hover{
     color: #a72824;
+}
+=======
+.msgapi .gn-catalogue, .msgapi .gn-embed {
+    display: unset !important;
+
+}
+
+.msgapi .gn-fixed-card-grid {
+    /* height: unset !important; */
 }
