@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800&display=swap');
 
 @import url(./variables.css);
+@import url(./Dashboard_view.css);
 
 @tailwind base;
 @tailwind components;
@@ -64,4 +65,8 @@ li{
 .gn-details-panel-meta-text > a {
     font-weight: 600;
     color: theme('colors.magenta.700');
+}
+
+.msgapi .gn-menu .gn-menu-list li a:hover{
+    color: #a72824;
 }
