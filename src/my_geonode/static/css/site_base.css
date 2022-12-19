@@ -1572,7 +1572,7 @@ li{
 }
 
 .msgapi .gn-fixed-card-grid {
-  height: unset !important;
+  /* height: unset !important; */
 }
 
 .before\:mt-0\.5::before{
