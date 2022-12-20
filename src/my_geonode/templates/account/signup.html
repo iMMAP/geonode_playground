@@ -60,12 +60,48 @@
                   {{ form.non_field_errors }}
                 </div>
             {% endif %}
+
+            <!-- First Name input -->
+            <div class="mb-10">
+              <label for="id_first_name" class="mb-5">First Name</label>
+              <input
+                type="text"
+                class="my_input {% if form.first_name.errors %} input_error_state {% endif %}"
+                placeholder="First Name"
+                name="first_name"
+                id="id_first_name"
+              />
+              {% if form.first_name.errors %}
+                <span class=" alert-danger">
+                    {{ form.first_name.errors }}
+                </span>
+              {% endif %}
+            
+            </div>
+
+            <!-- Last Name input -->
+            <div class="mb-10">
+              <label for="id_last_name" class="mb-5">Last Name</label>
+              <input
+                type="text"
+                class="my_input {% if form.last_name.errors %} input_error_state {% endif %}"
+                placeholder="Last Name"
+                name="last_name"
+                id="id_last_name"
+              />
+              {% if form.last_name.errors %}
+                <span class=" alert-danger">
+                    {{ form.last_name.errors }}
+                </span>
+              {% endif %}
+            
+            </div>
   
             <!-- Email input -->
             <div class="mb-10">
               <label for="id_email" class="mb-5">Email</label>
               <input
-                type="text"
+                type="email"
                 class="my_input {% if form.email.errors %} input_error_state {% endif %}"
                 placeholder="Email"
                 name="email"
@@ -74,6 +110,24 @@
               {% if form.email.errors %}
                 <span class=" alert-danger">
                     {{ form.email.errors }}
+                </span>
+              {% endif %}
+            
+            </div>
+
+             <!-- ORG input -->
+            <div class="mb-10">
+              <label for="id_organization" class="mb-5">Organization</label>
+              <input
+                type="text"
+                class="my_input {% if form.organization.errors %} input_error_state {% endif %}"
+                placeholder="Organization"
+                name="organization"
+                id="id_organization"
+              />
+              {% if form.organization.errors %}
+                <span class=" alert-danger">
+                    {{ form.organization.errors }}
                 </span>
               {% endif %}
             

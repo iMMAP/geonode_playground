@@ -1233,6 +1233,10 @@ video {
   margin-bottom: 3.5rem !important;
 }
 
+.mb-9{
+  margin-bottom: 2.25rem !important;
+}
+
 .block{
   display: block !important;
 }
