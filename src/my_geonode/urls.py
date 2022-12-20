@@ -19,12 +19,17 @@
 #########################################################################
 
 from geonode.urls import urlpatterns
+from django.conf.urls import include, url
+from myauth.views import CustomSignupView
 
-'''
+
+# url('test/hello', TestView, name='test_view')
+
+
 # You can register your own urlpatterns here
-urlpatterns = [
-    url(r'^/?$',
-        homepage,
-        name='home'),
- ] + urlpatterns
-'''
+
+urlpatterns += [
+    # include your urls here
+    # url(r'^sh/', CustomSignupView.as_view(), name='account_signup'),
+    url(r'^account/signup/', CustomSignupView.as_view(), name='account_signup'),
+]
