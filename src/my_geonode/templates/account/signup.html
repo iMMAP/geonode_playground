@@ -63,11 +63,10 @@
   
             <!-- Email input -->
             <div class="mb-10">
-              <label for="email" class="mb-5">Email</label>
+              <label for="id_email" class="mb-5">Email</label>
               <input
                 type="text"
-                class="my_input {% if form.login.errors %} input_error_state {% endif %}"
-                id="email"
+                class="my_input {% if form.email.errors %} input_error_state {% endif %}"
                 placeholder="Email"
                 name="email"
                 id="id_email"
@@ -80,13 +79,14 @@
             
             </div>
 
+           
+
              <!-- Username input -->
              <div class="mb-10">
-                <label for="email" class="mb-5">Username</label>
+                <label for="id_username" class="mb-5">Username</label>
                 <input
                   type="text"
-                  class="my_input {% if form.login.errors %} input_error_state {% endif %}"
-                  id="username"
+                  class="my_input {% if form.username.errors %} input_error_state {% endif %}"
                   placeholder="Username"
                   name="username"
                   id="id_username"
