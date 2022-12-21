@@ -37,10 +37,10 @@ export ADMIN_EMAIL=admin@localhost
 
 export EMAIL_ENABLE=True
 export DJANGO_EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
-export DJANGO_EMAIL_HOST=in-v3.mailjet.com
+export DJANGO_EMAIL_HOST=
 export DJANGO_EMAIL_PORT=25
-export DJANGO_EMAIL_HOST_USER=b4419a190d271d47d10ce1c6dbab416a
-export DJANGO_EMAIL_HOST_PASSWORD=c3b90406b5aeef689cfed2f21864b9fc
+export DJANGO_EMAIL_HOST_USER=
+export DJANGO_EMAIL_HOST_PASSWORD=
 export DJANGO_EMAIL_USE_TLS=False
 export DJANGO_EMAIL_USE_SSL=False
 export DEFAULT_FROM_EMAIL="GeoNode <ngmreporthub@gmail.com>"
