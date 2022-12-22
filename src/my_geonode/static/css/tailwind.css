@@ -5,6 +5,7 @@
 @import url(./variables.css);
 @import url(./Dashboard_view.css);
 @import url(./_resource_card.css);
+@import url(./landing_page.css);
 
 @tailwind base;
 @tailwind components;
@@ -80,6 +81,11 @@ li{
     display: unset !important;
 
 }
+
+.msgapi .gn-menu .gn-menu-content-side .gn-menu-list li > * {
+    margin-right: .4rem;
+    padding: .25rem .5rem;
+  }
 
 .msgapi .gn-fixed-card-grid {
     /* height: unset !important; */
