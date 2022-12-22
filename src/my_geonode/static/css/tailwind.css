@@ -5,6 +5,7 @@
 @import url(./variables.css);
 @import url(./Dashboard_view.css);
 @import url(./_resource_card.css);
+@import url(./landing_page.css);
 
 @tailwind base;
 @tailwind components;

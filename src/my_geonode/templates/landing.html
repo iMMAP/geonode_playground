@@ -1,12 +1,142 @@
+{% load static %}
+{% load client_lib_tags %}
+{% load client_version %}
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Humanitarian Spatial Data Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="{% static 'mapstore/dist/themes/geonode.css' %}?{% client_version %}" rel="stylesheet" />
+
+    {% block extra_head %}
+        <link href="{% static 'css/site_base.css' %}" rel="stylesheet" />    
+    {% endblock %}
 </head>
 <body>
-    <h1>This is the test landing page</h1>
+    <div class="landing_container">
+        <div class="flex flex-col md:flex-row justify-around bg-white">
+            {% block left_menu %}
+            <!-- The brand logo -->
+            <div class="">
+                    <ul class="">
+                        <li class="landing_logo space-x-2">
+                            <img src="../../../static/img/immap_logo.png" class="w-auto h-16">
+                            <p class="landing_logo_title">Humanitarian Spatial Data Center</p>
+                        </li>
+                    </ul>
+            </div>
+            <div class="gn-menu-content-right flex gap-3 items-center">
+                {% block right_menu %}
+                <div class="">
+                    <ul class="">
+                        <ul class="flex flex-col md:flex-row justify-between space-x-3">
+                            <button class="landing-login-btn">Login</button>
+                            <button class="landing-register-btn">Register</button>
+                    </ul>
+                    </ul>
+                </div>
+                {% endblock %}
+            </div>
+            {% endblock %}
+        </div>
+
+        <div class="intro_container flex flex-col md:flex-row justify-around">
+            {% block intro %}
+            <!-- The brand logo -->
+            <div class="intro_container_text container">
+
+                <h1>Humanitarian Spatial Data Center</h1>
+                <p>If you already have an account to access the iMMAP Afghanistan Data Repository, please sign in using your credentials on the provided Login form.Otherwise, please submit an access request along with your details and reasons to access the portal and send by email to rep-afghanistan@immap.org</p>
+
+            </div>
+            {% endblock %}
+        </div>
+
+        <div class="landing_details flex xl:justify-center lg:justify-between justify-center items-center flex-wrap">
+            {% block details %}
+            <div class="land_det_left mt-5 xl:mt-0 xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
+                <h2 class="font-extrabold text-[36px] uppercase mb-5 text-primary-900"> 
+                    HUMANITARIAN SPATIAL DATA CENTER
+                  </h2>          
+                  <p>
+                    The HSDC provides webmaps, dashboards and an extensive spatial data catalogue on disaster risk, infrastructure, demographics, terrain, administration, essential service, and much more, across Afghanistan. The platform is developed by iMMAP, funded by United States Agency for International Development (USAID) and provide to the humanitarian community in Afghanistan to enable more effective humanitarian programming and support disaster risk reduction efforts.
+                </p>
+            </div>
+            <div class="land_det_right lg:flex md:flex-col grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0 mt-10">
+                <img src="../static/img/map_test.png" alt="test icon 1">
+            </div>
+            {% endblock %}
+        </div>
+        
+        {% block content %}
+        {% comment %}
+        <!-- example of content extension -->
+        <div class="gn-container">
+            <div class="gn-content">
+                <!-- My custom content -->
+            </div>
+        </div>
+        {% endcomment %}
+        <div class="gn-container">
+            <div id="gn-home-featured-resources-grid"></div>
+            <div id="gn-home-resources-grid"></div>
+        </div>
+        {% endblock %}
+
+    </div>
+
+    <script>
+        window.addEventListener('mapstore:ready', function(event) {
+            const msAPI = event.detail;
+            msAPI.setPluginsConfig([
+                {
+                    name: 'FeaturedResourcesGrid',
+                    cfg: {
+                        targetSelector: '#gn-home-featured-resources-grid',
+                        pagePath: '/catalogue/'
+                    }
+                },
+                {
+                    name: 'ResourcesGrid',
+                    cfg: {
+                        targetSelector: '#gn-home-resources-grid',
+                        containerSelector: '#gn-home-resources-grid',
+                        pagination: false,
+                        pagePath: '/catalogue/',
+                        disableFilters: true,
+                        disableDetailPanel: true,
+                        enableGeoNodeCardsMenuItems: true
+                    }
+                },
+                { name: 'SaveAs', cfg: { closeOnSave: true } },
+                { name: 'DeleteResource' },
+                { name: 'DownloadResource' },
+                { name: 'Notifications' }
+            ]);
+        });
+    </script>
+    
+    {% block footer %}
+        {% include './geonode-mapstore-client/snippets/footer.html' %}
+    {% endblock %}
+
+
+    {% block ms_scripts %}
+    <script id="gn-script" src="{% static 'mapstore/dist/js/gn-catalogue.js' %}?{% client_version %}"></script>
+    {% endblock %}
+
+    {% block scripts %}
+    <script src="{% static "lib/js/jquery.min.js" %}"></script>
+    <script src="{% static "lib/js/bootstrap.min.js" %}"></script>
+    <script type="text/javascript">
+        // enable dropdown functionalities
+        $('.dropdown-toggle').dropdown();
+    </script>
+    {% endblock %}
 </body>
 </html>
