@@ -1404,10 +1404,6 @@ video {
   margin-bottom: calc(0.75rem * var(--tw-space-y-reverse)) !important;
 }
 
-.overflow-scroll{
-  overflow: scroll !important;
-}
-
 .rounded-sm{
   border-radius: 0.125rem !important;
 }

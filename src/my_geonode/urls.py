@@ -21,15 +21,25 @@
 from geonode.urls import urlpatterns
 from django.conf.urls import include, url
 from myauth.views import CustomSignupView
-
-
-# url('test/hello', TestView, name='test_view')
+from django.views.generic import TemplateView
 
 
 # You can register your own urlpatterns here
 
 urlpatterns += [
-    # include your urls here
-    # url(r'^sh/', CustomSignupView.as_view(), name='account_signup'),
+
+
+
     url(r'^account/signup/', CustomSignupView.as_view(), name='account_signup'),
+
+    # The Landing Route
+    url
+    (
+        'landing',
+        TemplateView.as_view(template_name='landing.html'),
+        name='landing'
+    ),
+
+
+
 ]
