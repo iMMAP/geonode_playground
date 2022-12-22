@@ -57,7 +57,7 @@ WSGI_APPLICATION = "{}.wsgi.application".format(PROJECT_NAME)
 LANGUAGE_CODE = os.getenv('LANGUAGE_CODE', "en")
 
 if PROJECT_NAME not in INSTALLED_APPS:
-    INSTALLED_APPS += (PROJECT_NAME,)
+    INSTALLED_APPS += (PROJECT_NAME, 'myauth')
 
 # Location of url mappings
 ROOT_URLCONF = os.getenv('ROOT_URLCONF', '{}.urls'.format(PROJECT_NAME))
@@ -69,10 +69,11 @@ STATICFILES_DIRS = [os.path.join(LOCAL_ROOT, "static"), ] + STATICFILES_DIRS
 # Location of locale files
 LOCALE_PATHS = (
     os.path.join(LOCAL_ROOT, 'locale'),
-    ) + LOCALE_PATHS
+) + LOCALE_PATHS
 
 TEMPLATES[0]['DIRS'].insert(0, os.path.join(LOCAL_ROOT, "templates"))
-loaders = TEMPLATES[0]['OPTIONS'].get('loaders') or ['django.template.loaders.filesystem.Loader','django.template.loaders.app_directories.Loader']
+loaders = TEMPLATES[0]['OPTIONS'].get('loaders') or [
+    'django.template.loaders.filesystem.Loader', 'django.template.loaders.app_directories.Loader']
 # loaders.insert(0, 'apptemplates.Loader')
 TEMPLATES[0]['OPTIONS']['loaders'] = loaders
 TEMPLATES[0].pop('APP_DIRS', None)
@@ -126,7 +127,8 @@ LOGGING = {
     },
 }
 
-CENTRALIZED_DASHBOARD_ENABLED = ast.literal_eval(os.getenv('CENTRALIZED_DASHBOARD_ENABLED', 'False'))
+CENTRALIZED_DASHBOARD_ENABLED = ast.literal_eval(
+    os.getenv('CENTRALIZED_DASHBOARD_ENABLED', 'False'))
 if CENTRALIZED_DASHBOARD_ENABLED and USER_ANALYTICS_ENABLED and 'geonode_logstash' not in INSTALLED_APPS:
     INSTALLED_APPS += ('geonode_logstash',)
 
@@ -141,3 +143,9 @@ if LDAP_ENABLED and 'geonode_ldap' not in INSTALLED_APPS:
 
 # Add your specific LDAP configuration after this comment:
 # https://docs.geonode.org/en/master/advanced/contrib/#configuration
+
+
+ACCOUNT_FORMS = {'signup': 'myauth.forms.SimpleSignupForm'}
+
+
+AUTH_EXEMPT_URLS += (f'{FORCE_SCRIPT_NAME}/landing',)

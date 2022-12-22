@@ -35,15 +35,15 @@ export MOSAIC_ENABLED=False
 export ADMIN_PASSWORD=admin
 export ADMIN_EMAIL=admin@localhost
 
-export EMAIL_ENABLE=False
+export EMAIL_ENABLE=True
 export DJANGO_EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
-export DJANGO_EMAIL_HOST=localhost
+export DJANGO_EMAIL_HOST=
 export DJANGO_EMAIL_PORT=25
 export DJANGO_EMAIL_HOST_USER=
 export DJANGO_EMAIL_HOST_PASSWORD=
 export DJANGO_EMAIL_USE_TLS=False
 export DJANGO_EMAIL_USE_SSL=False
-export DEFAULT_FROM_EMAIL="GeoNode <no-reply@geonode.org>"
+export DEFAULT_FROM_EMAIL="GeoNode <ngmreporthub@gmail.com>"
 
 export LOCKDOWN_GEONODE=True
 export CORS_ALLOW_ALL_ORIGINS=True
@@ -56,7 +56,7 @@ export ACCOUNT_OPEN_SIGNUP=True
 export ACCOUNT_EMAIL_REQUIRED=True
 export ACCOUNT_APPROVAL_REQUIRED=False
 export ACCOUNT_CONFIRM_EMAIL_ON_GET=False
-export ACCOUNT_EMAIL_VERIFICATION=none
+export ACCOUNT_EMAIL_VERIFICATION=mandatory
 export ACCOUNT_EMAIL_CONFIRMATION_EMAIL=False
 export ACCOUNT_EMAIL_CONFIRMATION_REQUIRED=False
 export ACCOUNT_AUTHENTICATION_METHOD=username_email
@@ -96,3 +96,8 @@ export FAVORITE_ENABLED=True
 
 export DEFAULT_MAX_UPLOAD_SIZE=5368709120
 export DEFAULT_MAX_PARALLEL_UPLOADS_PER_USER=5
+
+export ACCOUNT_APPROVAL_REQUIRED=True
+
+export LOGOUT_REDIRECT_URL=/landing
+export LOGIN_URL=/landing

@@ -8,13 +8,13 @@
 
 {% block body_outer %}
     
-<section class="h-screen">
-    <div class="px-6 h-full text-gray-800">
+<section class="md:h-screen">
+    <div class="h-full text-gray-800">
       <div
-        class="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full gap-20"
+        class="flex xl:justify-center justify-center items-center flex-wrap h-full gap-20"
       >
         
-        <div class="mt-10 xl:mt-0 xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
+        <div class="w-4/5">
           
           <div class=" mb-24">
 
@@ -53,87 +53,145 @@
 
           {% if account_geonode_local_signup %}
           <form id="signup_form" method="post" action="{% url "account_signup" %}" autocapitalize="off" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
-            {% csrf_token %}
-  
-            {% if form.non_field_errors  %}
-                <div class="alert alert-danger">
-                  {{ form.non_field_errors }}
-                </div>
-            {% endif %}
-  
-            <!-- Email input -->
-            <div class="mb-10">
-              <label for="email" class="mb-5">Email</label>
-              <input
-                type="text"
-                class="my_input {% if form.login.errors %} input_error_state {% endif %}"
-                id="email"
-                placeholder="Email"
-                name="email"
-                id="id_email"
-              />
-              {% if form.email.errors %}
-                <span class=" alert-danger">
-                    {{ form.email.errors }}
-                </span>
+              {% csrf_token %}
+    
+              {% if form.non_field_errors  %}
+                  <div class="alert alert-danger">
+                    {{ form.non_field_errors }}
+                  </div>
               {% endif %}
-            
+
+            <div class="flex flex-col md:flex-row gap-10">
+                  <!-- First Name input -->
+                <div class="mb-10 w-full">
+                  <label for="id_first_name" class="mb-5">First Name</label>
+                  <input
+                    type="text"
+                    class="my_input {% if form.first_name.errors %} input_error_state {% endif %}"
+                    placeholder="First Name"
+                    name="first_name"
+                    id="id_first_name"
+                  />
+                  {% if form.first_name.errors %}
+                    <span class=" alert-danger">
+                        {{ form.first_name.errors }}
+                    </span>
+                  {% endif %}
+                
+                </div>
+
+                <!-- Last Name input -->
+                <div class="mb-10 w-full">
+                  <label for="id_last_name" class="mb-5">Last Name</label>
+                  <input
+                    type="text"
+                    class="my_input {% if form.last_name.errors %} input_error_state {% endif %}"
+                    placeholder="Last Name"
+                    name="last_name"
+                    id="id_last_name"
+                  />
+                  {% if form.last_name.errors %}
+                    <span class=" alert-danger">
+                        {{ form.last_name.errors }}
+                    </span>
+                  {% endif %}
+                </div>
             </div>
 
-             <!-- Username input -->
-             <div class="mb-10">
-                <label for="email" class="mb-5">Username</label>
+
+            <!-- Email input -->
+            <div class="mb-10 w-full">
+                <label for="id_email" class="mb-5">Email</label>
                 <input
-                  type="text"
-                  class="my_input {% if form.login.errors %} input_error_state {% endif %}"
-                  id="username"
-                  placeholder="Username"
-                  name="username"
-                  id="id_username"
+                  type="email"
+                  class="my_input {% if form.email.errors %} input_error_state {% endif %}"
+                  placeholder="Email"
+                  name="email"
+                  id="id_email"
                 />
-                {% if form.username.errors %}
+                {% if form.email.errors %}
                   <span class=" alert-danger">
-                      {{ form.username.errors }}
+                      {{ form.email.errors }}
                   </span>
                 {% endif %}
-              
-              </div>
-  
-            <!-- Password input -->
-            <div class="mb-10">
-              <label for="password" class="mb-5">Password</label>
-              <input
-                type="password"
-                class="my_input {% if form.password1.errors %} input_error_state {% endif %}"
-                placeholder="Password"
-                id="id_password1"
-                name="password1"
-              />
-              {% if form.password1.errors %}
-                <span class=" alert-danger">
-                    {{ form.password1.errors }}
-                </span>
-              {% endif %}
             </div>
 
-            <!-- Confirm Password input -->
-            <div class="mb-10">
-                <label for="password" class="mb-5">Confirm Password</label>
+            <div class="flex flex-col md:flex-row gap-10">
+                  <!-- Username input -->
+                    <div class="mb-10 w-full">
+                      <label for="id_username" class="mb-5">Username</label>
+                      <input
+                        type="text"
+                        class="my_input {% if form.username.errors %} input_error_state {% endif %}"
+                        placeholder="Username"
+                        name="username"
+                        id="id_username"
+                      />
+                      {% if form.username.errors %}
+                        <span class=" alert-danger">
+                            {{ form.username.errors }}
+                        </span>
+                      {% endif %}
+                    
+                    </div>
+
+                <!-- ORG input -->
+                <div class="mb-10 w-full">
+                  <label for="id_organization" class="mb-5">Organization</label>
+                  <input
+                    type="text"
+                    class="my_input {% if form.organization.errors %} input_error_state {% endif %}"
+                    placeholder="Organization"
+                    name="organization"
+                    id="id_organization"
+                  />
+                  {% if form.organization.errors %}
+                    <span class=" alert-danger">
+                        {{ form.organization.errors }}
+                    </span>
+                  {% endif %}
+                
+                </div>
+            </div>
+
+              
+            <div class="flex flex-col md:flex-row gap-10">
+              <!-- Password input -->
+              <div class="mb-10 w-full">
+                <label for="password" class="mb-5">Password</label>
                 <input
                   type="password"
-                  class="my_input {% if form.password2.errors %} input_error_state {% endif %}"
-                  placeholder="Confirm Password"
-                  id="id_password2"
-                  name="password2"
+                  class="my_input {% if form.password1.errors %} input_error_state {% endif %}"
+                  placeholder="Password"
+                  id="id_password1"
+                  name="password1"
                 />
-                {% if form.password2.errors %}
+                {% if form.password1.errors %}
                   <span class=" alert-danger">
-                      {{ form.password2.errors }}
+                      {{ form.password1.errors }}
                   </span>
                 {% endif %}
               </div>
-  
-  
+
+              <!-- Confirm Password input -->
+              <div class="mb-10 w-full">
+                  <label for="password" class="mb-5">Confirm Password</label>
+                  <input
+                    type="password"
+                    class="my_input {% if form.password2.errors %} input_error_state {% endif %}"
+                    placeholder="Confirm Password"
+                    id="id_password2"
+                    name="password2"
+                  />
+                  {% if form.password2.errors %}
+                    <span class=" alert-danger">
+                        {{ form.password2.errors }}
+                    </span>
+                  {% endif %}
+                </div>
+            </div>
+    
+    
             <div class="lg:text-left ">
               
               <button
@@ -142,7 +200,7 @@
               >
                 {% trans "Register" %}
               </button>
-             
+              
               <p class="font-semibold mt-2 pt-1" >
                 Already have an account?
                 <a
@@ -159,16 +217,7 @@
           {% endif %}
         </div>
   
-        <div
-          class="hidden md:flex grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0"
-        >
         
-          <img
-            src="../../static//img/map_test.png"
-            class="w-full"
-            alt="Sample image"
-          />
-        </div>
       </div>
     </div>
   </section>

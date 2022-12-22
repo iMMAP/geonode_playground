@@ -30,7 +30,7 @@ def get_base_left_topbar_menu(context):
 
     return [
         {
-            "label": "Data 2",
+            "label": "Data",
             "type": "dropdown",
             "items": [
                 {
@@ -46,20 +46,33 @@ def get_base_left_topbar_menu(context):
             ]
         },
         {
-            "type": "link",
-            "href": "/catalogue/#/search/?f=map",
-            "label": "Maps"
-        },
-        {
-            "type": "link",
-            "href": "/catalogue/#/search/?f=geostory",
-            "label": "GeoStories"
+            "type": "dropdown",
+            # "href": "/catalogue/#/search/?f=map",
+            "label": "Maps",
+            "items": [
+                {
+                    "type": "link",
+                    "href": "/catalogue/#/search/?f=map",
+                    "label": "Interactive"
+                },
+                {
+                    "type": "link",
+                    "href": "/catalogue/#/search/?f=document",
+                    "label": "Static"
+                } if not is_mobile else None
+            ]
         },
         {
             "type": "link",
             "href": "/catalogue/#/search/?f=dashboard",
             "label": "Dashboards"
         },
+        {
+            "type": "link",
+            "href": "/catalogue/#/search/?f=geostory",
+            "label": "GeoStories"
+        },
+
         {
             "type": "link",
             "href": "/catalogue/#/search/?f=featured",
