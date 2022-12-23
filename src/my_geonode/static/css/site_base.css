@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Fjalla+One:wght@300;400;500;600;700;800&d&display=swap');
+
 :root{
   /* this variables should be generated from lesscss files */
   --gn-font-family-sans-serif: 'Montserrat', sans-serif;
@@ -494,6 +496,7 @@
   padding: 1rem 3rem 1rem 3rem;
   font-weight: bold;
   border-radius: 0.25rem;
+  margin-left: 1rem;
 }
 
 .landing-register-btn:hover{
@@ -501,7 +504,12 @@
   border: solid 1px #75110e;
 }
 
+.landing_hero_container .landing_hero_left .landing_hero_title h2{
+  font-family: 'Fjalla One', sans-serif;
+}
+
 .landing_hero_container .landing_hero_content p{
+  font-family: 'Fjalla One', sans-serif;
   font-size: 20px;
   margin-right: 80px;
 }
@@ -523,48 +531,6 @@
   /* margin: auto; */
 }
 
-/* 
-.intro_container .intro_container_text h1{
-    font-weight: bold;
-    padding: 200px 0 0;
-    margin: 0;
-    position: relative;
-    font-size: 3rem;
-    line-height: normal;
-    z-index: 100;
-
-}
-
-.intro_container .intro_container_text p{
-    font-weight: bold;
-    font-size: 1rem;
-}
-
-.intro_container .intro_container_text{
-    width: 50%;
-    color: #fff;
-}
-
-.intro_container{
-    background-image: url(../img/landing_back.jpg);
-    background-color: #75110e;
-    -webkit-filter: grayscale(50%);
-    filter: grayscale(50%);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 593px;
-    max-height: 593px;
-    width: 100%;
-    margin: auto;
-}
-
- .landing_details{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
-
 .land_det_right img{
   width: 80%;
   height: auto;
@@ -580,6 +546,7 @@
   max-width: 700px;
   margin: 0 auto;
   text-align: center;
+  font-family: 'Fjalla One', sans-serif;
 }
 
 .hero_container .hero_title h2 {
@@ -596,6 +563,7 @@
   line-height: 24px;
   color: #fff;
   opacity: 0.9;
+  font-family: 'Fjalla One', sans-serif;
 }
 
 .features_container .features_content{
@@ -610,6 +578,7 @@
   padding: 50px;
   font-size: 35px;
   text-align: center;
+  font-family: 'Fjalla One', sans-serif;
 }
 
 .features_container .features_details{
@@ -621,6 +590,86 @@
 .features_container .features_details h2{
   font-size: 20px;
   font-weight: bold;
+  font-family: 'Fjalla One', sans-serif;
+}
+
+.contact_container .contact_content {
+  background: #232323;
+  color: #6f6f6f;
+  padding: 5rem;
+  border-bottom: 2px solid #a72824;
+}
+
+.contact_content_details{
+  display: grid;
+  line-height: 2;
+}
+
+.contact_content_details .contact_contact_address strong{
+  margin-left: 0.50rem;
+}
+
+.contact_content_details h4{
+  font-family: 'Fjalla One', sans-serif;
+  color: #fff;
+}
+
+@media only screen and (max-width: 1024px) {
+  .landing_hero_container .landing_hero_left{
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+  }
+
+  .landing_hero_container .landing_hero_right{
+    display: none;
+  }
+
+  .features_container .features_content{
+    display: grid;
+    padding: 1rem;
+  }
+
+  .landing_hero_container .landing_hero_content p{
+    font-size: 20px;
+    margin: 0;
+  }
+
+  .features_container .features_details{
+    background-color: #fef2f2;
+    padding: 4rem;
+    margin: 1rem;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .landing-login-btn{
+    width: 100%;
+    padding: 1rem 5rem 1rem 5rem;
+  }
+
+  .landing-register-btn{
+    padding: 1rem 5rem 1rem 5rem;
+    margin-left: 0;
+    margin-top: 1rem;
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 476px) {
+  .features_container .features_details{
+    background-color: #fef2f2;
+    padding: 2rem;
+    margin: 2rem;
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .features_container .features_details{
+    background-color: #fef2f2;
+    padding: 2rem;
+    margin: 0.50rem;
+  }
 }
 
 /* ! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com */
@@ -1562,12 +1611,6 @@ video {
   --tw-space-x-reverse: 0 !important;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse)) !important;
   margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse))) !important;
-}
-
-.space-x-3 > :not([hidden]) ~ :not([hidden]){
-  --tw-space-x-reverse: 0 !important;
-  margin-right: calc(0.75rem * var(--tw-space-x-reverse)) !important;
-  margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse))) !important;
 }
 
 .space-y-3 > :not([hidden]) ~ :not([hidden]){
