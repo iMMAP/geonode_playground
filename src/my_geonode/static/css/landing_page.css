@@ -1,11 +1,6 @@
 .landing_container{
     background-color: #fff;
 }
-.landing_logo{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 .landing_logo .landing_logo_title{
     font-weight: bold;
@@ -15,7 +10,7 @@
 .landing-login-btn{
     background-color: #a72824;
     color: #fff;
-    padding: 1rem;
+    padding: 1rem 3rem 1rem 3rem;
     font-weight: bold;
     border-radius: 0.25rem;
 }
@@ -27,7 +22,7 @@
 .landing-register-btn{
     color: #a72824;
     border: solid 1px #a72824;
-    padding: 1rem;
+    padding: 1rem 3rem 1rem 3rem;
     font-weight: bold;
     border-radius: 0.25rem;
 }
@@ -37,6 +32,28 @@
     border: solid 1px #75110e;
 }
 
+.landing_hero_container .landing_hero_content p{
+    font-size: 20px;
+    margin-right: 80px;
+}
+
+.landing_hero_container .landing_hero_left{
+    width: 50%;
+    height: auto;
+    padding-top: 7rem;
+    padding-left: 5rem;
+}
+
+.landing_hero_container .landing_hero_right{
+    background-image: url(../img/map-test_1.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 900px;
+    width: 50%;
+    /* margin: auto; */
+}
+/* 
 .intro_container .intro_container_text h1{
     font-weight: bold;
     padding: 200px 0 0;
@@ -50,7 +67,7 @@
 
 .intro_container .intro_container_text p{
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 1rem;
 }
 
 .intro_container .intro_container_text{
@@ -60,7 +77,7 @@
 
 .intro_container{
     background-image: url(../img/landing_back.jpg);
-    /* background-color: #75110e; */
+    background-color: #75110e;
     -webkit-filter: grayscale(50%);
     filter: grayscale(50%);
     background-position: center;
@@ -72,7 +89,7 @@
     margin: auto;
 }
 
-/* .landing_details{
+ .landing_details{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -81,4 +98,58 @@
 .land_det_right img{
     width: 80%;
     height: auto;
+}
+
+.hero_section{
+    background-color: #a72824;
+    height: 500px;
+}
+
+.hero_container{
+    padding: 10px;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+
+}
+
+.hero_container .hero_title h2 {
+    font-size: 32px;
+    line-height: 48px;
+    text-align: center;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 36px;
+  }
+
+.hero_container .hero_content p {
+    font-size: 16px;
+    line-height: 24px;
+    color: #fff;
+    opacity: 0.9;
+  }
+
+  .features_container .features_content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+
+  .features_container .features_header h1{
+    padding: 50px;
+    font-size: 35px;
+    text-align: center;
+  }
+
+  .features_container .features_details{
+    background-color: #fef2f2;
+    padding: 4rem;
+    margin: 2rem;
+  }
+
+  .features_container .features_details h2{
+    font-size: 20px;
+    font-weight: bold;
 }

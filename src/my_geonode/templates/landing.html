@@ -19,116 +19,93 @@
 </head>
 <body>
     <div class="landing_container">
-        <div class="flex flex-col md:flex-row justify-around bg-white">
-            {% block left_menu %}
+        <div class="landing_container_content">
+            {% block left_hero %}
             <!-- The brand logo -->
-            <div class="">
-                    <ul class="">
-                        <li class="landing_logo space-x-2">
+            <div class="landing_hero_container flex justify-around">
+                <div class="landing_hero_left">
+                    <div class="landing_hero_content">
+                        <div class="landing_logo flex items-center space-x-2 mt-10">
                             <img src="../../../static/img/immap_logo.png" class="w-auto h-16">
                             <p class="landing_logo_title">Humanitarian Spatial Data Center</p>
-                        </li>
-                    </ul>
-            </div>
-            <div class="gn-menu-content-right flex gap-3 items-center">
-                {% block right_menu %}
-                <div class="">
-                    <ul class="">
-                        <ul class="flex flex-col md:flex-row justify-between space-x-3">
-                            <button class="landing-login-btn"><a class="" href="/account/login/?next=/">Login</a></button>
-                            <button class="landing-register-btn"><a class="" href="/account/signup/">Register</a></button>
-                    </ul>
-                    </ul>
+                        </div>
+                    </div>
+                    <div class="landing_hero_title mt-10">
+                        <h2 class="font-extrabold text-[36px] uppercase mb-5 text-primary-900"> 
+                            HUMANITARIAN SPATIAL DATA CENTER
+                        </h2>  
+                    </div>
+                    <div class="landing_hero_content mt-10">
+                        <p>The HSDC provides webmaps, dashboards and an extensive spatial data catalogue on disaster risk, infrastructure, demographics, terrain, administration, essential service, and much more, across Afghanistan. The platform is developed by iMMAP, funded by United States Agency for International Development (USAID) and provide to the humanitarian community in Afghanistan to enable more effective humanitarian programming and support disaster risk reduction efforts.</p>
+                    </div>
+                    <div class="gn-menu-content-right flex gap-3 items-center mt-10">
+                        <div class="">
+                            <ul class="">
+                                <ul class="flex flex-col md:flex-row justify-between space-x-3">
+                                    <a class="..." href="/account/login/?next=/"><button class="landing-login-btn">Login</button></a>
+                                    <a class="..." href="/account/signup/"><button class="landing-register-btn">Register</button></a>
+                            </ul>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                {% endblock %}
+                <div class="landing_hero_right"></div>
+
             </div>
+            
             {% endblock %}
         </div>
 
-        <div class="intro_container flex flex-col md:flex-row justify-around">
-            {% block intro %}
-            <!-- The brand logo -->
-            <div class="intro_container_text container">
-
-                <h1>Humanitarian Spatial Data Center</h1>
-                <p>If you already have an account to access the iMMAP Afghanistan Data Repository, please sign in using your credentials on the provided Login form.Otherwise, please submit an access request along with your details and reasons to access the portal and send by email to rep-afghanistan@immap.org</p>
-
+        <div class="hero_section grid items-center justify-center">
+            <div class="hero_container  justify-center grid items-center">
+                <div class="hero_title">
+                    <h2>HUMANITARIAN SPATIAL DATA CENTER</h2>
+                </div>
+                <div class="hero_content">
+                    <p>The HSDC provides webmaps, dashboards and an extensive spatial data catalogue on disaster risk, infrastructure, demographics, terrain, administration, essential service, and much more, across Afghanistan. The platform is developed by iMMAP, funded by United States Agency for International Development (USAID) and provide to the humanitarian community in Afghanistan to enable more effective humanitarian programming and support disaster risk reduction efforts.</p>
+                </div>
             </div>
-            {% endblock %}
         </div>
 
-        <div class="landing_details flex xl:justify-center lg:justify-between justify-center items-center flex-wrap">
+        <div class="features_container">
             {% block details %}
-            <div class="land_det_left mt-5 xl:mt-0 xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
-                <h2 class="font-extrabold text-[36px] uppercase mb-5 text-primary-900"> 
-                    HUMANITARIAN SPATIAL DATA CENTER
-                  </h2>          
-                  <p>
-                    The HSDC provides webmaps, dashboards and an extensive spatial data catalogue on disaster risk, infrastructure, demographics, terrain, administration, essential service, and much more, across Afghanistan. The platform is developed by iMMAP, funded by United States Agency for International Development (USAID) and provide to the humanitarian community in Afghanistan to enable more effective humanitarian programming and support disaster risk reduction efforts.
-                </p>
-            </div>
-            <div class="land_det_right lg:flex md:flex-col grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0 mt-10">
-                <img src="../static/img/map_test.png" alt="test icon 1">
-            </div>
+                <div class="features_header">
+                    <h1>FEATURES</h1>
+                </div>
+                <div class="features_content">
+                    <div class="features_details">
+                        <img src="../../../static/img/icons8-layers-90.png" class="w-auto h-16 mt-5">
+                        <h2 class="mt-5">DATASET</h2>
+                        <p class="mt-5">
+                            The HSDC provides webmaps, dashboards and an extensive spatial data catalogue on disaster risk, infrastructure, demographics, terrain, administration, essential service, and much more, across Afghanistan. The platform is developed by iMMAP, funded by United States Agency for International Development (USAID) and provide to the humanitarian community in Afghanistan to enable more effective humanitarian programming and support disaster risk reduction efforts. 
+                        </p>
+                    </div>
+                    <div class="features_details">
+                        <img src="../../../static/img/icons8-map-marker-100.png" class="w-auto h-16 mt-5">
+                        <h2 class="mt-5">MAP</h2>
+                        <p class="mt-5">
+                            The HSDC provides webmaps, dashboards and an extensive spatial data catalogue on disaster risk, infrastructure, demographics, terrain, administration, essential service, and much more, across Afghanistan. The platform is developed by iMMAP, funded by United States Agency for International Development (USAID) and provide to the humanitarian community in Afghanistan to enable more effective humanitarian programming and support disaster risk reduction efforts. 
+                        </p>
+                    </div>
+                    <div class="features_details">
+                        <img src="../../../static/img/icons8-signing-a-document-90.png" class="w-auto h-16 mt-5">
+                        <h2 class="mt-5">DOCUMENT</h2>
+                        <p class="mt-5">
+                            The HSDC provides webmaps, dashboards and an extensive spatial data catalogue on disaster risk, infrastructure, demographics, terrain, administration, essential service, and much more, across Afghanistan. The platform is developed by iMMAP, funded by United States Agency for International Development (USAID) and provide to the humanitarian community in Afghanistan to enable more effective humanitarian programming and support disaster risk reduction efforts. 
+                        </p>
+                    </div>
+                </div>
             {% endblock %}
-        </div>
-        
-        {% block content %}
-        {% comment %}
-        <!-- example of content extension -->
-        <div class="gn-container">
-            <div class="gn-content">
-                <!-- My custom content -->
-            </div>
-        </div>
-        {% endcomment %}
-        <div class="gn-container">
-            <div id="gn-home-featured-resources-grid"></div>
-            <div id="gn-home-resources-grid"></div>
-        </div>
-        {% endblock %}
+        </div
+
 
     </div>
 
-    <script>
-        window.addEventListener('mapstore:ready', function(event) {
-            const msAPI = event.detail;
-            msAPI.setPluginsConfig([
-                {
-                    name: 'FeaturedResourcesGrid',
-                    cfg: {
-                        targetSelector: '#gn-home-featured-resources-grid',
-                        pagePath: '/'
-                    }
-                },
-                {
-                    name: 'ResourcesGrid',
-                    cfg: {
-                        targetSelector: '#gn-home-resources-grid',
-                        containerSelector: '#gn-home-resources-grid',
-                        pagination: false,
-                        pagePath: '/',
-                        disableFilters: true,
-                        disableDetailPanel: true,
-                        enableGeoNodeCardsMenuItems: true
-                    }
-                },
-                { name: 'SaveAs', cfg: { closeOnSave: true } },
-                { name: 'DeleteResource' },
-                { name: 'DownloadResource' },
-                { name: 'Notifications' }
-            ]);
-        });
-    </script>
-    
     {% block footer %}
         {% include './geonode-mapstore-client/snippets/footer.html' %}
     {% endblock %}
 
-
-    {% block ms_scripts %}
-    <script id="gn-script" src="{% static 'mapstore/dist/js/gn-catalogue.js' %}?{% client_version %}"></script>
-    {% endblock %}
+    
 
     {% block scripts %}
     <script src="{% static "lib/js/jquery.min.js" %}"></script>
