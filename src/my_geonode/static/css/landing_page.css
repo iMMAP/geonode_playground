@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Fjalla+One:wght@300;400;500;600;700;800&d&display=swap');
+
+
 .landing_container{
     background-color: #fff;
 }
@@ -34,7 +37,14 @@
     border: solid 1px #75110e;
 }
 
+
+
+.landing_hero_container .landing_hero_left .landing_hero_title h2{
+    font-family: 'Fjalla One', sans-serif;
+}
+
 .landing_hero_container .landing_hero_content p{
+    font-family: 'Fjalla One', sans-serif;
     font-size: 20px;
     margin-right: 80px;
 }
@@ -71,7 +81,7 @@
     max-width: 700px;
     margin: 0 auto;
     text-align: center;
-
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .hero_container .hero_title h2 {
@@ -88,6 +98,7 @@
     line-height: 24px;
     color: #fff;
     opacity: 0.9;
+    font-family: 'Fjalla One', sans-serif;
   }
 
   .features_container .features_content{
@@ -102,6 +113,7 @@
     padding: 50px;
     font-size: 35px;
     text-align: center;
+    font-family: 'Fjalla One', sans-serif;
   }
 
   .features_container .features_details{
@@ -113,7 +125,29 @@
   .features_container .features_details h2{
     font-size: 20px;
     font-weight: bold;
+    font-family: 'Fjalla One', sans-serif;
 }
+
+.contact_container .contact_content {
+    background: #232323;
+    color: #6f6f6f;
+    padding: 5rem;
+    border-bottom: 2px solid #a72824;
+  }
+
+    .contact_content_details{
+    display: grid;
+    line-height: 2;
+  }
+
+  .contact_content_details .contact_contact_address strong{
+    margin-left: 0.50rem;
+  }
+
+  .contact_content_details h4{
+    font-family: 'Fjalla One', sans-serif;
+    color: #fff;
+  }
 
 @media only screen and (max-width: 1024px) {
     .landing_hero_container .landing_hero_left{
