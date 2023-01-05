@@ -1509,10 +1509,6 @@ video {
   width: 6rem !important;
 }
 
-.w-96{
-  width: 24rem !important;
-}
-
 .w-2\/3{
   width: 66.666667% !important;
 }
@@ -1527,14 +1523,6 @@ video {
 
 .max-w-full{
   max-width: 100% !important;
-}
-
-.grow-0{
-  flex-grow: 0 !important;
-}
-
-.basis-auto{
-  flex-basis: auto !important;
 }
 
 .transform{
@@ -1789,10 +1777,6 @@ video {
   font-size: 20px !important;
 }
 
-.text-\[18px\]{
-  font-size: 18px !important;
-}
-
 .font-extrabold{
   font-weight: 800 !important;
 }
@@ -1898,11 +1882,6 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
 }
 
-.drop-shadow{
-  --tw-drop-shadow: drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06)) !important;
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow) !important;
-}
-
 .filter{
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow) !important;
 }
@@ -1972,11 +1951,19 @@ li{
 
 .msgapi .gn-menu .gn-menu-content-side .gn-menu-list li{
   margin-right: .4rem;
-  padding: .25rem .5rem;
+  /* padding: .25rem .5rem; */
 }
 
 .msgapi .gn-fixed-card-grid {
   /* height: unset !important; */
+}
+
+.msgapi .gn-card-grid .gn-card-grid-pagination.featured-list {
+  padding-top: 48px !important;
+}
+
+.gn-row{
+  padding-top: 2.5rem;
 }
 
 .before\:mt-0\.5::before{
@@ -2099,14 +2086,6 @@ li{
     width: 33.333333% !important;
   }
 
-  .md\:w-9\/12{
-    width: 75% !important;
-  }
-
-  .md\:shrink-0{
-    flex-shrink: 0 !important;
-  }
-
   .md\:grid-cols-3{
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   }
@@ -2117,10 +2096,6 @@ li{
 
   .md\:flex-row{
     flex-direction: row !important;
-  }
-
-  .md\:flex-col{
-    flex-direction: column !important;
   }
 
   .md\:justify-start{
@@ -2138,16 +2113,8 @@ li{
 }
 
 @media (min-width: 1024px){
-  .lg\:flex{
-    display: flex !important;
-  }
-
   .lg\:w-5\/12{
     width: 41.666667% !important;
-  }
-
-  .lg\:w-6\/12{
-    width: 50% !important;
   }
 
   .lg\:justify-between{
@@ -2170,10 +2137,6 @@ li{
 
   .xl\:w-5\/12{
     width: 41.666667% !important;
-  }
-
-  .xl\:w-6\/12{
-    width: 50% !important;
   }
 
   .xl\:justify-center{
