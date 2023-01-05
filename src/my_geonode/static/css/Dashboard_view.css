@@ -119,15 +119,15 @@
       
 
         .msgapi .gn-main-loader {
-            border-left: 1em solid #a72824;
+            border-left: 1em solid #a72824 !important;
         }
 
         .gn-main-loader {
-            border-left: 1em solid #a72824;
+            border-left: 1em solid #a72824 !important;
         }
 
         .msgapi .mapstore-full-size-loader{
-            border-left: 1em solid #a72824;
+            border-left: 1em solid #a72824 !important;
         }
 
         .msgapi .mapstore-slider.with-tooltip .noUi-target.noUi-horizontal .noUi-base .noUi-origin .noUi-handle .noUi-tooltip {

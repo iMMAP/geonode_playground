@@ -19,53 +19,59 @@
 </head>
 <body>
     <div class="landing_container">
+        <div class="landing_topbar">
+            <div class="landing_hero_content">
+                <div class="landing_logo flex items-center space-x-2">
+                    <img src="../../../static/img/immap_logo.png" class="w-auto h-16">
+                    <p class="landing_logo_title">Humanitarian Spatial Data Center</p>
+                </div>
+            </div>
+            <div class="gn-menu-content-right">
+                <div class="">
+                    <ul class="top_bar_menu_button">
+                        <a class="..." href="/account/login/?next=/"><button class="landing-login-btn">Login<button></a>
+                        <a class="..." href="/account/signup/"><button class="landing-register-btn">Register</button></a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <div class="landing_container_content">
             {% block left_hero %}
             <!-- The brand logo -->
             <div class="landing_hero_container flex justify-around">
                 <div class="landing_hero_left">
-                    <div class="landing_hero_content">
-                        <div class="landing_logo flex items-center space-x-2 mt-10">
-                            <img src="../../../static/img/immap_logo.png" class="w-auto h-16">
-                            <p class="landing_logo_title">Humanitarian Spatial Data Center</p>
-                        </div>
-                    </div>
                     <div class="landing_hero_title mt-10">
-                        <h2 class="font-extrabold text-[36px] mb-5 text-primary-900"> 
-                            Humanitarian Spatial Data Center
+                        <h2 class="text-primary-900"> 
+                            Humanitarian <br/>Spatial Data Center
                         </h2>  
                     </div>
-                    <div class="landing_hero_content mt-10">
-                        <p>The HSDC provides webmaps, dashboards and an extensive spatial data catalogue on disaster risk, infrastructure, demographics, terrain, administration, essential service, and much more, across Afghanistan. The platform is developed by iMMAP, funded by United States Agency for International Development (USAID) and provide to the humanitarian community in Afghanistan to enable more effective humanitarian programming and support disaster risk reduction efforts.</p>
+                    <div class="landing_hero_content_desc mt-10">
+                        <p>The Humanitarian Spatial Data Center (HSDC) is an information management tool for humanitarian programming in Afghanistan. It provides data and analytics related to disaster risks, demograhics, accessibity and more across Afghanistan. The platform is developed by iMMAP, funded by United States Agency for International Development (USAID) and provide to the humanitarian community in Afghanistan to enable more effective humanitarian programming and support disaster risk reduction efforts.</p>
                     </div>
-                    <div class="gn-menu-content-right flex gap-3 items-center mt-10">
-                        <div class="">
-                            <ul class="">
-                                <ul class="flex flex-col md:flex-row justify-between">
-                                    <a class="..." href="/account/login/?next=/"><button class="landing-login-btn">Login</button></a>
-                                    <a class="..." href="/account/signup/"><button class="landing-register-btn">Register</button></a>
-                            </ul>
-                            </ul>
+                    <div class="landing_hero_counter flex">
+                        <div class="counter_card">
+                            <h1>50+</h1>
+                            <p>Datasets</p>
+                        </div>
+                        <div class="counter_card">
+                            <h1>5+</h1>
+                            <p>Dashboards</p>
+                        </div>
+                        <div class="counter_card">
+                            <h1>20+</h1>
+                            <p>Maps</p>
                         </div>
                     </div>
                 </div>
-                <div class="landing_hero_right"></div>
+                <div class="landing_hero_right"><img src="../../../static/img/image 8.png"></div>
 
             </div>
             
             {% endblock %}
         </div>
 
-        <div class="hero_section grid items-center justify-center">
-            <div class="hero_container  justify-center grid items-center">
-                <div class="hero_title">
-                    <h2>HUMANITARIAN SPATIAL DATA CENTER</h2>
-                </div>
-                <div class="hero_content">
-                    <p>The HSDC provides webmaps, dashboards and an extensive spatial data catalogue on disaster risk, infrastructure, demographics, terrain, administration, essential service, and much more, across Afghanistan. The platform is developed by iMMAP, funded by United States Agency for International Development (USAID) and provide to the humanitarian community in Afghanistan to enable more effective humanitarian programming and support disaster risk reduction efforts.</p>
-                </div>
-            </div>
-        </div>
+        <div class="hero_section grid items-center justify-center"></div>
 
         <div class="features_container">
             {% block details %}
@@ -75,23 +81,23 @@
                 <div class="features_content">
                     <div class="features_details">
                         <img src="../../../static/img/icons8-layers-90.png" class="w-auto h-16 mt-5">
-                        <h2 class="mt-5">DATASET</h2>
+                        <h2 class="mt-5">Datasets</h2>
                         <p class="mt-5">
-                            The HSDC provides webmaps, dashboards and an extensive spatial data catalogue on disaster risk, infrastructure, demographics, terrain, administration, essential service, and much more, across Afghanistan. The platform is developed by iMMAP, funded by United States Agency for International Development (USAID) and provide to the humanitarian community in Afghanistan to enable more effective humanitarian programming and support disaster risk reduction efforts. 
+                            The HSDC provides access to a spatial data catalogue developed specifically for the humanitarian community. The catalogue includes detailed information on flooding, landslides, avalanches, earthquakes,  environment/terrain, infrastructure, essential services, demographics, accessibility and more. The datasets can be analyzed through the build-in interactive maps and dashboards and are available for download. The catalogue is continuously updated and can be augmented based on user requests. 
+                        </p>
+                    </div>
+                    <div class="features_details">
+                        <img src="../../../static/img/icons8-dashboard-layout-96.png" class="w-auto h-16 mt-5">
+                        <h2 class="mt-5">Dashboards</h2>
+                        <p class="mt-5">
+                            The HSDC provides clear and rapid access to essential information through interactive dashboards. Disaster information is analyzed and translated into numbers of people, buildings and areas exposed to disaster risks at different spatial levels. The dashboards are powered by a combination of advanced disaster risk analysis and the latest data on population and infrastructure, thus providing valuable risk exposure indicators for humanitarian organizations.  
                         </p>
                     </div>
                     <div class="features_details">
                         <img src="../../../static/img/icons8-map-marker-100.png" class="w-auto h-16 mt-5">
-                        <h2 class="mt-5">MAP</h2>
+                        <h2 class="mt-5">Maps</h2>
                         <p class="mt-5">
-                            The HSDC provides webmaps, dashboards and an extensive spatial data catalogue on disaster risk, infrastructure, demographics, terrain, administration, essential service, and much more, across Afghanistan. The platform is developed by iMMAP, funded by United States Agency for International Development (USAID) and provide to the humanitarian community in Afghanistan to enable more effective humanitarian programming and support disaster risk reduction efforts. 
-                        </p>
-                    </div>
-                    <div class="features_details">
-                        <img src="../../../static/img/icons8-signing-a-document-90.png" class="w-auto h-16 mt-5">
-                        <h2 class="mt-5">DOCUMENT</h2>
-                        <p class="mt-5">
-                            The HSDC provides webmaps, dashboards and an extensive spatial data catalogue on disaster risk, infrastructure, demographics, terrain, administration, essential service, and much more, across Afghanistan. The platform is developed by iMMAP, funded by United States Agency for International Development (USAID) and provide to the humanitarian community in Afghanistan to enable more effective humanitarian programming and support disaster risk reduction efforts. 
+                            The HSDC provides access to data and analysis  through both static maps and interactive web maps. Users can overlay spatial layers such as infrastructure, demographics and disaster risks to build custom maps relevant to their activities. The interactive maps provide access to the entire spatial data catalogue and aims to serve as an online GIS environment enabling informed decision making for humanitarian organizations through easy access to spatial data. 
                         </p>
                     </div>
                 </div>
@@ -115,7 +121,6 @@
                                 </ul>
                             </div>
                         </div>
-                
                 </div>
             </div>
 
