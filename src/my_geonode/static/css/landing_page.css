@@ -43,10 +43,11 @@
     font-family: 'Fjalla One', sans-serif;
 }
 
-.landing_hero_container .landing_hero_content p{
+.landing_hero_container .landing_hero_content_desc p{
     font-family: 'Fjalla One', sans-serif;
-    font-size: 20px;
+    font-size: 10px;
     margin-right: 80px;
+    font-weight: bold;
 }
 
 .landing_hero_container .landing_hero_left{

@@ -309,15 +309,15 @@
 }
 
 .msgapi .gn-main-loader {
-  border-left: 1em solid #a72824;
+  border-left: 1em solid #a72824 !important;
 }
 
 .gn-main-loader {
-  border-left: 1em solid #a72824;
+  border-left: 1em solid #a72824 !important;
 }
 
 .msgapi .mapstore-full-size-loader{
-  border-left: 1em solid #a72824;
+  border-left: 1em solid #a72824 !important;
 }
 
 .msgapi .mapstore-slider.with-tooltip .noUi-target.noUi-horizontal .noUi-base .noUi-origin .noUi-handle .noUi-tooltip {
@@ -469,6 +469,10 @@
   /* filter: drop-shadow(0 1px 1px rgb(0 0 0 / 0.05)) !important; */
 }
 
+.msgapi .gn-default {
+  top: 94px !important;
+}
+
 .landing_container{
   background-color: #fff;
 }
@@ -508,10 +512,11 @@
   font-family: 'Fjalla One', sans-serif;
 }
 
-.landing_hero_container .landing_hero_content p{
+.landing_hero_container .landing_hero_content_desc p{
   font-family: 'Fjalla One', sans-serif;
-  font-size: 20px;
+  font-size: 10px;
   margin-right: 80px;
+  font-weight: bold;
 }
 
 .landing_hero_container .landing_hero_left{
@@ -1347,18 +1352,6 @@ video {
   }
 }
 
-.sr-only{
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  padding: 0 !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  clip: rect(0, 0, 0, 0) !important;
-  white-space: nowrap !important;
-  border-width: 0 !important;
-}
-
 .visible{
   visibility: visible !important;
 }
@@ -1977,7 +1970,7 @@ li{
   display: unset !important;
 }
 
-.msgapi .gn-menu .gn-menu-content-side .gn-menu-list li > * {
+.msgapi .gn-menu .gn-menu-content-side .gn-menu-list li{
   margin-right: .4rem;
   padding: .25rem .5rem;
 }
