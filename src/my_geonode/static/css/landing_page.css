@@ -251,6 +251,15 @@
       }
 }
 
+
+@media only screen and (max-width: 375px) {
+    .landing_hero_container .landing_hero_left .landing_hero_title h2{
+        font-family: 'Fjalla One', sans-serif;
+        font-size: 40px;
+        font-weight: bold;
+    }
+}
+
 @media only screen and (max-width: 767px) {
     .landing_topbar{
         display: block;
