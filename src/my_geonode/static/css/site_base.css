@@ -2021,10 +2021,6 @@ li{
   padding-top: 48px !important;
 }
 
-.gn-row{
-  padding-top: 2.5rem;
-}
-
 .before\:mt-0\.5::before{
   content: var(--tw-content) !important;
   margin-top: 0.125rem !important;
