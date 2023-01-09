@@ -239,7 +239,7 @@ def get_user_menu(context):
         },
         {
             "type": "link",
-            "href": "http://localhost:8080/geoserver/",
+            "href": "/geoserver/",
             "label": "GeoServer"
         }
     ] + monitoring + [devider] + general
