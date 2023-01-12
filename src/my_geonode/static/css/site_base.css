@@ -2037,7 +2037,7 @@ li{
 }
 
 .msgapi .gn-menu .gn-menu-list {
-  gap: 20px;
+  gap: 10px;
 }
 
 .before\:mt-0\.5::before{
