@@ -2008,11 +2008,6 @@ li{
   display: unset !important;
 }
 
-.msgapi .gn-menu .gn-menu-content-side .gn-menu-list li{
-  margin-right: .4rem;
-  /* padding: .25rem .5rem; */
-}
-
 .msgapi .gn-fixed-card-grid {
   /* height: unset !important; */
 }
@@ -2031,6 +2026,18 @@ li{
 
 .msgapi .gn-resource-card .card-title .fa {
   color: #a72824 !important;
+}
+
+.msgapi .gn-menu .gn-menu-list > li > * {
+  margin-right: 0px;
+}
+
+.msgapi .gn-menu-list .dropdown .dropdown-toggle{
+  padding: .25rem .5rem !important;
+}
+
+.msgapi .gn-menu .gn-menu-list {
+  gap: 20px;
 }
 
 .before\:mt-0\.5::before{
