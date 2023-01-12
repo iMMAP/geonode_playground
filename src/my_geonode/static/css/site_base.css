@@ -2021,16 +2021,8 @@ li{
   padding-top: 48px !important;
 }
 
-.msgapi .react-grid-checkbox:checked + .react-grid-checkbox-label::before {
-  background-color: #a72824 !important;
-}
-
-.msgapi .widget-container .mapstore-widget-card .mapstore-widget-header .glyphicon {
-  color: #a72824 !important;
-}
-
-.msgapi .gn-resource-card .card-title .fa {
-  color: #a72824 !important;
+.gn-row{
+  padding-top: 2.5rem;
 }
 
 .before\:mt-0\.5::before{
