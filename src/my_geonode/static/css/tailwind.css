@@ -31,6 +31,12 @@
     .input_error_state{
         @apply border-2 border-red-300;
     }
+    .my_hidden{
+        @apply hidden;
+    }
+    .my_block{
+        @apply block;
+    }
 }
 
 
