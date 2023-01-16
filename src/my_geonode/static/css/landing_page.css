@@ -7,8 +7,9 @@
 
 .landing_topbar{
     display: flex;
-    justify-content: space-around;
-    padding: 2rem;
+    justify-content: space-between;
+    padding: 2rem 6rem;
+    /* align-items: center; */
     align-items: center;
 }
 
@@ -241,6 +242,9 @@
         padding: 2rem;
         margin: 2rem;
       }
+
+      
+      
 }
 
 @media only screen and (max-width: 420px) {
@@ -262,9 +266,18 @@
 
 @media only screen and (max-width: 767px) {
     .landing_topbar{
-        display: block;
+        /* display: block; */
     }
     .gn-menu-content-right{
         margin-top: 10px;
+    }
+    .landing_logo_title{
+        display: none;
+      }
+
+      .landing_topbar{
+
+        padding: 2rem 2rem;
+       
     }
 }
