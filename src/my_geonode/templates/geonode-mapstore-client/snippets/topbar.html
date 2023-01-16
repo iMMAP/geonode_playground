@@ -7,26 +7,35 @@
 {% load catalogue_urls %}
 {% get_user_menu as USER_MENU %}
 
-<nav id="{{ id|default:'' }}" class="gn-menu shadow px-16 " data-gn-menu-resize="true">
+<nav id="{{ id|default:'' }}" class="gn-menu shadow  xl:px-16 " data-gn-menu-resize="true">
     <div class="gn-menu-container py-1">
         <div class="gn-menu-content">
 
             <div class="gn-menu-content-side gn-menu-content-left">
                 {% block left_menu %}
                  <!-- The brand logo -->
-                <div class="">
+                <!-- <div class="">
                         <ul class="">
                             <li>
                                 <a href="/">
                                     {% if custom_theme.logo and custom_theme.logo.url %}
                                         <img src="{{ custom_theme.logo.url }}" class="w-auto h-16">
                                     {% else %}
-                                        <img src="../../../static/img/immap_logo.png" class="w-auto h-16">
+                                        <img src="../../../static/img/immap_logo.png" class="w-auto h-auto">
                                     {% endif %}
                                 </a>
                             </li>
                         </ul>
-                </div>
+                </div> -->
+                
+                <a href="/" class="my_hidden sm:my_block">
+                    {% if custom_theme.logo and custom_theme.logo.url %}
+                        <img src="{{ custom_theme.logo.url }}" class="w-auto h-16">
+                    {% else %}
+                        <img src="../../../static/img/immap_logo.png" class="w-auto h-auto">
+                    {% endif %}
+                </a>
+                        
                 <!-- The hamburger Menu -->
                 <div class="dropdown">
                     <button
@@ -119,9 +128,16 @@
                 if (leftSide.clientWidth < leftSideMenuList.clientWidth) {
                     leftSideMenuList.style.visibility = 'hidden';
                     leftSideDropdown.style.visibility = 'visible';
+                    console.log(1)
+
+                    leftSideMenuList.style.display = 'none';
+                    // leftSideDropdown.style.display = 'unset';
                 } else {
                     leftSideMenuList.style.visibility = 'visible';
                     leftSideDropdown.style.visibility = 'hidden';
+                    console.log(2)
+                    leftSideMenuList.style.display = 'flex';
+                    // leftSideDropdown.style.display = 'none';
                 }
             }
 
