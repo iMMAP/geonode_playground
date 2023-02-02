@@ -2051,8 +2051,9 @@ li{
   padding-top: 48px !important;
 }
 
-.gn-row{
-  padding-top: 2.5rem;
+.msgapi .gn-page-wrapper .gn-resources-panel-wrapper{
+  top: 94px !important;
+  bottom: 0 !important;
 }
 
 .before\:mt-0\.5::before{
