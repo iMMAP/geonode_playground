@@ -31,6 +31,7 @@ def get_base_left_topbar_menu(context):
     return [
         {
             "label": "Data",
+            "class": "nav-link",
             "type": "dropdown",
             "items": [
                 {

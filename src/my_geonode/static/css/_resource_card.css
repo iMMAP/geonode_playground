@@ -112,3 +112,16 @@
     /* filter: drop-shadow(0 1px 1px rgb(0 0 0 / 0.05)) !important; */
     
 }
+
+.msgapi .gn-default {
+    top: 88px !important;
+    /* top: 70px !important; */
+}
+
+@media only screen and (max-width: 640px) {
+    .msgapi .gn-default {
+        /* top: 94px !important; */
+        top: 70px !important;
+    }
+ 
+}
