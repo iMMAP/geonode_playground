@@ -196,8 +196,7 @@
 }
 
 .msgapi .btn-primary{
-  background-color: #bb4940 !important;
-  border-color: #bb4940 !important;
+  background-color: #bb4940;
   color: white;
   border: none;
   font-size: 14px;
