@@ -196,8 +196,7 @@
 }
 
 .msgapi .btn-primary{
-  /* background-color: #A72824; */
-  background-color: #b95350;
+  background-color: #bb4940;
   color: white;
   border: none;
   font-size: 14px;
@@ -206,7 +205,8 @@
 }
 
 .msgapi .btn-primary:hover{
-  background-color: #A72824;
+  background-color: #79150d !important;
+  border-color: #79150d !important;
 }
 
 .msgapi .gn-menu.gn-primary{
@@ -229,6 +229,15 @@
 .gn-menu-content-right .gn-menu-list .btn-primary{
   background-color: #a72824;
   border: none;
+}
+
+.msgapi .btn-primary.active, .msgapi .btn-primary:active, .msgapi .open > .dropdown-toggle.btn-primary {
+  background-color: #79150d !important;
+  border: none !important;
+}
+
+.msgapi #zoomin-btn, .msgapi #zoomout-btn {
+  background-color: #bb4940 !important;
 }
 
 .gn-menu-content-right .gn-menu-list .btn-primary:hover{
