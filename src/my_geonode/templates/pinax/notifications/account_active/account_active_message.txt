@@ -1,3 +1,12 @@
 {% load i18n %}
-{% trans "Your account has been approved and is now active." %} ({{ username }})<br/>
-{% trans "You can use the login form at" %}: http://{{ current_site.name }}
+{% trans "Dear" %} {{ username }}:<br/>
+
+Your request to access the Humanitarian Spatial Data Center has been approved! 
+
+Please login with your account at http://hsdc.immap.org/
+
+Best regards,
+
+<button style="background-color:red">
+    http://{{ current_site.name }}
+</button>
