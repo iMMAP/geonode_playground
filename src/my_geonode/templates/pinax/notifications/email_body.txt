@@ -41,11 +41,12 @@
 
 
 <td class="content-cell" style="font-family: 'Barlow', sans-serif; box-sizing: border-box; padding: 35px;">
-<h1 style="font-family: 'Barlow', sans-serif; box-sizing: border-box; color: #2f3133; font-size: 19px; font-weight: bold; margin-top: 0; text-align: left;">{% url "notice_settings" as notices_url %}{% blocktrans %}You have received the following notice from{% endblocktrans %} {{ current_site }}:</h1>
+<h1 style="font-family: 'Barlow', sans-serif; box-sizing: border-box; color: #2f3133; font-size: 19px; font-weight: bold; margin-top: 0; text-align: left;">{% url "notice_settings" as notices_url %}{% blocktrans %}You have received the following notice from{% endblocktrans %} {{ current_site }}:<br></h1>
 
 <p style="font-family: 'Barlow', sans-serif; box-sizing: border-box; color: #74787e; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;"><b style="font-family: 'Barlow', sans-serif; box-sizing: border-box;"> {{ message }} </b></p>
-<p style="font-family: 'Barlow', sans-serif; box-sizing: border-box; color: #74787e; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">Best regards,<br>
-HSDC Support - iMMAP</p>
+<p style="font-family: 'Barlow', sans-serif; box-sizing: border-box; color: #74787e; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;"><p>Best regards,<p>
+<p>HSDC Support - iMMAP</p>
+</p>
 
                                         
 </td>
@@ -68,8 +69,7 @@ HSDC Support - iMMAP</p>
                         <a href="https://www.linkedin.com/company/immap" style="font-family: 'Barlow', sans-serif; box-sizing: border-box; color: #3869d4; text-decoration: none;">
                           <img style="font-family: 'Barlow', sans-serif; box-sizing: border-box; max-width: 100%; border: none; width: 24px; height: 24px;" src="https://hsdc.immap.org/static/img/linkedin.png"></a>
                     </p>
-                    <p style="font-family: 'Barlow', sans-serif; box-sizing: border-box; line-height: 1.5em; margin-top: 0; font-size: 20px; text-align: center; color: #fff;">HSDC</p>
-                    <p style="font-family: 'Barlow', sans-serif; box-sizing: border-box; line-height: 1.5em; font-size: 12px; text-align: center; color: #fff; margin-top: 20px;">Humanitarian Spatial Data Center</p>
+                    <p style="font-family: 'Barlow', sans-serif; box-sizing: border-box; line-height: 1.5em; margin-top: 0; font-size: 20px; text-align: center; color: #fff;">Humanitarian Spatial Data Center</p>
                     <p style="font-family: 'Barlow', sans-serif; box-sizing: border-box; line-height: 1.5em; font-size: 12px; text-align: center; color: #fff; margin-top: 20px;">HSDC is an information management tool for humanitarian programming in Afghanistan. </p>
                     <p style="font-family: 'Barlow', sans-serif; box-sizing: border-box; line-height: 1.5em; font-size: 12px; text-align: center; color: #fff; margin-top: 20px;"><a style="font-family: 'Barlow', sans-serif; box-sizing: border-box; color: white;" href="https://immap.org">www.immap.org</a> |
                        <a style="font-family: 'Barlow', sans-serif; box-sizing: border-box; color: white;" href="mailto:info@immap.org">info@immap.org </a> 
