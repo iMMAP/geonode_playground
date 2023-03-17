@@ -39,11 +39,20 @@ def get_base_left_topbar_menu(context):
                     "href": "/catalogue/#/search/?f=dataset",
                     "label": "Datasets"
                 },
+
+
+                # {
+                #     "type": "link",
+                #     "href": "/catalogue/#/search/?f=document",
+                #     "label": "Documents"
+                #}if not is_mobile else None
+
                 {
                     "type": "link",
-                    "href": "/catalogue/#/search/?f=document",
-                    "label": "Documents"
+                    "href": "/services/",
+                    "label": "Remote Services"
                 } if not is_mobile else None
+
             ]
         },
         {

@@ -74,4 +74,5 @@ Vagrantfile
 src/.override_dev_env
 src/geoserver
 
-
+VENV
+.VENV
