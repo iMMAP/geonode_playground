@@ -41,7 +41,7 @@
 
 
 <td class="content-cell" style="font-family: 'Barlow', sans-serif; box-sizing: border-box; padding: 35px;">
-<h1 style="font-family: 'Barlow', sans-serif; box-sizing: border-box; color: #2f3133; font-size: 19px; font-weight: bold; margin-top: 0; text-align: left;">{{% trans "Dear" %} ({{ username }}),<br></h1>
+<h1 style="font-family: 'Barlow', sans-serif; box-sizing: border-box; color: #2f3133; font-size: 19px; font-weight: bold; margin-top: 0; text-align: left;">Dear {{ username }},<br></h1>
 
 <p style="font-family: 'Barlow', sans-serif; box-sizing: border-box; color: #74787e; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;"><b style="font-family: 'Barlow', sans-serif; box-sizing: border-box;">{% trans "Your account has been approved and is now active." %}<br></p>
 <p style="font-family: 'Barlow', sans-serif; box-sizing: border-box; color: #74787e; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;"><b style="font-family: 'Barlow', sans-serif; box-sizing: border-box;">{% trans "You can use the login form at" %}: http://{{ current_site }}<br></p>
