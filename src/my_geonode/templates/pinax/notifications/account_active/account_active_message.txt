@@ -1,12 +1,12 @@
 {% load i18n %}
+{% trans "Dear" %} {{ username }}:<br/>
 
-<body>
+Your request to access the Humanitarian Spatial Data Center has been approved! 
 
-<h1>Dear {{ username }},<br></h1>
+Please login with your account at http://hsdc.immap.org/
 
-<p><b style="font-family: 'Barlow', sans-serif; box-sizing: border-box;">{% trans "Your request to access the Humanitarian Spatial Data Center has been approved!" %}<b></p>
-<p ><b>{% trans "Please login with your account at" %}: https://{{ current_site }}/account/login/<br/></p>
-<p ><p>Best regards,<p>
-<p>HSDC Support - iMMAP</p>
-</p>
-</body>
+Best regards,
+
+<button style="background-color:red">
+    http://{{ current_site.name }}
+</button>
