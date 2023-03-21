@@ -1,19 +1,14 @@
-<footer class="gn-footer">
-  <ul>
-    <li>
-      <a href="https://geonode.org/" class="nav-link">
-        <span>geonode.org</span>
-      </a>
-    </li>
-    <li>
-      <a href="/developer/" class="nav-link">
-        <span>Developers</span>
-      </a>
-    </li>
-    <li>
-      <a href="/about/" class="nav-link">
-        <span>About</span>
-      </a>
-    </li>
-  </ul>
+{% load static %}
+
+<footer class="border-t-2 px-16 py-8 text-black-900">
+    <div class="flex flex-col md:flex-row justify-between text-center md:text-left">
+          <div class="mb-14 md:mb-0">
+               <img src="../../../static/img/usaid_logo.png" alt="USAID-LOGO" class="max-w-full h-auto">
+          </div>
+       <div class="flex gap-4 justify-center md:justify-start items-center">
+          <a href="/people/">People</a> 
+          <a href="/groups/">Groups</a>
+          <a href="/invitations/geonode-send-invite/">Invite users</a>
+       </div>
+    </div>
 </footer>
