@@ -3,7 +3,7 @@
 
 Your request to access the Humanitarian Spatial Data Center has been approved! 
 
-Please login with your account at http://hsdc.immap.org/
+Please login with your account at http://hsdc.immap.org/account/login/
 
 Best regards,
 
