@@ -1,12 +1,10 @@
 {% load i18n %}
-{% trans "Dear" %} {{ username }}:<br/>
+{% trans "Dear" %} {{ username }}:
 
 Your request to access the Humanitarian Spatial Data Center has been approved! 
 
-Please login with your account at http://hsdc.immap.org/account/login/
+Please login with your account at https://hsdc.immap.org/account/login/
 
 Best regards,
 
-<button style="background-color:red">
-    http://{{ current_site.name }}
-</button>
+HSDC Support - iMMAP
