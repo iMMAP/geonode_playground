@@ -170,3 +170,7 @@
           .msgapi .gn-resources-panel-wrapper{
             top: 90px !important;
           }
+
+          .msgapi .react-grid-checkbox:checked+.react-grid-checkbox-label:before {
+            background-color: #a72824 !important;
+        }
