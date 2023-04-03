@@ -140,7 +140,7 @@
         }
 
         .msgapi .toc-default-group .toc-default-layer.selected .toc-default-layer-head {
-            background-color: #a72824;
+            background-color: #a72824 !important;
           }
 
           .msgapi .ol-popup-closer:hover {
@@ -177,4 +177,9 @@
 
         .msgapi .widget-container .mapstore-widget-card .mapstore-widget-header {
             color: #a72824 !important;
+        }
+
+        .msgapi .toc-default-group.selected .toc-default-group-head {
+            background-color: #a72824 !important;
+            color: #fff !important;
         }
