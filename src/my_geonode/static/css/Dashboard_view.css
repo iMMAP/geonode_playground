@@ -183,3 +183,7 @@
             background-color: #a72824 !important;
             color: #fff !important;
         }
+
+        .msgapi .pagination.custom>.active>a, .msgapi .pagination.custom>.active>a:hover, .msgapi .pagination.custom>.active>span, .msgapi .pagination.custom>.active>span:focus, .msgapi .pagination.custom>.active>span:hover {
+            background-color: #a72824 !important;
+        }
