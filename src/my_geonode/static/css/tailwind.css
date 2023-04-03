@@ -84,7 +84,3 @@ li {
 .msgapi .gn-card-grid .gn-card-grid-pagination.featured-list {
   padding-top: 48px !important;
 }
-
-.gn-row {
-  @apply pt-10;
-}

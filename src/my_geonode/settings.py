@@ -204,3 +204,5 @@ MONITORING_DATA_AGGREGATION = (
 
 # privacy settings
 USER_ANALYTICS_ENABLED = ast.literal_eval(os.getenv('USER_ANALYTICS_ENABLED', 'False'))
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
