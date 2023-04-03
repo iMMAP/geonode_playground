@@ -157,3 +157,16 @@
           .msgapi #zoomin-btn, .msgapi #zoomout-btn {
             background-color: #b95350;
           }
+
+          .msgapi .nav-link {
+            display: block;
+            padding: 0 !important;
+          }
+          
+          .msgapi #gn-topbar .gn-menu-container .gn-menu-content .gn-menu-content-side .gn-menu-list {
+            gap: 10px !important;
+          }
+          
+          .msgapi .gn-resources-panel-wrapper{
+            top: 90px !important;
+          }

@@ -46,7 +46,7 @@
   color: rgb(92 89 89);
   white-space: pre-wrap !important;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 }
 .gn-footer-wrapper {
