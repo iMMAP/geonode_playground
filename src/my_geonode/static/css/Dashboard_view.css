@@ -174,3 +174,7 @@
           .msgapi .react-grid-checkbox:checked+.react-grid-checkbox-label:before {
             background-color: #a72824 !important;
         }
+
+        .msgapi .widget-container .mapstore-widget-card .mapstore-widget-header {
+            color: #a72824 !important;
+        }
