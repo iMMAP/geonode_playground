@@ -191,3 +191,7 @@
         .msgapi .dropdown-menu>.active>a, .msgapi .dropdown-menu>.active>a:focus, .msgapi .dropdown-menu>.active>a:hover {
             color: #a72824;
         }
+
+        .msgapi .mapstore-switch-btn .m-slider {
+            background-color: #a72824;
+        }
