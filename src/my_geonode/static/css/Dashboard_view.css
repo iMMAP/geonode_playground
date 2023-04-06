@@ -195,3 +195,7 @@
         .msgapi .mapstore-switch-btn .m-slider {
             background-color: #a72824 !important;
         }
+
+        .msgapi .mapstore-medium-size-loader {
+            border-left: 6px solid #a72824 !important;
+        }
