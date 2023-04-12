@@ -196,7 +196,8 @@
 }
 
 .msgapi .btn-primary{
-  background-color: #bb4940;
+  /* background-color: #A72824; */
+  background-color: #b95350;
   color: white;
   border: none;
   font-size: 14px;
@@ -205,8 +206,7 @@
 }
 
 .msgapi .btn-primary:hover{
-  background-color: #79150d !important;
-  border-color: #79150d !important;
+  background-color: #A72824;
 }
 
 .msgapi .gn-menu.gn-primary{
@@ -229,15 +229,6 @@
 .gn-menu-content-right .gn-menu-list .btn-primary{
   background-color: #a72824;
   border: none;
-}
-
-.msgapi .btn-primary.active, .msgapi .btn-primary:active, .msgapi .open > .dropdown-toggle.btn-primary {
-  background-color: #79150d !important;
-  border: none !important;
-}
-
-.msgapi #zoomin-btn, .msgapi #zoomout-btn {
-  background-color: #bb4940 !important;
 }
 
 .gn-menu-content-right .gn-menu-list .btn-primary:hover{
@@ -2060,9 +2051,32 @@ li{
   padding-top: 48px !important;
 }
 
-.msgapi .gn-page-wrapper .gn-resources-panel-wrapper{
-  top: 94px !important;
-  bottom: 0 !important;
+.gn-row{
+  padding-top: 2.5rem;
+}
+
+.msgapi .modal-header{
+  color: black;
+}
+
+.msgapi button.close{
+  color: black;
+}
+
+.msgapi .modal-header:hover{
+  color: black;
+}
+
+.msgapi button.close:hover{
+  color: black;
+}
+
+.msgapi .rw-widget{
+  color: #140f0f!important;
+}
+
+.msgapi .rw-widget:hover{
+  color: #140f0f!important;
 }
 
 .before\:mt-0\.5::before{
