@@ -84,3 +84,27 @@ li {
 .msgapi .gn-card-grid .gn-card-grid-pagination.featured-list {
   padding-top: 48px !important;
 }
+
+.msgapi .modal-header{
+    color: black;
+  }
+  .msgapi button.close{
+    color: black;
+  } 
+  
+  .msgapi .modal-header:hover{
+    color: black;
+  }
+  
+  .msgapi button.close:hover{
+  color: black;
+  }
+
+
+.msgapi .rw-widget{
+    color: #140f0f!important;
+}
+
+.msgapi .rw-widget:hover{
+    color: #140f0f!important;
+}

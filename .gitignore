@@ -70,6 +70,7 @@ local_settings.py
 .vagrant/
 Vagrantfile
 /.env
+VENV
 
 src/.override_dev_env
 src/my_geonode/static/css/site_base.css
