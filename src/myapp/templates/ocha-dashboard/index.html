@@ -1,0 +1,23 @@
+{% extends "account/base.html" %}
+
+
+{% load i18n %}
+{% load bootstrap_tags %}
+
+
+{% block head_title %}{% trans "OCHA Dashboards" %}{% endblock %}
+
+{% block body %}
+
+<section class="">
+    <h2>OCHA Dashboards List</h2>
+    {% for dashboard in ocha_dashboards %}
+        <li>
+            <a href="{% url 'ocha_dashboards.show' dashboard.slug %}">
+                {{dashboard.name}}
+            </a>
+        </li>
+    {% endfor %}
+</section>
+
+{% endblock body %}

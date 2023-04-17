@@ -1,0 +1,23 @@
+{% extends "account/base.html" %}
+
+
+{% load i18n %}
+{% load bootstrap_tags %}
+
+
+{% block head_title %}{% trans "ocha_dashboard.name" %}{% endblock %}
+
+{% block body %}
+
+<section class="">
+ <h2>{{ ocha_dashboard.name }}</h2>
+ <p>
+    {{ocha_dashboard.description}}
+ </p>
+
+ <article>
+    {{ ocha_dashboard.content |safe }}
+ </article>
+</section>
+
+{% endblock body %}
