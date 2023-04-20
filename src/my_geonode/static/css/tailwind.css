@@ -151,3 +151,7 @@ li {
 .form-actions {
   margin-right: 5rem !important;
 }
+
+.msgapi .rw-i, .msgapi .rw-state-focus {
+  color: black !important;
+}
