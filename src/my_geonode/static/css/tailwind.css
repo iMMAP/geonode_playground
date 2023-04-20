@@ -108,3 +108,46 @@ li {
 .msgapi .rw-widget:hover{
     color: #140f0f!important;
 }
+
+
+.msgapi .progress-bar {
+  background-color: #800 !important;
+}
+
+.msgapi .progress-bar-danger{
+  background-color: #a72824 !important;
+}
+
+.wizard--progress > li {
+  text-align: center !important;
+}
+
+.wizard--progress > li.is-active::before {
+  color: #fff !important;
+  background: #a72824 !important;
+}
+
+.wizard--progress > li::before {
+  color: #a72824 !important;
+}
+
+.wizard--progress > li.is-complete {
+  color: #fff !important;
+}
+
+.wizard--progress > li.is-complete::before, .wizard--progress > li.is-complete::after {
+  color: #FFF !important;
+}
+
+
+.wizard--progress > li.is-active {
+  color: #a72824 !important;
+}
+
+.wizard--progress > li a {
+  color: #a72824 !important;
+}
+
+.form-actions {
+  margin-right: 5rem !important;
+}
