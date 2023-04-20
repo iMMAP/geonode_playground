@@ -161,6 +161,6 @@ li {
 }
 
 .msgapi .ms-map-popup .mapstore-identify-viewer .panel {
-  max-width: 500px !important;
-  min-width: 500px !important;
+  max-width: 400px !important;
+  min-width: 400px !important;
 }
