@@ -161,17 +161,6 @@ li {
 }
 
 .msgapi .ms-map-popup .mapstore-identify-viewer .panel {
-  border: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  margin: 0 auto;
-  max-height: 300px;
   max-width: 500px !important;
-  min-height: 100px;
   min-width: 500px !important;
-  overflow: hidden;
-  width: 100%;
 }
