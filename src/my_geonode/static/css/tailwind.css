@@ -155,3 +155,7 @@ li {
 .msgapi .rw-i, .msgapi .rw-state-focus {
   color: black !important;
 }
+
+.msgapi .rw-list-option:hover {
+  background-color: #a72824 !important;
+}
