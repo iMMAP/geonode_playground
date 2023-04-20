@@ -63,12 +63,12 @@ def get_base_left_topbar_menu(context):
                 {
                     "type": "link",
                     "href": "/catalogue/#/search/?f=map",
-                    "label": "Interactive"
+                    "label": "Interactive Maps"
                 },
                 {
                     "type": "link",
                     "href": "/catalogue/#/search/?f=document",
-                    "label": "Static"
+                    "label": "Static Maps"
                 } if not is_mobile else None
             ]
         },
