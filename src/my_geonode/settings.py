@@ -57,7 +57,7 @@ WSGI_APPLICATION = "{}.wsgi.application".format(PROJECT_NAME)
 LANGUAGE_CODE = os.getenv('LANGUAGE_CODE', "en")
 
 if PROJECT_NAME not in INSTALLED_APPS:
-    INSTALLED_APPS += (PROJECT_NAME, 'myauth')
+    INSTALLED_APPS += (PROJECT_NAME, 'myauth', 'geodb')
 
 # Location of url mappings
 ROOT_URLCONF = os.getenv('ROOT_URLCONF', '{}.urls'.format(PROJECT_NAME))
@@ -127,6 +127,27 @@ LOGGING = {
     },
 }
 
+MIDDLEWARE_CLASSES = [
+    'geodb.middleware.multiDomainAccessMiddleware',
+]
+
+CELERY_ALWAYS_EAGER = True
+CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
+CELERY_IGNORE_RESULT = False
+CELERY_SEND_EVENTS = True
+# CELERY_RESULT_BACKEND = None
+CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'
+CELERY_TASK_RESULT_EXPIRES = 1
+CELERY_DISABLE_RATE_LIMITS = True
+CELERY_DEFAULT_QUEUE = "default"
+CELERY_DEFAULT_EXCHANGE = "default"
+CELERY_DEFAULT_EXCHANGE_TYPE = "direct"
+CELERY_DEFAULT_ROUTING_KEY = "default"
+CELERY_CREATE_MISSING_QUEUES = True
+CELERY_IMPORTS = (
+    'geodb.tasks',
+)
+
 CENTRALIZED_DASHBOARD_ENABLED = ast.literal_eval(
     os.getenv('CENTRALIZED_DASHBOARD_ENABLED', 'False'))
 if CENTRALIZED_DASHBOARD_ENABLED and USER_ANALYTICS_ENABLED and 'geonode_logstash' not in INSTALLED_APPS:
@@ -156,8 +177,6 @@ AUTH_EXEMPT_URLS += (f'{FORCE_SCRIPT_NAME}/landing',)
 
 # Settings for MONITORING plugin
 
-
-MIDDLEWARE_CLASSES = []
 
 CORS_ORIGIN_ALLOW_ALL = ast.literal_eval(os.environ.get('CORS_ORIGIN_ALLOW_ALL', 'False'))
 GEOIP_PATH = os.getenv('GEOIP_PATH', os.path.join(PROJECT_ROOT, 'GeoIPCities.dat'))
