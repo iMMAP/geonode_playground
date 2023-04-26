@@ -83,3 +83,92 @@ def getLatestEarthQuake(startdate=datetime.datetime.utcnow()-datetime.timedelta(
             c.depth = content['geometry']['coordinates'][2]
             c.save()
 
+def getLatestShakemap(includeShakeMap=False, startdate=datetime.datetime.utcnow()-datetime.timedelta(days=35), enddate=None):
+    contents = getContents('shakemap',['shape.zip'],bounds=[60,77,29,45], magrange=[4,9], starttime=startdate, endtime=enddate, listURL=True, getAll=True)
+    for content in contents:
+        point = Point(x=content['geometry']['coordinates'][0], y=content['geometry']['coordinates'][1],srid=4326)
+        dateofevent = getUTCTimeStamp(content['properties']['time'])
+        shakemaptimestamp = content['shakemap_url'].split('/')[-3]
+        recordExists = earthquake_events.objects.all().filter(event_code=content['properties']['code'])
+        if recordExists.count() > 0:
+            oldTimeStamp = recordExists[0].shakemaptimestamp
+            c = earthquake_events(pk=recordExists[0].pk,event_code=content['properties']['code'])
+            c.wkb_geometry = point
+            c.title = content['properties']['title']
+            c.dateofevent = dateofevent
+            c.magnitude = content['properties']['mag']
+            c.depth = content['geometry']['coordinates'][2]
+            c.shakemaptimestamp = shakemaptimestamp
+            c.save()
+
+
+            # update to make the new SSL on USGS works
+
+            r = requests.get(content['shakemap_url'], stream=True)
+            thefile=ZipFile(io.BytesIO(r.content))
+
+            for name in thefile.namelist():
+                if name.split('.')[0]=='mi':
+                    outfile = open(os.path.join(GS_TMP_DIR,name), 'wb')
+                    outfile.write(thefile.read(name))
+                    outfile.close()
+            thefile.close()
+
+            if oldTimeStamp is None:
+            	oldTimeStamp = 30
+
+            if includeShakeMap and long(oldTimeStamp) < long(shakemaptimestamp):
+            	mapping = {
+            		'wkb_geometry' : 'POLYGON',
+            		'grid_value' : 'GRID_VALUE',
+            	}
+
+            	subprocess.call('%s -f "ESRI Shapefile" %s %s -overwrite -dialect sqlite -sql "select ST_union(Geometry),round(PARAMVALUE,0) AS GRID_CODE from mi GROUP BY round(PARAMVALUE,0)"' %(os.path.join(gdal_path,'ogr2ogr'), os.path.join(GS_TMP_DIR,'mi_dissolved.shp'), os.path.join(GS_TMP_DIR,'mi.shp')),shell=True)
+                earthquake_shakemap.objects.filter(event_code=content['properties']['code']).delete()
+                lm = LayerMapping(earthquake_shakemap, os.path.join(GS_TMP_DIR,'mi_dissolved.shp'), mapping)
+                lm.save(verbose=True)
+                earthquake_shakemap.objects.filter(event_code='').update(event_code=content['properties']['code'],shakemaptimestamp=shakemaptimestamp)
+
+                updateEarthQuakeSummaryTable(event_code=content['properties']['code'])
+            print 'earthqueke id ' + content['properties']['code'] + ' modified'
+        else
+        	c = earthquake_events(event_code=content['properties']['code'])
+            c.wkb_geometry = point
+            c.title = content['properties']['title']
+            c.dateofevent = dateofevent
+            c.magnitude = content['properties']['mag']
+            c.depth = content['geometry']['coordinates'][2]
+            c.shakemaptimestamp = shakemaptimestamp
+            c.save()
+
+            # update to make the new SSL on USGS works
+            # filename = mktemp('.zip')
+            # name, hdrs = urllib.urlretrieve(content['shakemap_url'], filename)
+            # thefile=ZipFile(filename)
+
+            r = requests.get(content['shakemap_url'], stream=True)
+            thefile=ZipFile(io.BytesIO(r.content))
+
+            for name in thefile.namelist():
+                if name.split('.')[0]=='mi':
+                    outfile = open(os.path.join(GS_TMP_DIR,name), 'wb')
+                    outfile.write(thefile.read(name))
+                    outfile.close()
+            thefile.close()
+
+            if includeShakeMap:
+                mapping = {
+                    'wkb_geometry' : 'POLYGON',
+                    'grid_value':  'GRID_CODE',
+                }
+                # subprocess.call('%s -f "ESRI Shapefile" %s %s -overwrite -dialect sqlite -sql "select ST_union(ST_MakeValid(Geometry)),GRID_CODE from mi GROUP BY GRID_CODE"' %(os.path.join(gdal_path,'ogr2ogr'), os.path.join(GS_TMP_DIR,'mi_dissolved.shp'), os.path.join(GS_TMP_DIR,'mi.shp')),shell=True)
+                subprocess.call('%s -f "ESRI Shapefile" %s %s -overwrite -dialect sqlite -sql "select ST_union(Geometry),round(PARAMVALUE,0) AS GRID_CODE from mi GROUP BY round(PARAMVALUE,0)"' %(os.path.join(gdal_path,'ogr2ogr'), os.path.join(GS_TMP_DIR,'mi_dissolved.shp'), os.path.join(GS_TMP_DIR,'mi.shp')),shell=True)
+                earthquake_shakemap.objects.filter(event_code=content['properties']['code']).delete()
+                lm = LayerMapping(earthquake_shakemap, os.path.join(GS_TMP_DIR,'mi_dissolved.shp'), mapping)
+                lm.save(verbose=True)
+                earthquake_shakemap.objects.filter(event_code='').update(event_code=content['properties']['code'],shakemaptimestamp=shakemaptimestamp)
+
+                updateEarthQuakeSummaryTable(event_code=content['properties']['code'])
+            print 'earthqueke id ' + content['properties']['code'] + ' added'
+
+    cleantmpfile('mi');
