@@ -57,7 +57,7 @@ WSGI_APPLICATION = "{}.wsgi.application".format(PROJECT_NAME)
 LANGUAGE_CODE = os.getenv('LANGUAGE_CODE', "en")
 
 if PROJECT_NAME not in INSTALLED_APPS:
-    INSTALLED_APPS += (PROJECT_NAME, 'myauth')
+    INSTALLED_APPS += (PROJECT_NAME, 'myapp')
 
 # Location of url mappings
 ROOT_URLCONF = os.getenv('ROOT_URLCONF', '{}.urls'.format(PROJECT_NAME))
@@ -145,7 +145,7 @@ if LDAP_ENABLED and 'geonode_ldap' not in INSTALLED_APPS:
 # https://docs.geonode.org/en/master/advanced/contrib/#configuration
 
 
-ACCOUNT_FORMS = {'signup': 'myauth.forms.SimpleSignupForm'}
+ACCOUNT_FORMS = {'signup': 'myapp.forms.SimpleSignupForm'}
 
 
 AUTH_EXEMPT_URLS += (f'{FORCE_SCRIPT_NAME}/landing',)
