@@ -1,23 +1,55 @@
-{% extends "account/base.html" %}
-
-
+{% extends "base.html" %}
 {% load i18n %}
-{% load bootstrap_tags %}
+{% block title %}{% trans "External Dashboards" %}{% endblock %}
 
 
-{% block head_title %}{% trans "OCHA Dashboards" %}{% endblock %}
-
-{% block body %}
-
-<section class="">
-    <h2>OCHA Dashboards List</h2>
+{% block body_outer %}
+<h1 class="text-3xl font-bold pb-2">External Dashboards</h1>
+<p class="text-gray-500 mt-5">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+    sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</p>
+<ul class="flex flex-wrap w-full mt-5">
     {% for dashboard in ocha_dashboards %}
-        <li>
-            <a href="{% url 'ocha_dashboards.show' dashboard.slug %}">
-                {{dashboard.name}}
-            </a>
-        </li>
-    {% endfor %}
-</section>
+    <li style="width: 330px; margin-right: 24px; margin-top: 24px;list-style: none">
+        <div class="gn-resource-card gn-card-type-grid ">
+            <div class="card-resource-grid">
+                <div class="gn-resource-card-body-wrapper">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <div><a href="{% url 'ocha_dashboards.show' dashboard.slug %}"><i
+                                    class="fa fa-file"></i></a><a
+                                    href="{% url 'ocha_dashboards.show' dashboard.slug %}"
+                                    class="gn-card-title">{{dashboard.name}}</a>
+                            </div>
+                            <div><p class="gn-resource-status-text"></p></div>
+                        </div>
+                        <p class="card-text gn-card-description">Field declared Mandatory by the Metadata
+                            SchemaField
+                            declared Mandatory by the Metadata Schema Field declared Mandatory by the Metadata
+                            Schema
+                            Field declared Mandatory by the Metadata Schema Field declared Mandatory by the Metadata
+                            Schema</p></div>
+                    <div class="gn-footer-wrapper">
+                        <div class="gn-card-footer" style="padding: 0px 0.5rem;">
 
-{% endblock body %}
+                            <div class="gn-card-actions">
+                                <div class="gn-card-view-editor">
+                                    <a href="{% url 'ocha_dashboards.show' dashboard.slug %}"
+                                       rel="noopener noreferrer"
+                                       class="btn btn-primary"><span>View</span></a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
+
+

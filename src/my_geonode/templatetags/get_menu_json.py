@@ -85,7 +85,7 @@ def get_base_left_topbar_menu(context):
                 {
                     "type": "link",
                     "href": "/ocha_dashboards",
-                    "label": "External OCHA"
+                    "label": "External"
                 } if not is_mobile else None
             ]
         },
