@@ -631,7 +631,7 @@ def start_geoserver(options):
     web_app = path('geoserver/geoserver').abspath()
     log_file = path('geoserver/jetty.log').abspath()
     config = path('scripts/misc/jetty-runner.xml').abspath()
-    jetty_port = urlparse(GEOSERVER_BASE_URL).port
+    jetty_port = 8080
 
     import socket
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

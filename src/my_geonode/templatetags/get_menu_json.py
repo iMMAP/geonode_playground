@@ -73,10 +73,23 @@ def get_base_left_topbar_menu(context):
             ]
         },
         {
-            "type": "link",
-            "href": "/catalogue/#/search/?f=dashboard",
-            "label": "Dashboards"
+            "type": "dropdown",
+            # "href": "/catalogue/#/search/?f=map",
+            "label": "Dashboards",
+            "items": [
+                {
+                    "type": "link",
+                    "href": "/catalogue/#/search/?f=dashboard",
+                    "label": "Internal"
+                },
+                {
+                    "type": "link",
+                    "href": "/ocha_dashboards",
+                    "label": "External"
+                } if not is_mobile else None
+            ]
         },
+    
         {
             "type": "link",
             "href": "/catalogue/#/search/?f=geostory",

@@ -166,7 +166,7 @@ if LDAP_ENABLED and 'geonode_ldap' not in INSTALLED_APPS:
 # https://docs.geonode.org/en/master/advanced/contrib/#configuration
 
 
-ACCOUNT_FORMS = {'signup': 'myauth.forms.SimpleSignupForm'}
+ACCOUNT_FORMS = {'signup': 'myapp.forms.SimpleSignupForm'}
 
 
 AUTH_EXEMPT_URLS += (f'{FORCE_SCRIPT_NAME}/landing',)
