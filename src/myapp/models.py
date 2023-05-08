@@ -7,6 +7,7 @@ class OchaDashboard(models.Model):
     slug = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     content = models.TextField(null=True, blank=True)
+    thumbnail = models.ImageField(null=True, blank=True, upload_to='external_dashboard_thumbnails')
 
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
