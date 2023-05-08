@@ -33,12 +33,12 @@
                             </div>
                             <div><p class="gn-resource-status-text"></p></div>
                         </div>
-                        <p class="card-text gn-card-description">Field declared Mandatory by the Metadata
-                            SchemaField
-                            declared Mandatory by the Metadata Schema Field declared Mandatory by the Metadata
-                            Schema
-                            Field declared Mandatory by the Metadata Schema Field declared Mandatory by the Metadata
-                            Schema</p></div>
+                        {% if dashboard.description %}
+                        <p class="card-text gn-card-description">{{ dashboard.description }}</p>
+                        {% else %}
+                            <p class="card-text gn-card-description">{{ dashboard.description }}</p>
+                        {% endif %}
+                    </div>
                     <div class="gn-footer-wrapper">
                         <div class="gn-card-footer" style="padding: 0px 0.5rem;">
 
