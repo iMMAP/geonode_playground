@@ -16,6 +16,13 @@
     <li style="width: 330px; margin-right: 24px; margin-top: 24px;list-style: none">
         <div class="gn-resource-card gn-card-type-grid ">
             <div class="card-resource-grid">
+                
+                {% if dashboard.thumbnail %}
+                    <img class="card-img-top" src="/uploaded/{{ dashboard.thumbnail }}">
+                {% else %}
+                    <div class="card-img-top card-img-placeholder"><i class="fa fa-file"></i></div>
+                {% endif %}
+
                 <div class="gn-resource-card-body-wrapper">
                     <div class="card-body">
                         <div class="card-title">
