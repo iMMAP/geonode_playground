@@ -8,7 +8,7 @@
 
 {% block body_outer %}
     
-<section class="md:h-screen">
+<section class="min-h-screen">
     <div class="h-full text-gray-800">
       <div
         class="flex xl:justify-center justify-center items-center flex-wrap h-full gap-20"
@@ -101,7 +101,10 @@
 
             <!-- Email input -->
             <div class="mb-10 w-full">
-                <label for="id_email" class="mb-5">Email</label>
+                <label for="id_email" class="">Email</label>
+                <p class="mb-5 text-gray-600">
+                  Only formal organization emails addresses are accepted
+                </p>
                 <input
                   type="email"
                   class="my_input {% if form.email.errors %} input_error_state {% endif %}"
@@ -154,7 +157,7 @@
                 </div>
             </div>
 
-              
+              {% comment %} Password Input {% endcomment %}
             <div class="flex flex-col md:flex-row gap-10">
               <!-- Password input -->
               <div class="mb-10 w-full">
@@ -189,6 +192,25 @@
                     </span>
                   {% endif %}
                 </div>
+            </div>
+
+
+            <!-- Reason input -->
+            <div class="mb-10 w-full">
+                <label for="id_profile" class="">Reason for registering</label>
+                <textarea
+                  class="my_input {% if form.email.errors %} input_error_state {% endif %}"
+                  placeholder="Please state in a few sentences your reason for registering to HSDC platform."
+                  name="profile"
+                  id="id_profile"
+                   cols="30" rows="3"
+                   required
+                /></textarea>
+                {% if form.profile.errors %}
+                  <span class=" alert-danger">
+                      {{ form.profile.errors }}
+                  </span>
+                {% endif %}
             </div>
     
     
