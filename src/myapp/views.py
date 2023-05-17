@@ -15,7 +15,7 @@ def ocha_dashboards(request):
         Q(description__icontains=q)
     )
     
-    ocha_dashboards = OchaDashboard.objects.all()[0:5]
+    ocha_dashboards = OchaDashboard.objects.all()
 
     context = {'ocha_dashboards': ocha_dashboards,}
 
