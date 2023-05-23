@@ -199,3 +199,7 @@
         .msgapi .mapstore-medium-size-loader {
             border-left: 6px solid #a72824 !important;
         }
+
+        .bg-primary-50 {
+            background-color: #F6EAE9;
+        }
