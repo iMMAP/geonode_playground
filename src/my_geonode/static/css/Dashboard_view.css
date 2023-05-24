@@ -214,6 +214,7 @@
             width: 100%;
             background-color: white;
             padding: 0.5rem 4rem !important;
+            z-index: 9999;
         }
 
         .msgapi .gn-card-grid .gn-card-grid-pagination {
