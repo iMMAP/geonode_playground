@@ -204,7 +204,12 @@
             background-color: #F6EAE9;
         }
 
+        .gn-page-wrapper.gn-desktop {
+            background-color: #F6EAE9;
+        }
+
         .footer_container {
+            position: absolute;
             bottom: 0;
             width: 100%;
             background-color: white;
