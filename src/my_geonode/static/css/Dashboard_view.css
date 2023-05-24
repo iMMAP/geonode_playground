@@ -203,3 +203,9 @@
         .bg-primary-50 {
             background-color: #F6EAE9;
         }
+
+        .footer_container {
+            bottom: 0;
+            width: 100%;
+            background-color: white;
+        }
