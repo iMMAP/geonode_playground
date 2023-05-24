@@ -222,3 +222,7 @@
             text-align: center;
             margin-bottom: 50px !important;
         }
+
+        .gn-resource-card-body-wrapper .card-body .card-title div {
+            display: flex !important;
+        }
