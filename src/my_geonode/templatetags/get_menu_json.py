@@ -80,7 +80,7 @@ def get_base_left_topbar_menu(context):
                 {
                     "type": "link",
                     "href": "/catalogue/#/search/?f=dashboard",
-                    "label": "Geonode Dashboards"
+                    "label": "HSDC Dashboards"
                 },
                 {
                     "type": "link",
