@@ -232,3 +232,9 @@
             object-fit: cover;
             width: 435px;
         }
+
+        .msgapi .Select--multi .Select-value {
+            background-color: var(--gn-primary) !important;
+            border-color: transparent;
+            color: #000000 !important;
+        }
