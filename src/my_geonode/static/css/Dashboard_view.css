@@ -226,3 +226,9 @@
         .gn-resource-card-body-wrapper .card-body .card-title div {
             display: flex !important;
         }
+
+        .msgapi .gn-resource-card .card-resource-list .card-img-left {
+            height: auto !important;
+            object-fit: cover;
+            width: 160px;
+        }
