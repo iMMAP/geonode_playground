@@ -248,6 +248,11 @@
             border-color: #7e1310 !important;
         }
 
+        .msgapi .btn-primary.active, .msgapi .btn-primary:active, .msgapi .open>.dropdown-toggle.btn-primary {
+            background-color: #7e1310;
+            border-color: #7e1310;
+        }
+
         .msgapi .btn-primary.focus, .msgapi .btn-primary:focus {
             background-color: #7e1310 !important;
             border-color: #7e1310 !important;
