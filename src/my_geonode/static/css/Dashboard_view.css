@@ -257,3 +257,10 @@
             background-color: #7e1310 !important;
             border-color: #7e1310 !important;
         }
+
+        .msgapi .gn-resource-card .card-text a:hover {
+            color: #a72824;
+        }
+        .msgapi .gn-resource-card .card-text a:focus {
+            color: #a72824;
+        }
