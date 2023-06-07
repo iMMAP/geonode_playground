@@ -1,0 +1,166 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fjalla+One:wght@300;400;500;600;700;800&d&display=swap");
+
+@import url(./variables.css);
+@import url(./Dashboard_view.css);
+@import url(./_resource_card.css);
+@import url(./landing_page.css);
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .my_input {
+    @apply block w-full px-4 py-[24px] text-2xl font-semibold text-gray-700 bg-white bg-clip-padding border-2 border-solid border-gray-300 rounded-sm transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none;
+  }
+
+  .my_primary_btn {
+    @apply inline-block  w-64 py-[20px] bg-primary-900 text-white font-semibold text-xl uppercase rounded hover:shadow-lg focus:shadow-lg active:bg-primary-600 active:shadow-lg transition duration-150 ease-in-out;
+  }
+
+  .my_secondary_btn {
+    @apply inline-block w-64 py-[20px] bg-transparent border border-primary-900 text-xl uppercase rounded  hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out  text-primary-900 font-semibold;
+  }
+
+  .input_error_state {
+    @apply border-2 border-red-300;
+  }
+  .my_hidden {
+    @apply hidden;
+  }
+  .my_block {
+    @apply block;
+  }
+}
+
+* {
+  font-family: "Barlow", Montserrat;
+}
+
+body {
+  /* background: #eee !important; */
+  font-family: "Lato", sans-serif;
+  font-size: 16px;
+  padding-top: 0px;
+}
+
+#wrap {
+  margin-top: 0px;
+  padding-top: 0px;
+}
+
+li {
+  text-align: inherit !important;
+}
+
+.msgapi .gn-action-navbar-title {
+  @apply bg-black-900 !important;
+  padding: 4px 8px;
+}
+
+.gn-details-panel-meta-text {
+  @apply flex;
+}
+
+.gn-details-panel-meta-text .gn-details-panel-origin {
+  margin-right: 4px;
+}
+
+.gn-details-panel-meta-text > a {
+  font-weight: 600;
+  color: theme("colors.magenta.700");
+}
+
+.msgapi .gn-menu .gn-menu-list li a:hover {
+  color: #a72824;
+}
+
+.msgapi .gn-menu .gn-menu-content-side .gn-menu-list li {
+  margin-right: 0.4rem;
+  /* padding: .25rem .5rem; */
+}
+
+.msgapi .gn-card-grid .gn-card-grid-pagination.featured-list {
+  padding-top: 48px !important;
+}
+
+.msgapi .modal-header{
+    color: black;
+  }
+  .msgapi button.close{
+    color: black;
+  } 
+  
+  .msgapi .modal-header:hover{
+    color: black;
+  }
+  
+  .msgapi button.close:hover{
+  color: black;
+  }
+
+
+.msgapi .rw-widget{
+    color: #140f0f!important;
+}
+
+.msgapi .rw-widget:hover{
+    color: #140f0f!important;
+}
+
+
+.msgapi .progress-bar {
+  background-color: #800 !important;
+}
+
+.msgapi .progress-bar-danger{
+  background-color: #a72824 !important;
+}
+
+.wizard--progress > li {
+  text-align: center !important;
+}
+
+.wizard--progress > li.is-active::before {
+  color: #fff !important;
+  background: #a72824 !important;
+}
+
+.wizard--progress > li::before {
+  color: #a72824 !important;
+}
+
+.wizard--progress > li.is-complete {
+  color: #fff !important;
+}
+
+.wizard--progress > li.is-complete::before, .wizard--progress > li.is-complete::after {
+  color: #FFF !important;
+}
+
+
+.wizard--progress > li.is-active {
+  color: #a72824 !important;
+}
+
+.wizard--progress > li a {
+  color: #a72824 !important;
+}
+
+.form-actions {
+  margin-right: 5rem !important;
+}
+
+.msgapi .rw-i, .msgapi .rw-state-focus {
+  color: black !important;
+}
+
+.msgapi .rw-list-option:hover {
+  background-color: #a72824 !important;
+}
+
+.msgapi .ms-map-popup .mapstore-identify-viewer .panel {
+  max-width: 400px !important;
+  min-width: 400px !important;
+}

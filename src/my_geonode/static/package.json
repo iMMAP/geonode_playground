@@ -1,0 +1,27 @@
+{
+  "name": "my_geonode",
+  "version": "0.0.1",
+  "author": "GeoNode Developers",
+  "description": "Static code and assets for my_geonode",
+  "contributors": [
+    {}
+  ],
+  "scripts": {
+    "test": "jshint **.js",
+    "dev": "gulp watch",
+    "tailwind-watch": "tailwindcss -i ./css/tailwind.css -o ./css/site_base.css --watch",
+    "tailwind-build": "tailwindcss -i ./css/tailwind.css  -o ./css/site_base.css --minify"
+  },
+  "license": "BSD",
+  "private": "false",
+  "dependencies": {},
+  "devDependencies": {
+    "del": "6.1.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "*",
+    "gulp-less": "*",
+    "gulp-util": "*",
+    "path": "*",
+    "tailwindcss": "^3.2.4"
+  }
+}

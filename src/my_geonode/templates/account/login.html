@@ -1,0 +1,142 @@
+{% extends "basic_base.html" %}
+
+
+{% load i18n %}
+{% load bootstrap_tags %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Log in" %}{% endblock %}
+
+{% block body_outer %}
+
+<section class="h-screen">
+  <div class="px-6 h-full text-gray-800">
+    <div
+      class="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full gap-20"
+    >
+      
+    <!-- The left side -->
+      <div class="mt-10 xl:mt-0 xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
+        
+        <div class=" mb-24">
+          <div class="flex items-center mb-16 justify-between">
+            <div class="flex items-center">
+              <a href="https://hsdc.immap.org" target="_blank">
+                <img src="../../static/img/immap_logo.png" class="h-auto w-24"  alt="iMMAP LOGO" srcset="">
+              </a>
+              <h1 class="font-extrabold text-[16px] ml-5 text-primary-900">iMMAP</h1>
+            </div>
+            <!-- <h1 class="font-extrabold text-[16px] ml-5">
+              ASDC
+            </h1> -->
+            
+          </div>
+          
+          
+
+          <h2 class="font-extrabold text-[36px] uppercase mb-5 text-primary-900">
+            <!-- Afghanistan Spatial Data Center -->
+            Log in to an existing account
+          </h2>
+          <!-- <p class="text-[20px] text-gray-800">
+            Log in to an existing account
+          </p> -->
+        </div>
+        
+        <form role="form" method="POST" action="{% url 'account_login' %}" autocapitalize="off" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+          {% csrf_token %}
+
+          {% if form.non_field_errors  %}
+              <div class="alert alert-danger">
+                {{ form.non_field_errors }}
+              </div>
+          {% endif %}
+
+          
+
+          <!-- <div
+            class="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5 mb-5"
+          >
+            <p class="text-center font-semibold mx-4 mb-0"></p>
+          </div> -->
+
+          <!-- Email input -->
+          <div class="mb-10">
+            <label for="email" class="mb-5 ">Email/Username</label>
+            <input
+              type="text"
+              class="my_input {% if form.login.errors %} input_error_state {% endif %}"
+              id="email"
+              placeholder="Email address/Username"
+              name="login"
+            />
+            {% if form.login.errors %}
+              <span class=" alert-danger">
+                  {{ form.login.errors }}
+              </span>
+            {% endif %}
+          
+          </div>
+
+          <!-- Password input -->
+          <div class="mb-10">
+            <label for="password" class="mb-5 ">Password</label>
+            <input
+              type="password"
+              class="my_input {% if form.password.errors %} input_error_state {% endif %}"
+              placeholder="Password"
+              id="password"
+              name="password"
+            />
+            {% if form.password.errors %}
+              <span class=" alert-danger">
+                  {{ form.password.errors }}
+              </span>
+            {% endif %}
+          </div>
+
+          <div class="flex justify-between items-center mb-6">
+            <div class="form-group form-check items-center">
+              <input
+                type="checkbox"
+                name="remember"
+                id="id_remember"
+                class="mr-3"
+              
+              />
+              <label class="form-check-label inline-block text-gray-700" for="id_remember"
+                >Remember me</label
+              >
+            </div>
+            <a href="{% url 'account_reset_password' %}" class=" text-magenta-800">Forgot password?</a>
+          </div>
+
+          <div class="lg:text-left ">
+            <button
+              type="submit"
+              class="my_primary_btn mb-10 w-full md:w-1/3"
+            >
+            {% trans "Sign In" %}
+            </button>
+           
+            <p class="font-semibold mt-2 pt-1" >
+              Don't have an account?
+              <a
+                href="{{ signup_url }}"
+                class="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out ml-5"
+                >Register</a
+              >
+            </p>
+          </div>
+          {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+          {% endif %}
+        </form>
+      </div>
+
+     
+    </div>
+  </div>
+</section>
+
+{% endblock body_outer %}
