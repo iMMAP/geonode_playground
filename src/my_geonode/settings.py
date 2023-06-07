@@ -78,6 +78,9 @@ loaders = TEMPLATES[0]['OPTIONS'].get('loaders') or [
 TEMPLATES[0]['OPTIONS']['loaders'] = loaders
 TEMPLATES[0].pop('APP_DIRS', None)
 
+
+TEMPLATES[0]['OPTIONS']['context_processors'] += ('django.contrib.auth.context_processors.auth','my_geonode.context_processors.export_vars')   
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
@@ -164,7 +167,7 @@ GEOIP_PATH = os.getenv('GEOIP_PATH', os.path.join(PROJECT_ROOT, 'GeoIPCities.dat
 MONITORING_ENABLED = ast.literal_eval(os.environ.get('MONITORING_ENABLED', 'True'))
 
 MONITORING_CONFIG = os.getenv("MONITORING_CONFIG", None)
-MONITORING_HOST_NAME = os.getenv("MONITORING_HOST_NAME", HOSTNAME)
+MONITORING_HOST_NAME = os.getenv("MONITORING_HOST_NAME", 'localhost')
 MONITORING_SERVICE_NAME = os.getenv("MONITORING_SERVICE_NAME", 'local-geonode')
 
 # how long monitoring data should be stored
