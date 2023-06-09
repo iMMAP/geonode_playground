@@ -30,7 +30,7 @@
           {% endif %}
           <div>
             <label for="lat" style="display: inline-block; width: 75px">{% trans "Latitude" %}</label>
-            <select id="lat" name="lat">
+            <select id="lat" name="lat" onchange="nextButtonVisibility()>
               <option value="None">{% trans "Select an attribute" %}</option>
               {% for option in point_candidates %}
               <option value="{{ option }}"
@@ -40,7 +40,7 @@
           </div>
           <div style="margin: 10px 0">
             <label for="lat" style="display: inline-block; width: 75px">{% trans "Longitude" %}</label>
-            <select id="lng" name="lng">
+            <select id="lng" name="lng" onchange="nextButtonVisibility()>
               <option value="None">{% trans "Select an attribute" %}</option>
               {% for option in point_candidates %}
               <option value="{{ option }}"
@@ -50,7 +50,7 @@
           </div>
 
           <a href="{% dataset_upload_url %}" class="btn btn-default pull-left">{% trans "Cancel" %}</a> &nbsp;
-          <button id='next' class="btn btn-primary" type="submit" value="{% trans 'Next' %}"> Next
+          <button id='next' class="btn btn-primary" type="submit" value="{% trans 'Next' %}" style="visibility: hidden;"> Next
               <i id="next-spinner" class="fa fa-spinner fa-spin hide"></i>
           </button>
           <div id="upload-status"></div>
@@ -67,6 +67,13 @@
         the latitude and longitude.{% endblocktrans %}</p>
     {% endif %}
 </div>
+
+<script>
+    function nextButtonVisibility() {
+      document.getElementById("next").style.visibility = "visible";
+    }
+</script>
+
 {% endblock %}
 
 {% block extra_script %}
