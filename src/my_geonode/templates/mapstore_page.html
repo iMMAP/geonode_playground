@@ -18,6 +18,18 @@
 
         {% block extra_style %}
         {% endblock %}
+
+        {% if APP_ENV == "production" %}
+            <!-- Google tag (gtag.js) -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-PEK7L15G1V"></script>
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', 'G-PEK7L15G1V');
+            </script>
+        {% endif %}
     </head>
     <body class="msgapi ms2" data-ms2-container="ms2" >
         <div class="gn-page-wrapper {% if request.user_agent.is_mobile %}gn-mobile{% else %}gn-desktop{% endif %}">
