@@ -30,7 +30,7 @@
           {% endif %}
           <div>
             <label for="lat" style="display: inline-block; width: 75px">{% trans "Latitude" %}</label>
-            <select id="lat" name="lat" onchange="nextButtonVisibility()>
+            <select id="lat" name="lat" onchange="nextButtonVisibility()">
               <option value="None">{% trans "Select an attribute" %}</option>
               {% for option in point_candidates %}
               <option value="{{ option }}"
@@ -40,7 +40,7 @@
           </div>
           <div style="margin: 10px 0">
             <label for="lat" style="display: inline-block; width: 75px">{% trans "Longitude" %}</label>
-            <select id="lng" name="lng" onchange="nextButtonVisibility()>
+            <select id="lng" name="lng" onchange="nextButtonVisibility()">
               <option value="None">{% trans "Select an attribute" %}</option>
               {% for option in point_candidates %}
               <option value="{{ option }}"
@@ -69,9 +69,9 @@
 </div>
 
 <script>
-    function nextButtonVisibility() {
-      document.getElementById("next").style.visibility = "visible";
-    }
+  function nextButtonVisibility() {
+    document.getElementById("next").style.visibility = "visible";
+  }
 </script>
 
 {% endblock %}
