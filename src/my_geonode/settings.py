@@ -45,7 +45,7 @@ if not SITEURL.endswith('/'):
     SITEURL = '{}/'.format(SITEURL)
 
 SITENAME = os.getenv("SITENAME", 'my_geonode')
-APP_ENV = os.getenv("APP_ENV", 'local')
+# APP_ENV = os.getenv("APP_ENV", 'local')
 
 # Defines the directory that contains the settings file as the LOCAL_ROOT
 # It is used for relative settings elsewhere.
@@ -78,9 +78,6 @@ loaders = TEMPLATES[0]['OPTIONS'].get('loaders') or [
 # loaders.insert(0, 'apptemplates.Loader')
 TEMPLATES[0]['OPTIONS']['loaders'] = loaders
 TEMPLATES[0].pop('APP_DIRS', None)
-
-
-TEMPLATES[0]['OPTIONS']['context_processors'] += ('django.contrib.auth.context_processors.auth','my_geonode.context_processors.export_vars')   
 
 LOGGING = {
     'version': 1,
