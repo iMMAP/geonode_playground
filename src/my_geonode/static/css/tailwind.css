@@ -164,3 +164,7 @@ li {
   max-width: 400px !important;
   min-width: 400px !important;
 }
+
+#upload-status {
+  margin-top: 20px;
+}
