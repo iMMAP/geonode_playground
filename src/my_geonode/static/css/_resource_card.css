@@ -34,6 +34,9 @@
   color: #4e4b4b !important;
   white-space: pre-wrap !important;
   margin-left: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .gn-resource-status-text {

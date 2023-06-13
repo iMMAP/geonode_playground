@@ -172,6 +172,7 @@
           <link rel="stylesheet" type="text/css" href="{% static "geonode/css/geonode-rtl.min.css" %}">
         {% endif %}
     {% endif %}
+    
   </head>
 
   <body class="{% block body_class %}{% endblock %} {% block body_extra_class %}{% endblock %}">
@@ -192,14 +193,14 @@
       {% include "_announcements.html" %}
       {% include "_messages.html" %}
       {% block body_outer %}
-      <div class="row">
-        <div class="col-md-8">
-        {% block body %}{% endblock %}
+        <div class="row">
+          <div class="col-md-8">
+          {% block body %}{% endblock %}
+          </div>
+          <div class="col-md-4">
+          {% block sidebar %}{% endblock %}
+          </div>
         </div>
-        <div class="col-md-4">
-        {% block sidebar %}{% endblock %}
-        </div>
-      </div>
       {% endblock %}
     </div>
     {% endblock middle %}

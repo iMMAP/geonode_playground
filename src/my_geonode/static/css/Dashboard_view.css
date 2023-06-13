@@ -13,6 +13,10 @@
             background-color: #A72824;
         }
 
+        .msgapi .btn-primary:focus{
+            background-color: #7e1310;
+        }
+
         .msgapi .gn-menu.gn-primary{
             background-color: #a72824;
         }
@@ -198,4 +202,65 @@
 
         .msgapi .mapstore-medium-size-loader {
             border-left: 6px solid #a72824 !important;
+        }
+
+        .bg-primary-50 {
+            background-color: #F6EAE9;
+        }
+
+        .gn-page-wrapper.gn-desktop {
+            background-color: #F6EAE9;
+        }
+
+        .footer_container {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: white;
+            padding: 0.5rem 4rem !important;
+            z-index: 9999;
+        }
+
+        .msgapi .gn-card-grid .gn-card-grid-pagination {
+            padding: 1rem 1rem 3rem;
+            text-align: center;
+            margin-bottom: 50px !important;
+        }
+
+        .gn-resource-card-body-wrapper .card-body .card-title div {
+            display: flex !important;
+        }
+
+        .msgapi .gn-resource-card .card-resource-list .card-img-left {
+            height: auto !important;
+            object-fit: cover;
+            width: 435px;
+        }
+
+        .msgapi .Select--multi .Select-value {
+            background-color: var(--gn-primary) !important;
+            border-color: transparent;
+            color: #000000 !important;
+        }
+
+        .msgapi .btn-primary.active.focus, .msgapi .btn-primary.active:focus, .msgapi .btn-primary.active:hover, .msgapi .btn-primary:active.focus, .msgapi .btn-primary:active:focus, .msgapi .btn-primary:active:hover, .msgapi .open>.dropdown-toggle.btn-primary.focus, .msgapi .open>.dropdown-toggle.btn-primary:focus, .msgapi .open>.dropdown-toggle.btn-primary:hover {
+            background-color: #7e1310 !important;
+            border-color: #7e1310 !important;
+        }
+
+        .msgapi .btn-primary.active, .msgapi .btn-primary:active, .msgapi .open>.dropdown-toggle.btn-primary {
+            background-color: #7e1310;
+            border-color: #7e1310;
+        }
+
+        .msgapi .btn-primary.focus, .msgapi .btn-primary:focus {
+            background-color: #7e1310 !important;
+            border-color: #7e1310 !important;
+        }
+
+        .msgapi .gn-resource-card .card-text a:hover {
+            color: #a72824;
+        }
+        .msgapi .gn-resource-card .card-text a:focus {
+            color: #a72824;
         }

@@ -45,6 +45,7 @@ if not SITEURL.endswith('/'):
     SITEURL = '{}/'.format(SITEURL)
 
 SITENAME = os.getenv("SITENAME", 'my_geonode')
+# APP_ENV = os.getenv("APP_ENV", 'local')
 
 # Defines the directory that contains the settings file as the LOCAL_ROOT
 # It is used for relative settings elsewhere.
@@ -183,7 +184,7 @@ GEOIP_PATH = os.getenv('GEOIP_PATH', os.path.join(PROJECT_ROOT, 'GeoIPCities.dat
 MONITORING_ENABLED = ast.literal_eval(os.environ.get('MONITORING_ENABLED', 'True'))
 
 MONITORING_CONFIG = os.getenv("MONITORING_CONFIG", None)
-MONITORING_HOST_NAME = os.getenv("MONITORING_HOST_NAME", HOSTNAME)
+MONITORING_HOST_NAME = os.getenv("MONITORING_HOST_NAME", 'localhost')
 MONITORING_SERVICE_NAME = os.getenv("MONITORING_SERVICE_NAME", 'local-geonode')
 
 # how long monitoring data should be stored
