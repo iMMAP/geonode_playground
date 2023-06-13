@@ -234,7 +234,7 @@
         .msgapi .gn-resource-card .card-resource-list .card-img-left {
             height: auto !important;
             object-fit: cover;
-            width: 435px;
+            width: 200px;
         }
 
         .msgapi .Select--multi .Select-value {
