@@ -192,6 +192,10 @@
             background-color: #a72824 !important;
         }
 
+        .msgapi .gn-resources-pagination {
+            margin-bottom: 40px !important;
+        }
+
         .msgapi .dropdown-menu>.active>a, .msgapi .dropdown-menu>.active>a:focus, .msgapi .dropdown-menu>.active>a:hover {
             color: #a72824;
         }
