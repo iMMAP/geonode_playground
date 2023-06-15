@@ -268,3 +268,14 @@
         .msgapi .gn-resource-card .card-text a:focus {
             color: #a72824;
         }
+
+        .msgapi .gn-details-info {
+            margin-bottom: 2rem;
+            padding: 1rem 1rem 5rem 1rem !important;
+        }
+
+        .msgapi .gn-filter-form .gn-filter-form-body .gn-filter-form-content {
+            padding: 1rem 1rem 5rem 1rem !important;
+            position: absolute;
+            width: 100%;
+        }
