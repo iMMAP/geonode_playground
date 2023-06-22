@@ -192,6 +192,10 @@
             background-color: #a72824 !important;
         }
 
+        .msgapi .gn-resources-pagination {
+            margin-bottom: 150px !important;
+        }
+
         .msgapi .dropdown-menu>.active>a, .msgapi .dropdown-menu>.active>a:focus, .msgapi .dropdown-menu>.active>a:hover {
             color: #a72824;
         }
@@ -234,7 +238,7 @@
         .msgapi .gn-resource-card .card-resource-list .card-img-left {
             height: auto !important;
             object-fit: cover;
-            width: 435px;
+            width: 200px;
         }
 
         .msgapi .Select--multi .Select-value {
@@ -263,4 +267,15 @@
         }
         .msgapi .gn-resource-card .card-text a:focus {
             color: #a72824;
+        }
+
+        .msgapi .gn-details-info {
+            margin-bottom: 2rem;
+            padding: 1rem 1rem 5rem 1rem !important;
+        }
+
+        .msgapi .gn-filter-form .gn-filter-form-body .gn-filter-form-content {
+            padding: 1rem 1rem 5rem 1rem !important;
+            position: absolute;
+            width: 100%;
         }
