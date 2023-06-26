@@ -25,7 +25,7 @@
           {% endif %}
           <div>
             <label for="lat" style="display: inline-block; width: 75px">{% trans "Latitude" %}</label>
-            <select id="lat" name="lat"">
+            <select id="lat" name="lat">
               <option value="">{% trans "Select an attribute" %}</option>
               {% for option in point_candidates %}
               <option value="{{ option }}"
