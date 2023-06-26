@@ -1,0 +1,30 @@
+{% extends "email_base.html" %}
+{% load i18n %}
+
+{% block email-title %}
+    Unknown Account message
+{% endblock email-title %}
+
+{% block email-body  %} 
+<tr>
+    <td style="padding:0 0 17px;">
+
+{% autoescape off %}{% blocktrans %}You are receiving this e-mail because you or someone else has requested a
+password for your user account. However, we do not have any record of a user
+with email <strong>{{ email }}</strong> in our database.
+
+
+            <p>
+                This mail can be safely ignored if you did not request a password reset.
+            </p>
+            <p>
+                If it was you, you can sign up for an account using the link below.
+            </p>
+
+            <button class="btn-primary">
+                <a href="{{ signup_url }}">Sign Up</a>
+            </button>
+
+        </td>
+    </tr>
+{% endblock email-body  %}
