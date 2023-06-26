@@ -31,6 +31,7 @@
     border-radius: 0.25rem;
 }
 
+
 .landing-login-btn:hover{
     background-color: #75110e;
 }
@@ -188,6 +189,12 @@
     font-family: 'Fjalla One', sans-serif;
     color: #fff;
   }
+
+.row{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
 
 @media only screen and (max-width: 1024px) {
     .landing_hero_container .landing_hero_left{
