@@ -44,6 +44,7 @@ PROJECT_NAME = 'my_geonode'
 if not SITEURL.endswith('/'):
     SITEURL = '{}/'.format(SITEURL)
 
+
 SITENAME = os.getenv("SITENAME", 'my_geonode', )
 # APP_ENV = os.getenv("APP_ENV", 'local')
 
