@@ -22,6 +22,7 @@ from __future__ import absolute_import
 
 import os
 from celery import Celery
+from datetime import timedelta
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'my_geonode.settings')
 
@@ -30,12 +31,6 @@ app = Celery('my_geonode')
 # Using a string here means the worker will not have to
 # pickle the object when using Windows.
 app.config_from_object('django.conf:settings', namespace="CELERY")
+
 app.autodiscover_tasks()
 
-
-@app.task(
-    bind=True,
-    name='my_geonode.debug_task',
-    queue='default')
-def debug_task(self):
-    print("Request: {!r}".format(self.request))

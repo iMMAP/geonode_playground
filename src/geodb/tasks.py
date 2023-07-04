@@ -1,18 +1,14 @@
 
-from celery.task.schedules import crontab
-from celery.decorators import periodic_task, task
+from celery import shared_task
 from celery.utils.log import get_task_logger
-from datetime import datetime
-from geodb.views import getForecastedDisaster, updateSummaryTable, getSnowCover, getLatestEarthQuake, getLatestShakemap, databasevacumm, runGlofasDownloader
-from geodb.zonal_stats import downloadtif
-from dashboard.views import classmarkerGet
+from geodb.views import getLatestEarthQuake
 
 logger = get_task_logger(__name__)
 
-@periodic_task(run_every=(crontab(hour='*')))
+@shared_task
 def updateLatestEarthQuake():
 	getLatestEarthQuake()
 
-@periodic_task(run_every=(crontab(hour='*')))
-def updateLatestShakemap():
-	getLatestShakemap(True)
+# @shared_task
+# def updateLatestShakemap():
+# 	getLatestShakemap(True)
