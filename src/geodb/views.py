@@ -7,7 +7,6 @@ from sqlalchemy import create_engine
 import geopandas as gpd
 from shapely.geometry import Point
 import matplotlib.pyplot as plt
-from .models import earthquake_epicenter
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
