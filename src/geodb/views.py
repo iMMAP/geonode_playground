@@ -18,16 +18,22 @@ pd.set_option('display.width', 500)
 def getLatestEarthQuake(startdate=datetime.datetime.utcnow()-datetime.timedelta(days=30), enddate=None):
 
     start_time = 'now-180days'
-    min_magnitude = 5
+    # min_magnitude = 5
+    min_magnitude = 0
 
     latitude = 39.1458
     longitude = 34.1614
     max_radius_km = 1500
 
-    minlatitude = 29.377065
-    maxlatitude = 38.490842
-    minlongitude = 60.471977
-    maxlongitude = 74.889561
+    # minlatitude = 29.377065
+    # maxlatitude = 38.490842
+    # minlongitude = 60.471977
+    # maxlongitude = 74.889561
+
+    minlatitude = -90
+    maxlatitude = 90
+    minlongitude = -179
+    maxlongitude = 179
 
     bbox_query = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time}&minmagnitude={min_magnitude}&minlatitude={minlatitude}&maxlatitude={maxlatitude}&minlongitude={minlongitude}&maxlongitude={maxlongitude}&producttype=shakemap'
 
@@ -52,8 +58,10 @@ def getLatestEarthQuake(startdate=datetime.datetime.utcnow()-datetime.timedelta(
         coordinates = most_recent_feature['geometry']
 
         data = pd.DataFrame(attributes, index=[0])
+        dataAttr = ['mag','place','time','updated','alert','status','type','title','geometry']
         data['geometry'] = Point(coordinates['coordinates'])
-        epicenter = gpd.GeoDataFrame(data)
+        earthquake_epic = data[dataAttr]
+        epicenter = gpd.GeoDataFrame(earthquake_epic)
 
         db_url = f"postgresql://my_geonode:geonode@localhost:5432/my_geonode_data"
         con = create_engine(db_url)
