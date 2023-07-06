@@ -150,13 +150,13 @@ CELERY_BEAT_SCHEDULE = {
         }
     },
 
-    'get_latest_earthquake_every_5_seconds': {
-        'task':'geodb.tasks.updateLatestEarthQuake',
-        'schedule': timedelta(seconds=5),
-        'options': {
-            'priority': 1
-        }
-    },
+    # 'get_latest_earthquake_every_5_seconds': {
+    #     'task':'geodb.tasks.updateLatestEarthQuake',
+    #     'schedule': timedelta(seconds=5),
+    #     'options': {
+    #         'priority': 1
+    #     }
+    # },
 }
 
 CENTRALIZED_DASHBOARD_ENABLED = ast.literal_eval(
