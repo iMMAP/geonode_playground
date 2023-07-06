@@ -1,7 +1,7 @@
 
 from celery import shared_task
 from celery.utils.log import get_task_logger
-from geodb.views import getLatestEarthQuake
+from geodb.views import getLatestEarthQuake, getLatestShakemap
 
 logger = get_task_logger(__name__)
 
@@ -9,6 +9,6 @@ logger = get_task_logger(__name__)
 def updateLatestEarthQuake():
 	getLatestEarthQuake()
 
-# @shared_task
-# def updateLatestShakemap():
-# 	getLatestShakemap(True)
+@shared_task
+def updateLatestShakemap():
+	getLatestShakemap()
