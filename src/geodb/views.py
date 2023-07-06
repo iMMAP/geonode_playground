@@ -155,8 +155,9 @@ def getLatestShakemap(startdate=datetime.datetime.utcnow()-datetime.timedelta(da
         db_url = f"postgresql://my_geonode:geonode@localhost:5432/my_geonode_data"
         con = create_engine(db_url)
 
-        new_shakemap.to_postgis('earthquake_shakemap', con, if_exists='replace')
-        print('Earthquake shakemap inserted successfully')
+        # new_shakemap.to_postgis('earthquake_shakemap', con, if_exists='replace')
+        # print('Earthquake shakemap inserted successfully')
+        print(new_shakemap)
 
     else:
         print('Error:', response.status_code)
