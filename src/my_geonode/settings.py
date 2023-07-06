@@ -146,10 +146,10 @@ CELERY_BEAT_SCHEDULE = {
         'task':'geodb.tasks.updateLatestEarthQuake',
         'schedule': timedelta(seconds=5)
     },
-    # 'get_latest_shakemap_every_5_seconds': {
-    #     'task':'geodb.tasks.updateLatestShakemap',
-    #     'schedule': timedelta(seconds=5)
-    # }
+    'get_latest_shakemap_every_5_seconds': {
+        'task':'geodb.tasks.updateLatestShakemap',
+        'schedule': timedelta(seconds=5)
+    }
 }
 
 CENTRALIZED_DASHBOARD_ENABLED = ast.literal_eval(
