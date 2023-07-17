@@ -9,9 +9,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Humanitarian Spatial Data Center</title>
+    <link rel="shortcut icon" href="{% static 'img/immap-logo-white.png' %}" type="image/x-icon" />
+
+    <meta name="description" content="The Humanitarian Spatial Data Center (HSDC) is an information management tool for humanitarian programming in Afghanistan. It provides data and analytics related to disaster risks, demograhics, accessibity and more across Afghanistan" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="/" />
+    <meta property="og:title" content="HSDC: Humanitarian Spatial Data Center" />
+    <meta property="og:description" content="The Humanitarian Spatial Data Center (HSDC) is an information management tool for humanitarian programming in Afghanistan. It provides data and analytics related to disaster risks, demograhics, accessibity and more across Afghanistan" />
+    <meta property="og:image" content="{% static 'img/wantto-create-BcnjcRmtQRI-unsplash.png' %}" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="/" />
+    <meta property="twitter:title" content="HSDC: Humanitarian Spatial Data Center" />
+    <meta property="twitter:description" content="The Humanitarian Spatial Data Center (HSDC) is an information management tool for humanitarian programming in Afghanistan. It provides data and analytics related to disaster risks, demograhics, accessibity and more across Afghanistan" />
+    <meta property="twitter:image" content="{% static 'img/wantto-create-BcnjcRmtQRI-unsplash.png' %}" />
+
+
+
+    <title>HSDC: Humanitarian Spatial Data Center</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
-    <link href="{% static 'mapstore/dist/themes/geonode.css' %}?{% client_version %}" rel="stylesheet" />
 
     {% block extra_head %}
         <link href="{% static 'css/site_base.css' %}" rel="stylesheet" />    
@@ -21,7 +41,7 @@
 <body>
     <div class="landing_container">
         <div class="landing_topbar">
-            <div class="landing_hero_content">
+            <div class="landing_hero_content ">
                 <div class="landing_logo flex items-center space-x-2">
                     <img src="../../../static/img/immap_logo.png" class="w-auto h-16">
                     <p class="landing_logo_title">Humanitarian Spatial Data Center</p>
@@ -40,7 +60,7 @@
         <div class="landing_container_content">
             {% block left_hero %}
             <!-- The brand logo -->
-            <div class="landing_hero_container flex justify-around">
+            <div class="landing_hero_container flex justify-between ">
                 <div class="landing_hero_left">
                     <div class="landing_hero_title mt-10">
                         <h2 class="text-primary-900"> 
@@ -77,13 +97,45 @@
                     </div>
                 </div>
                 <div class="landing_hero_right"><img src="../../../static/img/image 8.png"></div>
-
             </div>
             
             {% endblock %}
+
         </div>
 
-        <div class="hero_section grid items-center justify-center"></div>
+        <div class="relative">
+            <div class="hero_section grid items-center justify-center ">
+            </div>
+            {% comment %} The Steps {% endcomment %}
+            <div class="bg-text">
+                <section class="p-6 ">
+                    <div class="container mx-auto">
+                        <span class="block mb-2 text-xs font-medium tracki text-center uppercase ">Progress</span>
+                        <h2 class="text-5xl font-bold text-center text-gray-50">Platform Launch Progress</h2>
+                        <div class="grid gap-6 my-16 lg:grid-cols-3">
+                            <div class="flex gap-5 items-center  p-6  rounded-md bg-white">
+                                <div class="flex  items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full border-2 border-primary-700 text-gray-800 ">1</div>
+                                <p class="text-lg text-left text-gray-900 font-semibold">
+                                    <b>Nulla.</b>Nostrum, corrupti blanditiis. Illum, architecto?
+                                </p>
+                            </div>
+                            <div class="flex  gap-5 items-center  p-6  rounded-md bg-white border-2 border-primary-900 bg-red-50">
+                                <div class="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full bg-primary-700 ">2</div>
+                                <p class="text-lg text-left text-gray-900 font-semibold">
+                                    <b>Accusantium.</b>Vitae saepe atque neque sunt eius dolor veniam alias debitis?
+                                </p>
+                            </div>
+                            <div class="flex  gap-5 items-center  p-6  rounded-md bg-white">
+                                <div class="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl font-bold rounded-full border-2 border-primary-700 text-gray-800 ">3</div>
+                                <p class="text-lg text-left text-gray-900 font-semibold">
+                                    <b>Maxime.</b>Expedita temporibus culpa reprehenderit doloribus consectetur odio!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
 
         <div class="features_container">
             {% block details %}
@@ -135,8 +187,6 @@
                         </div>
                 </div>
             </div>
-
-
     </div>
 
     {% block footer %}
@@ -146,12 +196,7 @@
     
 
     {% block scripts %}
-    <script src="{% static "lib/js/jquery.min.js" %}"></script>
-    <script src="{% static "lib/js/bootstrap.min.js" %}"></script>
-    <script type="text/javascript">
-        // enable dropdown functionalities
-        $('.dropdown-toggle').dropdown();
-    </script>
+   
     {% endblock %}
 </body>
 </html>
