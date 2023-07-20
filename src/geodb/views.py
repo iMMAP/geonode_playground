@@ -194,7 +194,6 @@ def getLatestShakemap(startdate=datetime.datetime.utcnow()-datetime.timedelta(da
 
         column_order = list(epicenter_attributes.columns) + [col for col in merged_gdf.columns if col not in epicenter_attributes.columns]
         new_shakemap = merged_gdf.reindex(columns=column_order)
-        print(new_shakemap)
 
         db_url = f"postgresql://my_geonode:geonode@localhost:5432/my_geonode_data"
         con = create_engine(db_url)
