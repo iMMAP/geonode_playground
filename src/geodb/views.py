@@ -12,7 +12,8 @@ import os
 import zipfile
 from geoalchemy2 import Geometry
 import psycopg2
-from shapely.geometry import Polygon, MultiPolygon
+from shapely.geometry import Polygon, MultiPolygon, shape
+from osgeo import ogr
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
@@ -107,22 +108,22 @@ def getLatestEarthQuake(startdate=datetime.datetime.utcnow()-datetime.timedelta(
 def getLatestShakemap(startdate=datetime.datetime.utcnow()-datetime.timedelta(days=35), enddate=None):
 
     start_time = 'now-180days'
-    #min_magnitude = 5
-    min_magnitude = 0
+    min_magnitude = 5
+    # min_magnitude = 0
 
     # latitude = 39.1458
     # longitude = 34.1614
     # max_radius_km = 1500
 
-    # minlatitude = 29.377065
-    # maxlatitude = 38.490842
-    # minlongitude = 60.471977
-    # maxlongitude = 74.889561
+    minlatitude = 29.377065
+    maxlatitude = 38.490842
+    minlongitude = 60.471977
+    maxlongitude = 74.889561
 
-    minlatitude = -90
-    maxlatitude = 90
-    minlongitude = -179
-    maxlongitude = 179
+    # minlatitude = -90
+    # maxlatitude = 90
+    # minlongitude = -179
+    # maxlongitude = 179
 
     bbox_query = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time}&minmagnitude={min_magnitude}&minlatitude={minlatitude}&maxlatitude={maxlatitude}&minlongitude={minlongitude}&maxlongitude={maxlongitude}&producttype=shakemap'
 
@@ -170,15 +171,30 @@ def getLatestShakemap(startdate=datetime.datetime.utcnow()-datetime.timedelta(da
         with zipfile.ZipFile(save_expanded_path, "r") as zip_ref:
             zip_ref.extractall(zip_expanded_path)
 
-        shapefile_path = zip_expanded_path + '/mi.shp'
-        shakemap = gpd.read_file(shapefile_path)
-        shakemap = shakemap[shakemap['PARAMVALUE'] != 1]
+        # shapefile_path = zip_expanded_path + '/mi.shp'
+        # shakemap = gpd.read_file(shapefile_path)
+
+        shapefile = ogr.Open(zip_expanded_path + '/mi.shp')
+        layer = shapefile.GetLayer()
+        data = []
+        for feature in layer:
+            attributes = feature.items()
+            geometry = feature.GetGeometryRef().ExportToWkt()
+            data.append((attributes, geometry))
+
+        attributes_list, geometry_list = zip(*data)
+        df = gpd.GeoDataFrame(list(attributes_list))
+        df['geometry'] = geometry_list
+        df['geometry'] = Point(coordinates['coordinates'])
+        shakemap = gpd.GeoDataFrame(df)
+
 
         epicenter_attributes = epicenter.drop(columns='geometry')
         merged_gdf = gpd.GeoDataFrame(shakemap.merge(epicenter_attributes, how='cross'))
 
         column_order = list(epicenter_attributes.columns) + [col for col in merged_gdf.columns if col not in epicenter_attributes.columns]
         new_shakemap = merged_gdf.reindex(columns=column_order)
+        print(new_shakemap)
 
         db_url = f"postgresql://my_geonode:geonode@localhost:5432/my_geonode_data"
         con = create_engine(db_url)
