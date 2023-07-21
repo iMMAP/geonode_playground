@@ -165,13 +165,13 @@ def getLatestShakemap(startdate=datetime.datetime.utcnow()-datetime.timedelta(da
         shakemap_shape_url = shakemap_files[0]['contents']['download/shape.zip']['url']
         file_url = shakemap_shape_url
 
-        save_path = r'~/Documents/shp.zip'
-        # save_path = r'~/Earthquake_shakemap/shp.zip'
+        # save_path = r'~/Documents/shp.zip'
+        save_path = r'~/Earthquake_shakemap/shp.zip'
         save_expanded_path = os.path.expanduser(save_path)
         urllib.request.urlretrieve(file_url, save_expanded_path)
 
-        # zip_ref_path = r'~/Earthquake_shakemap/temp_extracted_files'
-        zip_ref_path = r'~/Documents/temp_extracted_files'
+        zip_ref_path = r'~/Earthquake_shakemap/temp_extracted_files'
+        # zip_ref_path = r'~/Documents/temp_extracted_files'
         zip_expanded_path = os.path.expanduser(zip_ref_path)
         with zipfile.ZipFile(save_expanded_path, "r") as zip_ref:
             zip_ref.extractall(zip_expanded_path)
