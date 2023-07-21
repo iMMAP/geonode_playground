@@ -142,7 +142,7 @@ CELERY_TASK_DEFAULT_EXCHANGE_TYPE = "direct"
 
 # Celery Beat Configuration (optional)
 CELERY_BEAT_SCHEDULE = {
-    'get_latest_shakemap_every_5_seconds': {
+    'get_latest_shakemap_every_5_minutes': {
         'task':'geodb.tasks.updateLatestShakemap',
         'schedule': timedelta(minutes=5),
         'options': {
@@ -150,7 +150,7 @@ CELERY_BEAT_SCHEDULE = {
         }
     },
 
-    'get_latest_earthquake_every_5_seconds': {
+    'get_latest_earthquake_every_5_minutes': {
         'task':'geodb.tasks.updateLatestEarthQuake',
         'schedule': timedelta(minutes=5),
         'options': {

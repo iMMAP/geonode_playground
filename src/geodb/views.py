@@ -81,21 +81,25 @@ def getLatestEarthQuake(startdate=datetime.datetime.utcnow()-datetime.timedelta(
         table = metadata.tables.get('all_earthquake_epicenter')
 
         if table is not None:
-            unique_time_values = epicenter['time'].unique()[0]
-            query = text(f"SELECT COUNT(*) FROM all_earthquake_epicenter WHERE time = {unique_time_values}")
+            if 'time' in table.columns:
+                unique_time_values = epicenter['time'].unique()[0]
+                query = text(f"SELECT COUNT(*) FROM all_earthquake_epicenter WHERE time = {unique_time_values}")
 
-            conn = con.connect()
-            cursor = conn.execute(query)
-            count = cursor.fetchone()[0]
+                conn = con.connect()
+                cursor = conn.execute(query)
+                count = cursor.fetchone()[0]
 
-            if count > 0:
-                print('The record already exits')
-                
+                if count > 0:
+                    print('The record already exits')
+                    
+                else:
+                    epicenter['mag'] = epicenter['mag'].astype(float)
+                    epicenter.crs = 'EPSG:4326'
+                    epicenter.to_postgis("all_earthquake_epicenter", con, if_exists="append", index=False, dtype={'geometry': Geometry('POINT', srid=4326)})
+                    print('Earthquake Epicenter added successfully')
             else:
-                epicenter['mag'] = epicenter['mag'].astype(float)
-                epicenter.crs = 'EPSG:4326'
-                epicenter.to_postgis("all_earthquake_epicenter", con, if_exists="append", index=False, dtype={'geometry': Geometry('POINT', srid=4326)})
-                print('Earthquake Epicenter added successfully')
+                epicenter.to_postgis("all_earthquake_epicenter", con, if_exists="replace")
+                print('All earthquake Epicenter replaced successfully')
         else:
             epicenter.crs = 'EPSG:4326'
             epicenter.to_postgis("all_earthquake_epicenter", con, if_exists="append", index=False, dtype={'geometry': Geometry('POINT', srid=4326)})
@@ -161,13 +165,13 @@ def getLatestShakemap(startdate=datetime.datetime.utcnow()-datetime.timedelta(da
         shakemap_shape_url = shakemap_files[0]['contents']['download/shape.zip']['url']
         file_url = shakemap_shape_url
 
-        # save_path = r'~/Documents/shp.zip'
-        save_path = r'~/Earthquake_shakemap/shp.zip'
+        save_path = r'~/Documents/shp.zip'
+        # save_path = r'~/Earthquake_shakemap/shp.zip'
         save_expanded_path = os.path.expanduser(save_path)
         urllib.request.urlretrieve(file_url, save_expanded_path)
 
-        zip_ref_path = r'~/Earthquake_shakemap/temp_extracted_files'
-        # zip_ref_path = r'~/Documents/temp_extracted_files'
+        # zip_ref_path = r'~/Earthquake_shakemap/temp_extracted_files'
+        zip_ref_path = r'~/Documents/temp_extracted_files'
         zip_expanded_path = os.path.expanduser(zip_ref_path)
         with zipfile.ZipFile(save_expanded_path, "r") as zip_ref:
             zip_ref.extractall(zip_expanded_path)
@@ -208,20 +212,23 @@ def getLatestShakemap(startdate=datetime.datetime.utcnow()-datetime.timedelta(da
         unique_time_values = new_shakemap['time'].unique()[0]
 
         if table is not None:
-            query = text(f"SELECT COUNT(*) FROM all_earthquake_shakemap WHERE time = {unique_time_values}")
+            if 'time' in table.columns:
+                query = text(f"SELECT COUNT(*) FROM all_earthquake_shakemap WHERE time = {unique_time_values}")
 
-            conn = con.connect()
-            cursor = conn.execute(query)
-            count = cursor.fetchone()[0]
+                conn = con.connect()
+                cursor = conn.execute(query)
+                count = cursor.fetchone()[0]
 
-            if count > 0:
-                print('The record already exits')
-                
+                if count > 0:
+                    print('The record already exits')
+                    
+                else:
+                    new_shakemap['mag'] = new_shakemap['mag'].astype(float)
+                    new_shakemap.to_postgis("all_earthquake_shakemap", con, if_exists="append")
+                    print('All Earthquake Shakemap added successfully')
             else:
-                new_shakemap['mag'] = new_shakemap['mag'].astype(float)
-                new_shakemap.to_postgis("all_earthquake_shakemap", con, if_exists="append")
-                print('All Earthquake Shakemap added successfully')
-                # print('The record does not exits')
+                new_shakemap.to_postgis("all_earthquake_shakemap", con, if_exists="replace")
+                print('All earthquake Shakemap replaced successfully')
         else:
             new_shakemap.to_postgis("all_earthquake_shakemap", con, if_exists="append")
             print('All earthquake Shakemap saved successfully')
