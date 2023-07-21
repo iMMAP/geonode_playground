@@ -94,15 +94,14 @@ def getLatestEarthQuake(startdate=datetime.datetime.utcnow()-datetime.timedelta(
                     
                 else:
                     epicenter['mag'] = epicenter['mag'].astype(float)
-                    epicenter.crs = 'EPSG:4326'
-                    epicenter.to_postgis("all_earthquake_epicenter", con, if_exists="append", index=False, dtype={'geometry': Geometry('POINT', srid=4326)})
+                    epicenter.to_postgis("all_earthquake_epicenter", con, if_exists="append")
                     print('Earthquake Epicenter added successfully')
             else:
                 epicenter.to_postgis("all_earthquake_epicenter", con, if_exists="replace")
                 print('All earthquake Epicenter replaced successfully')
         else:
             epicenter.crs = 'EPSG:4326'
-            epicenter.to_postgis("all_earthquake_epicenter", con, if_exists="append", index=False, dtype={'geometry': Geometry('POINT', srid=4326)})
+            epicenter.to_postgis("all_earthquake_epicenter", con, if_exists="append")
             print('All earthquake Epicenter saved successfully')
 
     else:
