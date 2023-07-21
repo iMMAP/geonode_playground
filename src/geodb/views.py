@@ -148,7 +148,7 @@ def getLatestShakemap(startdate=datetime.datetime.utcnow()-datetime.timedelta(da
 
         sorted_features = sorted(data, key=lambda x: x['properties']['time'], reverse=False)
 
-        most_recent_feature = sorted_features[0]
+        most_recent_feature = sorted_features[-1]
         attributes = most_recent_feature['properties']
         coordinates = most_recent_feature['geometry']
 
