@@ -14,6 +14,7 @@ from geoalchemy2 import Geometry
 import psycopg2
 from shapely.geometry import Polygon, MultiPolygon, shape
 from osgeo import ogr
+from shapely.wkt import loads
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
@@ -180,13 +181,13 @@ def getLatestShakemap(startdate=datetime.datetime.utcnow()-datetime.timedelta(da
         for feature in layer:
             attributes = feature.items()
             geometry = feature.GetGeometryRef().ExportToWkt()
-            data.append((attributes, geometry))
-
-        attributes_list, geometry_list = zip(*data)
-        df = gpd.GeoDataFrame(list(attributes_list))
-        df['geometry'] = geometry_list
-        df['geometry'] = Point(coordinates['coordinates'])
+            
+            data.append(attributes | {'geometry':geometry})
+            
+        df = pd.DataFrame(data)
         shakemap = gpd.GeoDataFrame(df)
+        shakemap.geometry =  shakemap['geometry'].apply(loads)
+        shakemap.crs = layer.GetSpatialRef().ExportToProj4()
 
 
         epicenter_attributes = epicenter.drop(columns='geometry')
