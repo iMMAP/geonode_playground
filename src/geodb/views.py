@@ -69,6 +69,7 @@ def getLatestEarthQuake(startdate=datetime.datetime.utcnow()-datetime.timedelta(
         data['geometry'] = Point(coordinates['coordinates'])
         earthquake_epic = data[dataAttr]
         epicenter = gpd.GeoDataFrame(earthquake_epic)
+        epicenter = epicenter.set_crs(4326, allow_override=True)
 
 
         db_url = f"postgresql://my_geonode:geonode@localhost:5432/my_geonode_data"
