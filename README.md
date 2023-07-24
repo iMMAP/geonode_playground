@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## About
 
 The Afghanistan Spatial Data Center (ASDC) is developed by iMMAP in Afghanistan. It is part of the iMMAP Disaster Risk Reduction Program, 
@@ -211,4 +210,3 @@ cd my_geonode/static
 npm install
 npm run tailwind-watch
 ```
->>>>>>> 69390fb7ececd263ab296d6ee6b7f9badbdc0f9d
