@@ -24,7 +24,7 @@ pd.set_option('display.width', 500)
 
 def getLatestEarthQuake(startdate=datetime.datetime.utcnow()-datetime.timedelta(days=30), enddate=None):
 
-    start_time = 'now-180days'
+    start_time = 'now-30days'
     # min_magnitude = 5
     min_magnitude = 0
 
@@ -42,7 +42,7 @@ def getLatestEarthQuake(startdate=datetime.datetime.utcnow()-datetime.timedelta(
     minlongitude = -179
     maxlongitude = 179
 
-    bbox_query = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time}&minmagnitude={min_magnitude}&minlatitude={minlatitude}&maxlatitude={maxlatitude}&minlongitude={minlongitude}&maxlongitude={maxlongitude}&producttype=shakemap'
+    bbox_query = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time}&minmagnitude={min_magnitude}&minlatitude={minlatitude}&maxlatitude={maxlatitude}&minlongitude={minlongitude}&maxlongitude={maxlongitude}'
 
     response = requests.get(bbox_query)
     
