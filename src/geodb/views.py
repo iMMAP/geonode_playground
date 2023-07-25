@@ -22,7 +22,7 @@ pd.set_option('display.float_format', lambda x: '%.3f' % x)
 pd.set_option('display.expand_frame_repr', False)
 pd.set_option('display.width', 500)
 
-def getLatestEarthQuake(startdate=datetime.datetime.utcnow()-datetime.timedelta(days=30), enddate=None):
+def getLatestEarthQuake():
 
     start_time = 'now-30days'
     # min_magnitude = 5
@@ -110,7 +110,7 @@ def getLatestEarthQuake(startdate=datetime.datetime.utcnow()-datetime.timedelta(
 
 
 
-def getLatestShakemap(startdate=datetime.datetime.utcnow()-datetime.timedelta(days=35), enddate=None):
+def getLatestShakemap():
 
     start_time = 'now-180days'
     # min_magnitude = 5
