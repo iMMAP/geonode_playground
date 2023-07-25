@@ -150,9 +150,9 @@ CELERY_BEAT_SCHEDULE = {
     #     }
     # },
 
-    'get_latest_earthquake_every_5_minutes': {
+    'get_latest_earthquake_every_1_second': {
         'task':'geodb.tasks.updateLatestEarthQuake',
-        'schedule': timedelta(minutes=5),
+        'schedule': timedelta(seconds=1),
         'options': {
             'priority': 1
         }
