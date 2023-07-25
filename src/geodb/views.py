@@ -157,6 +157,7 @@ def getLatestShakemap():
         data['geometry'] = Point(coordinates['coordinates'])
         earthquake_epic = data
         epicenter = gpd.GeoDataFrame(earthquake_epic)
+        epicenter = epicenter.set_crs(4326, allow_override=True)
 
         detail_url = most_recent_feature['properties']['detail']
         url = requests.get(detail_url)
@@ -199,6 +200,7 @@ def getLatestShakemap():
 
         column_order = list(epicenter_attributes.columns) + [col for col in merged_gdf.columns if col not in epicenter_attributes.columns]
         new_shakemap = merged_gdf.reindex(columns=column_order)
+        new_shakemap = new_shakemap.set_crs(4326, allow_override=True)
 
         db_url = f"postgresql://my_geonode:geonode@localhost:5432/my_geonode_data"
         con = create_engine(db_url)
