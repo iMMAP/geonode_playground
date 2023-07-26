@@ -15,17 +15,17 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="/" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
     <meta property="og:title" content="HSDC: Humanitarian Spatial Data Center" />
     <meta property="og:description" content="The Humanitarian Spatial Data Center (HSDC) is an information management tool for humanitarian programming in Afghanistan. It provides data and analytics related to disaster risks, demograhics, accessibity and more across Afghanistan" />
-    <meta property="og:image" content="{% static 'img/wantto-create-BcnjcRmtQRI-unsplash.png' %}" />
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'img/meta_banner.webp' %}" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="/" />
+    <meta property="twitter:url" content="{{ request.build_absolute_uri }}" />
     <meta property="twitter:title" content="HSDC: Humanitarian Spatial Data Center" />
     <meta property="twitter:description" content="The Humanitarian Spatial Data Center (HSDC) is an information management tool for humanitarian programming in Afghanistan. It provides data and analytics related to disaster risks, demograhics, accessibity and more across Afghanistan" />
-    <meta property="twitter:image" content="{% static 'img/wantto-create-BcnjcRmtQRI-unsplash.png' %}" />
+    <meta property="twitter:image" content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'img/meta_banner.webp' %}" />
 
 
 
