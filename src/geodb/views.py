@@ -112,7 +112,7 @@ def getLatestEarthQuake():
 
 def getLatestShakemap():
 
-    start_time = 'now-180days'
+    start_time = 'now-30days'
     # min_magnitude = 5
     min_magnitude = 0
 
@@ -130,7 +130,7 @@ def getLatestShakemap():
     minlongitude = -179
     maxlongitude = 179
 
-    bbox_query = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time}&minmagnitude={min_magnitude}&minlatitude={minlatitude}&maxlatitude={maxlatitude}&minlongitude={minlongitude}&maxlongitude={maxlongitude}&producttype=shakemap'
+    bbox_query = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time}&minmagnitude={min_magnitude}&minlatitude={minlatitude}&maxlatitude={maxlatitude}&minlongitude={minlongitude}&maxlongitude={maxlongitude}'
 
     response = requests.get(bbox_query)
     
@@ -162,79 +162,83 @@ def getLatestShakemap():
         detail_url = most_recent_feature['properties']['detail']
         url = requests.get(detail_url)
         detail_url_open = url.json()
-        shakemap_files = detail_url_open['properties']['products']['shakemap']
-        shakemap_shape_url = shakemap_files[0]['contents']['download/shape.zip']['url']
-        file_url = shakemap_shape_url
 
-        # save_path = r'~/Documents/shp.zip'
-        save_path = r'~/Earthquake_shakemap/shp.zip'
-        save_expanded_path = os.path.expanduser(save_path)
-        urllib.request.urlretrieve(file_url, save_expanded_path)
+        if 'shakemap' in detail_url_open['properties']['products']:
+            shakemap_files = detail_url_open['properties']['products']['shakemap']
+            print(shakemap_files)
+            shakemap_shape_url = shakemap_files[0]['contents']['download/shape.zip']['url']
+            file_url = shakemap_shape_url
 
-        zip_ref_path = r'~/Earthquake_shakemap/temp_extracted_files'
-        # zip_ref_path = r'~/Documents/temp_extracted_files'
-        zip_expanded_path = os.path.expanduser(zip_ref_path)
-        with zipfile.ZipFile(save_expanded_path, "r") as zip_ref:
-            zip_ref.extractall(zip_expanded_path)
+            # save_path = r'~/Documents/shp.zip'
+            save_path = r'~/Earthquake_shakemap/shp.zip'
+            save_expanded_path = os.path.expanduser(save_path)
+            urllib.request.urlretrieve(file_url, save_expanded_path)
 
-        # shapefile_path = zip_expanded_path + '/mi.shp'
-        # shakemap = gpd.read_file(shapefile_path)
+            zip_ref_path = r'~/Earthquake_shakemap/temp_extracted_files'
+            # zip_ref_path = r'~/Documents/temp_extracted_files'
+            zip_expanded_path = os.path.expanduser(zip_ref_path)
+            with zipfile.ZipFile(save_expanded_path, "r") as zip_ref:
+                zip_ref.extractall(zip_expanded_path)
 
-        shapefile = ogr.Open(zip_expanded_path + '/mi.shp')
-        layer = shapefile.GetLayer()
-        data = []
-        for feature in layer:
-            attributes = feature.items()
-            geometry = feature.GetGeometryRef().ExportToWkt()
-            
-            data.append(attributes | {'geometry':geometry})
-            
-        df = pd.DataFrame(data)
-        shakemap = gpd.GeoDataFrame(df)
-        shakemap.geometry =  shakemap['geometry'].apply(loads)
-        shakemap.crs = layer.GetSpatialRef().ExportToProj4()
+            # shapefile_path = zip_expanded_path + '/mi.shp'
+            # shakemap = gpd.read_file(shapefile_path)
+
+            shapefile = ogr.Open(zip_expanded_path + '/mi.shp')
+            layer = shapefile.GetLayer()
+            data = []
+            for feature in layer:
+                attributes = feature.items()
+                geometry = feature.GetGeometryRef().ExportToWkt()
+                
+                data.append(attributes | {'geometry':geometry})
+                
+            df = pd.DataFrame(data)
+            shakemap = gpd.GeoDataFrame(df)
+            shakemap.geometry =  shakemap['geometry'].apply(loads)
+            shakemap.crs = layer.GetSpatialRef().ExportToProj4()
 
 
-        epicenter_attributes = epicenter.drop(columns='geometry')
-        merged_gdf = gpd.GeoDataFrame(shakemap.merge(epicenter_attributes, how='cross'))
+            epicenter_attributes = epicenter.drop(columns='geometry')
+            merged_gdf = gpd.GeoDataFrame(shakemap.merge(epicenter_attributes, how='cross'))
 
-        column_order = list(epicenter_attributes.columns) + [col for col in merged_gdf.columns if col not in epicenter_attributes.columns]
-        new_shakemap = merged_gdf.reindex(columns=column_order)
-        new_shakemap = new_shakemap.set_crs(4326, allow_override=True)
+            column_order = list(epicenter_attributes.columns) + [col for col in merged_gdf.columns if col not in epicenter_attributes.columns]
+            new_shakemap = merged_gdf.reindex(columns=column_order)
+            new_shakemap = new_shakemap.set_crs(4326, allow_override=True)
 
-        db_url = f"postgresql://my_geonode:geonode@localhost:5432/my_geonode_data"
-        con = create_engine(db_url)
+            db_url = f"postgresql://my_geonode:geonode@localhost:5432/my_geonode_data"
+            con = create_engine(db_url)
 
-        new_shakemap.to_postgis('earthquake_shakemap', con, if_exists='replace')
-        print('Earthquake Shakemap saved successfully')
+            new_shakemap.to_postgis('earthquake_shakemap', con, if_exists='replace')
+            print('Earthquake Shakemap saved successfully')
 
-        metadata = MetaData()
-        metadata.reflect(bind=con)
-        table = metadata.tables.get('all_earthquake_shakemap')
-        unique_time_values = new_shakemap['time'].unique()[0]
+            metadata = MetaData()
+            metadata.reflect(bind=con)
+            table = metadata.tables.get('all_earthquake_shakemap')
+            unique_time_values = new_shakemap['time'].unique()[0]
 
-        if table is not None:
-            if 'time' in table.columns:
-                query = text(f"SELECT COUNT(*) FROM all_earthquake_shakemap WHERE time = {unique_time_values}")
+            if table is not None:
+                if 'time' in table.columns:
+                    query = text(f"SELECT COUNT(*) FROM all_earthquake_shakemap WHERE time = {unique_time_values}")
 
-                conn = con.connect()
-                cursor = conn.execute(query)
-                count = cursor.fetchone()[0]
+                    conn = con.connect()
+                    cursor = conn.execute(query)
+                    count = cursor.fetchone()[0]
 
-                if count > 0:
-                    print('The record already exits')
-                    
+                    if count > 0:
+                        print('The record already exits')
+                        
+                    else:
+                        new_shakemap['mag'] = new_shakemap['mag'].astype(float)
+                        new_shakemap.to_postgis("all_earthquake_shakemap", con, if_exists="append")
+                        print('All Earthquake Shakemap added successfully')
                 else:
-                    new_shakemap['mag'] = new_shakemap['mag'].astype(float)
-                    new_shakemap.to_postgis("all_earthquake_shakemap", con, if_exists="append")
-                    print('All Earthquake Shakemap added successfully')
+                    new_shakemap.to_postgis("all_earthquake_shakemap", con, if_exists="replace")
+                    print('All earthquake Shakemap replaced successfully')
             else:
-                new_shakemap.to_postgis("all_earthquake_shakemap", con, if_exists="replace")
-                print('All earthquake Shakemap replaced successfully')
+                new_shakemap.to_postgis("all_earthquake_shakemap", con, if_exists="append")
+                print('All earthquake Shakemap saved successfully')
         else:
-            new_shakemap.to_postgis("all_earthquake_shakemap", con, if_exists="append")
-            print('All earthquake Shakemap saved successfully')
-            # print('the table does not exist')
+            print("The earthquake doesn't have a shakemap")
 
     else:
         print('Error:', response.status_code)
