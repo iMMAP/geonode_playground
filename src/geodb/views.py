@@ -204,6 +204,7 @@ def getLatestShakemap():
             column_order = list(epicenter_attributes.columns) + [col for col in merged_gdf.columns if col not in epicenter_attributes.columns]
             new_shakemap = merged_gdf.reindex(columns=column_order)
             new_shakemap = new_shakemap.set_crs(4326, allow_override=True)
+            new_shakemap = MultiPolygon[(new_shakemap['geometry'])]
 
             db_url = f"postgresql://my_geonode:geonode@localhost:5432/my_geonode_data"
             con = create_engine(db_url)
