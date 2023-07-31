@@ -189,7 +189,7 @@ def getLatestShakemap():
         if 'shakemap' in detail_url_open['properties']['products']:
 
             # Load database configuration from file
-            with open(r'~/Documents/geonode_playground/src/hsdc_postgres_db_config.json', 'r') as f:
+            with open(r'~/geonode_playground/src/hsdc_postgres_db_config.json', 'r') as f:
                 config = json.load(f)
             db_url = f"postgresql://{config['username']}:{config['password']}@{config['host']}:{config['port']}/{config['database']}"
             con = create_engine(db_url)
