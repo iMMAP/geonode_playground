@@ -4,7 +4,7 @@
     <link href="{% static 'css/site_base.css' %}" rel="stylesheet" />    
 {% endblock %} -->
 
-<footer class="border-t-2 px-16 py-16 text-black-900">
+<footer class="border-t-2 px-16 py-10 text-black-900 bg-white">
   <div
     class="flex flex-col md:flex-row justify-between items-center text-center md:text-left"
   >
@@ -15,17 +15,25 @@
     />
 
     <p class="mb-5 md:mb-0 tracking-wider">
-      <span class="space-x-2"> @ {% now "Y" %}</span> iMMAP HSDC Platform
+      <span class="space-x-2"> @ {% now "Y" %}</span> <a href="https://immap.org" target="_blank" class="underline">iMMAP</a> HSDC Platform
     </p>
-    <div class="flex gap-5 justify-center md:justify-start flex-wrap">
-      <p class="font-medium">Find us on:</p>
-      <!-- <i class="fa fa-facebook" class="bg-gray-900 p-5"> </i>   -->
-      <a target="_blank" href="https://www.facebook.com/immap.org ">Facebook</a>
-      <a target="_blank" href="https://www.youtube.com/@immap3095">Youtube</a>
-      <a target="_blank" href="https://twitter.com/iMMAP_org ">Twitter</a>
-      <a target="_blank" href="https://www.linkedin.com/company/immap/"
+
+    <div class="flex flex-col gap-1 justify-center md:justify-start flex-wrap">
+      <div class="flex gap-5">
+        <p class="font-medium">Find us on:</p>
+        <!-- <i class="fa fa-facebook" class="bg-gray-900 p-5"> </i>   -->
+        <a target="_blank" class="underline" href="https://www.facebook.com/immap.org ">Facebook</a>
+        <a target="_blank" class="underline" href="https://www.youtube.com/@immap3095">Youtube</a>
+        <a target="_blank" class="underline" href="https://twitter.com/iMMAP_org ">Twitter</a>
+        <a target="_blank" class="underline" href="https://www.linkedin.com/company/immap/"
         >Linkedin</a
-      >
+        >
+      </div>
+      <div class="flex gap-5">
+        <p class="font-medium">Contact Us:</p>
+        <a target="_blank" class="underline" href="mailto:hsdc@immap.org">hsdc@immap.org</a>
+      </div>
     </div>
+    
   </div>
 </footer>
