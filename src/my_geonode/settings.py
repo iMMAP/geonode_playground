@@ -18,15 +18,16 @@
 #
 #########################################################################
 
+import ast
+
 # Django settings for the GeoNode project.
 import os
-import ast
 
 try:
     from urllib.parse import urlparse, urlunparse
-    from urllib.request import urlopen, Request
+    from urllib.request import Request, urlopen
 except ImportError:
-    from urllib2 import urlopen, Request
+    from urllib2 import Request, urlopen
     from urlparse import urlparse, urlunparse
 # Load more settings from a file called local_settings.py if it exists
 try:
@@ -46,7 +47,7 @@ if not SITEURL.endswith('/'):
 
 
 SITENAME = os.getenv("SITENAME", 'my_geonode', )
-# APP_ENV = os.getenv("APP_ENV", 'local')
+APP_ENV = os.getenv("APP_ENV", 'local')
 
 # Defines the directory that contains the settings file as the LOCAL_ROOT
 # It is used for relative settings elsewhere.

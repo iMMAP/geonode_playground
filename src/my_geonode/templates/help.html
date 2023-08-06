@@ -10,7 +10,10 @@
     line-height: 2;
     font-size:1rem;
   }
-  .help_content ul li{
+  .help_content ul {
+    all: revert;
+  }
+  .help_content a {
     all: revert;
   }
 </style>
@@ -127,7 +130,7 @@
         <ul>
           
           <li>
-            Detailed Geonode documentation: https://docs.geonode.org/en/master/usage/index.html 
+            Detailed Geonode documentation: <a target="_blank" href="https://docs.geonode.org/en/master/usage/index.html">Here</a> 
           </li>
         </ul>
 
@@ -137,7 +140,8 @@
 
         Please reach out if you have any questions or require further guidance 
 
-        Email: hsdc@immap.org  
+        Email: <a target="_blank" class="underline" href="mailto:hsdc@immap.org">hsdc@immap.org</a>
+        
     {% endblocktrans %}
 
   </div>
