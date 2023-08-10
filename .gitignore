@@ -76,6 +76,7 @@ src/.override_dev_env
 src/my_geonode/static/css/site_base.css
 src/geoserver
 src/celerybeat-schedule
+src/hsdc_postgres_db_config.json
 
 VENV
 .VENV
