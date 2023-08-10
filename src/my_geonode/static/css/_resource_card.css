@@ -58,7 +58,7 @@ p.card-text.gn-card-description.grid{
   display: flex;
   align-items: center;
 }
-.msgapi a:hover {
+.msgapi .msgapi .gn-details-info-fields a:hover {
   color: #bb4940 !important;
   text-decoration: none;
 }
