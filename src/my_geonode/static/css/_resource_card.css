@@ -53,6 +53,15 @@ p.card-text.gn-card-description.grid{
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 }
+
+.gn-details-panel-tools {
+  display: flex;
+  align-items: center;
+}
+.msgapi a:hover {
+  color: #bb4940 !important;
+  text-decoration: none;
+}
 /* .gn-card-description {
   color: rgb(92 89 89);
   white-space: pre-wrap !important;
