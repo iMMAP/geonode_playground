@@ -49,7 +49,7 @@
 p.card-text.gn-card-description.grid{
   color: rgb(92 89 89);
   white-space: pre-wrap !important;
-  display: -webkit-box;
+  display: -webkit-box !important;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 }
