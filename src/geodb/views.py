@@ -73,7 +73,9 @@ def getLatestEarthQuake():
         epicenter = epicenter.set_crs(4326, allow_override=True)
 
         # Load database configuration from file
-        with open(r'~/Documents/geonode_playground/src/hsdc_postgres_db_config.json', 'r') as f:
+        db_credential_file = r'~/geonode_playground/src/hsdc_postgres_db_config.json'
+        db_credential = db_credential = os.path.expanduser(db_credential_file)
+        with open(db_credential, 'r') as f:
             config = json.load(f)
         db_url = f"postgresql://{config['username']}:{config['password']}@{config['host']}:{config['port']}/{config['database']}"
         con = create_engine(db_url)
@@ -193,7 +195,9 @@ def getLatestShakemap():
         if 'shakemap' in detail_url_open['properties']['products']:
 
             # Load database configuration from file
-            with open(r'~/geonode_playground/src/hsdc_postgres_db_config.json', 'r') as f:
+            db_credential_file = r'~/geonode_playground/src/hsdc_postgres_db_config.json'
+            db_credential = db_credential = os.path.expanduser(db_credential_file)
+            with open(db_credential, 'r') as f:
                 config = json.load(f)
             db_url = f"postgresql://{config['username']}:{config['password']}@{config['host']}:{config['port']}/{config['database']}"
             con = create_engine(db_url)
