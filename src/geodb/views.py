@@ -15,6 +15,7 @@ import psycopg2
 from shapely.geometry import Polygon, MultiPolygon, shape
 from osgeo import ogr
 from shapely.wkt import loads
+import rasterstats
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
@@ -71,9 +72,12 @@ def getLatestEarthQuake():
         epicenter = gpd.GeoDataFrame(earthquake_epic)
         epicenter = epicenter.set_crs(4326, allow_override=True)
 
-
-        db_url = f"postgresql://my_geonode:geonode@localhost:5432/my_geonode_data"
+        # Load database configuration from file
+        with open(r'~/Documents/geonode_playground/src/hsdc_postgres_db_config.json', 'r') as f:
+            config = json.load(f)
+        db_url = f"postgresql://{config['username']}:{config['password']}@{config['host']}:{config['port']}/{config['database']}"
         con = create_engine(db_url)
+
         epicenter.to_postgis("earthquake_epicenter", con, if_exists="replace")
         print('Earthquake Epicenter saved successfully')
 
@@ -214,28 +218,14 @@ def getLatestShakemap():
             with zipfile.ZipFile(save_expanded_path, "r") as zip_ref:
                 zip_ref.extractall(zip_expanded_path)
 
-            # Read the shapefile as a GeoPandas DataFrame usin OSGeo
-            shapefile = ogr.Open(zip_expanded_path + '/mi.shp')
-            layer = shapefile.GetLayer()
-            data = []
-            for feature in layer:
-                attributes = feature.items()
-                geometry = feature.GetGeometryRef().ExportToWkt()
-                
-                data.append(attributes | {'geometry':geometry})
-
-            df = pd.DataFrame(data)
-            shakemap = gpd.GeoDataFrame(df)
+            # Read the shapefile as a GeoPandas DataFrame
+            shakemap = gpd.read_file(zip_expanded_path + '/mi.shp')
 
             # Remove rows if PARAMVALUE = 1
             shakemap = shakemap[shakemap['PARAMVALUE'] != 1]
 
-            # Apply the loads the available shakemap
-            shakemap.geometry =  shakemap['geometry'].apply(loads)
-
             # Apply the Multipolygon and Polygon on Geometry
             shakemap['geometry'] = shakemap['geometry'].apply(lambda geom: MultiPolygon([geom]) if geom.type == 'Polygon' else geom)
-            shakemap.crs = layer.GetSpatialRef().ExportToProj4()
 
             # Create list of columns to user for ordering
             shakemap_columns = list(shakemap.columns)
