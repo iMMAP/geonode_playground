@@ -204,7 +204,6 @@ def getLatestShakemap():
 
             # Get the URLs for the ShakeMap files (many different data format available)
             shakemap_files = detail_url_open['properties']['products']['shakemap']
-            print(shakemap_files)
 
             # Select the shape format and specify the URL of the file to download
             shakemap_shape_url = shakemap_files[0]['contents']['download/shape.zip']['url']
@@ -233,8 +232,8 @@ def getLatestShakemap():
 
             # Create list of columns to user for ordering
             shakemap_columns = list(shakemap.columns)
-            epicenter_attributes = epicenter.drop(columns='geometry')
-            column_order = epicenter_columns + shakemap_columns
+            epicenter_attributes = list(epicenter.drop(columns='geometry').columns)
+            column_order = epicenter_attributes + shakemap_columns
 
             # Add a temporary column to both DataFrames with a constant value to create a Cartesian product merge
             shakemap['_merge_key'] = 1
