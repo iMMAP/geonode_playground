@@ -66,7 +66,7 @@ def getLatestEarthQuake():
         coordinates = most_recent_feature['geometry']
 
         data = pd.DataFrame(attributes, index=[0])
-        dataAttr = ['mag','place','time','updated','alert','status','type','title','geometry']
+        dataAttr = ['title','place','mag','time','type','cdi','mmi','alert','geometry']
         data['geometry'] = Point(coordinates['coordinates'])
         earthquake_epic = data[dataAttr]
         epicenter = gpd.GeoDataFrame(earthquake_epic)
@@ -241,11 +241,10 @@ def getLatestShakemap():
             epicenter['_merge_key'] = 1
 
             # Perform a merge on the temporary column
-            shakemap = pd.merge(shakemap, epicenter.drop(columns='geometry'), how='cross', on='_merge_key')
+            shakemap = pd.merge(shakemap, epicenter.drop(columns='geometry'), how='outer', on='_merge_key')
 
             # Remove the temporary column
             shakemap = shakemap.drop(columns='_merge_key')
-            column_order = list(epicenter_attributes.columns) + [col for col in merged_gdf.columns if col not in epicenter_attributes.columns]
             
             # Reorder columns
             shakemap = shakemap.reindex(columns=column_order)
@@ -374,7 +373,7 @@ def getLatestShakemap():
 
             if table is not None:
                 if 'time' in table.columns:
-                    query = text(f"SELECT COUNT(*) FROM all_earthquake_shakemap WHERE time = {unique_time_values}")
+                    query = text(f"SELECT COUNT(*) FROM all_earthquake_shakemap WHERE time = '{unique_time_values}'")
 
                     conn = con.connect()
                     cursor = conn.execute(query)
