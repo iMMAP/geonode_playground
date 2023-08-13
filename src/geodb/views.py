@@ -26,22 +26,22 @@ pd.set_option('display.width', 500)
 def getLatestEarthQuake():
 
     start_time = 'now-30days'
-    # min_magnitude = 5
-    min_magnitude = 0
+    min_magnitude = 5
+    # min_magnitude = 0
 
     latitude = 39.1458
     longitude = 34.1614
     max_radius_km = 1500
 
-    # minlatitude = 29.377065
-    # maxlatitude = 38.490842
-    # minlongitude = 60.471977
-    # maxlongitude = 74.889561
+    minlatitude = 29.377065
+    maxlatitude = 38.490842
+    minlongitude = 60.471977
+    maxlongitude = 74.889561
 
-    minlatitude = -90
-    maxlatitude = 90
-    minlongitude = -179
-    maxlongitude = 179
+    # minlatitude = -90
+    # maxlatitude = 90
+    # minlongitude = -179
+    # maxlongitude = 179
 
     bbox_query = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time}&minmagnitude={min_magnitude}&minlatitude={minlatitude}&maxlatitude={maxlatitude}&minlongitude={minlongitude}&maxlongitude={maxlongitude}'
 
@@ -119,22 +119,22 @@ def getLatestEarthQuake():
 def getLatestShakemap():
 
     start_time = 'now-30days'
-    # min_magnitude = 5
-    min_magnitude = 0
+    min_magnitude = 5
+    # min_magnitude = 0
 
     latitude = 39.1458
     longitude = 34.1614
     max_radius_km = 1500
 
-    # minlatitude = 29.377065
-    # maxlatitude = 38.490842
-    # minlongitude = 60.471977
-    # maxlongitude = 74.889561
+    minlatitude = 29.377065
+    maxlatitude = 38.490842
+    minlongitude = 60.471977
+    maxlongitude = 74.889561
 
-    minlatitude = -90
-    maxlatitude = 90
-    minlongitude = -179
-    maxlongitude = 179
+    # minlatitude = -90
+    # maxlatitude = 90
+    # minlongitude = -179
+    # maxlongitude = 179
 
     # Run query and check response
     bbox_query = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time}&minmagnitude={min_magnitude}&minlatitude={minlatitude}&maxlatitude={maxlatitude}&minlongitude={minlongitude}&maxlongitude={maxlongitude}'
