@@ -25,7 +25,7 @@ pd.set_option('display.width', 500)
 
 def getLatestEarthQuake():
 
-    start_time = 'now-30days'
+    start_time = 'now-180days'
     min_magnitude = 5
     # min_magnitude = 0
 
@@ -118,7 +118,7 @@ def getLatestEarthQuake():
 
 def getLatestShakemap():
 
-    start_time = 'now-30days'
+    start_time = 'now-180days'
     min_magnitude = 5
     # min_magnitude = 0
 
