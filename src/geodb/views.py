@@ -74,7 +74,7 @@ def getLatestEarthQuake():
 
         # Load database configuration from file
         db_credential_file = r'~/geonode_playground/src/hsdc_postgres_db_config.json'
-        db_credential = db_credential = os.path.expanduser(db_credential_file)
+        db_credential = os.path.expanduser(db_credential_file)
         with open(db_credential, 'r') as f:
             config = json.load(f)
         db_url = f"postgresql://{config['username']}:{config['password']}@{config['host']}:{config['port']}/{config['database']}"
@@ -196,7 +196,7 @@ def getLatestShakemap():
 
             # Load database configuration from file
             db_credential_file = r'~/geonode_playground/src/hsdc_postgres_db_config.json'
-            db_credential = db_credential = os.path.expanduser(db_credential_file)
+            db_credential = os.path.expanduser(db_credential_file)
             with open(db_credential, 'r') as f:
                 config = json.load(f)
             db_url = f"postgresql://{config['username']}:{config['password']}@{config['host']}:{config['port']}/{config['database']}"
@@ -280,9 +280,10 @@ def getLatestShakemap():
 
             # Get population raster
             pop = r'~/raster/afg_worldpop_2020_UNadj_unconstrained_comp.tif' #_projCEA
+            pop_expanded_path = os.path.expanduser(pop)
 
             # Run zonal statistics
-            zonal = rasterstats.zonal_stats(shakemap, pop, stats = 'sum')
+            zonal = rasterstats.zonal_stats(shakemap, pop_expanded_path, stats = 'sum')
             # Convert to pandas dataframe
             df = pd.DataFrame(zonal)
             df = df.rename(columns={'sum': 'pop'})
