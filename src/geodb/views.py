@@ -15,6 +15,7 @@ import psycopg2
 from shapely.geometry import Polygon, MultiPolygon, shape
 from osgeo import ogr
 from shapely.wkt import loads
+import rasterstats
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
@@ -24,23 +25,23 @@ pd.set_option('display.width', 500)
 
 def getLatestEarthQuake():
 
-    start_time = 'now-30days'
-    # min_magnitude = 5
-    min_magnitude = 0
+    start_time = 'now-180days'
+    min_magnitude = 5
+    # min_magnitude = 0
 
     latitude = 39.1458
     longitude = 34.1614
     max_radius_km = 1500
 
-    # minlatitude = 29.377065
-    # maxlatitude = 38.490842
-    # minlongitude = 60.471977
-    # maxlongitude = 74.889561
+    minlatitude = 29.377065
+    maxlatitude = 38.490842
+    minlongitude = 60.471977
+    maxlongitude = 74.889561
 
-    minlatitude = -90
-    maxlatitude = 90
-    minlongitude = -179
-    maxlongitude = 179
+    # minlatitude = -90
+    # maxlatitude = 90
+    # minlongitude = -179
+    # maxlongitude = 179
 
     bbox_query = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time}&minmagnitude={min_magnitude}&minlatitude={minlatitude}&maxlatitude={maxlatitude}&minlongitude={minlongitude}&maxlongitude={maxlongitude}'
 
@@ -65,15 +66,20 @@ def getLatestEarthQuake():
         coordinates = most_recent_feature['geometry']
 
         data = pd.DataFrame(attributes, index=[0])
-        dataAttr = ['mag','place','time','updated','alert','status','type','title','geometry']
+        dataAttr = ['title','place','mag','time','type','cdi','mmi','alert','geometry']
         data['geometry'] = Point(coordinates['coordinates'])
         earthquake_epic = data[dataAttr]
         epicenter = gpd.GeoDataFrame(earthquake_epic)
         epicenter = epicenter.set_crs(4326, allow_override=True)
 
-
-        db_url = f"postgresql://my_geonode:geonode@localhost:5432/my_geonode_data"
+        # Load database configuration from file
+        db_credential_file = r'~/geonode_playground/src/hsdc_postgres_db_config.json'
+        db_credential = os.path.expanduser(db_credential_file)
+        with open(db_credential, 'r') as f:
+            config = json.load(f)
+        db_url = f"postgresql://{config['username']}:{config['password']}@{config['host']}:{config['port']}/{config['database']}"
         con = create_engine(db_url)
+
         epicenter.to_postgis("earthquake_epicenter", con, if_exists="replace")
         print('Earthquake Epicenter saved successfully')
 
@@ -112,23 +118,23 @@ def getLatestEarthQuake():
 
 def getLatestShakemap():
 
-    start_time = 'now-30days'
-    # min_magnitude = 5
-    min_magnitude = 0
+    start_time = 'now-180days'
+    min_magnitude = 5
+    # min_magnitude = 0
 
     latitude = 39.1458
     longitude = 34.1614
     max_radius_km = 1500
 
-    # minlatitude = 29.377065
-    # maxlatitude = 38.490842
-    # minlongitude = 60.471977
-    # maxlongitude = 74.889561
+    minlatitude = 29.377065
+    maxlatitude = 38.490842
+    minlongitude = 60.471977
+    maxlongitude = 74.889561
 
-    minlatitude = -90
-    maxlatitude = 90
-    minlongitude = -179
-    maxlongitude = 179
+    # minlatitude = -90
+    # maxlatitude = 90
+    # minlongitude = -179
+    # maxlongitude = 179
 
     # Run query and check response
     bbox_query = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time}&minmagnitude={min_magnitude}&minlatitude={minlatitude}&maxlatitude={maxlatitude}&minlongitude={minlongitude}&maxlongitude={maxlongitude}'
@@ -189,14 +195,15 @@ def getLatestShakemap():
         if 'shakemap' in detail_url_open['properties']['products']:
 
             # Load database configuration from file
-            with open(r'~/geonode_playground/src/hsdc_postgres_db_config.json', 'r') as f:
+            db_credential_file = r'~/geonode_playground/src/hsdc_postgres_db_config.json'
+            db_credential = os.path.expanduser(db_credential_file)
+            with open(db_credential, 'r') as f:
                 config = json.load(f)
             db_url = f"postgresql://{config['username']}:{config['password']}@{config['host']}:{config['port']}/{config['database']}"
             con = create_engine(db_url)
 
             # Get the URLs for the ShakeMap files (many different data format available)
             shakemap_files = detail_url_open['properties']['products']['shakemap']
-            print(shakemap_files)
 
             # Select the shape format and specify the URL of the file to download
             shakemap_shape_url = shakemap_files[0]['contents']['download/shape.zip']['url']
@@ -214,44 +221,29 @@ def getLatestShakemap():
             with zipfile.ZipFile(save_expanded_path, "r") as zip_ref:
                 zip_ref.extractall(zip_expanded_path)
 
-            # Read the shapefile as a GeoPandas DataFrame usin OSGeo
-            shapefile = ogr.Open(zip_expanded_path + '/mi.shp')
-            layer = shapefile.GetLayer()
-            data = []
-            for feature in layer:
-                attributes = feature.items()
-                geometry = feature.GetGeometryRef().ExportToWkt()
-                
-                data.append(attributes | {'geometry':geometry})
-
-            df = pd.DataFrame(data)
-            shakemap = gpd.GeoDataFrame(df)
+            # Read the shapefile as a GeoPandas DataFrame
+            shakemap = gpd.read_file(zip_expanded_path + '/mi.shp')
 
             # Remove rows if PARAMVALUE = 1
             shakemap = shakemap[shakemap['PARAMVALUE'] != 1]
 
-            # Apply the loads the available shakemap
-            shakemap.geometry =  shakemap['geometry'].apply(loads)
-
             # Apply the Multipolygon and Polygon on Geometry
             shakemap['geometry'] = shakemap['geometry'].apply(lambda geom: MultiPolygon([geom]) if geom.type == 'Polygon' else geom)
-            shakemap.crs = layer.GetSpatialRef().ExportToProj4()
 
             # Create list of columns to user for ordering
             shakemap_columns = list(shakemap.columns)
-            epicenter_attributes = epicenter.drop(columns='geometry')
-            column_order = epicenter_columns + shakemap_columns
+            epicenter_attributes = list(epicenter.drop(columns='geometry').columns)
+            column_order = epicenter_attributes + shakemap_columns
 
             # Add a temporary column to both DataFrames with a constant value to create a Cartesian product merge
             shakemap['_merge_key'] = 1
             epicenter['_merge_key'] = 1
 
             # Perform a merge on the temporary column
-            shakemap = pd.merge(shakemap, epicenter.drop(columns='geometry'), how='cross', on='_merge_key')
+            shakemap = pd.merge(shakemap, epicenter.drop(columns='geometry'), how='outer', on='_merge_key')
 
             # Remove the temporary column
             shakemap = shakemap.drop(columns='_merge_key')
-            column_order = list(epicenter_attributes.columns) + [col for col in merged_gdf.columns if col not in epicenter_attributes.columns]
             
             # Reorder columns
             shakemap = shakemap.reindex(columns=column_order)
@@ -287,9 +279,10 @@ def getLatestShakemap():
 
             # Get population raster
             pop = r'~/raster/afg_worldpop_2020_UNadj_unconstrained_comp.tif' #_projCEA
+            pop_expanded_path = os.path.expanduser(pop)
 
             # Run zonal statistics
-            zonal = rasterstats.zonal_stats(shakemap, pop, stats = 'sum')
+            zonal = rasterstats.zonal_stats(shakemap, pop_expanded_path, stats = 'sum')
             # Convert to pandas dataframe
             df = pd.DataFrame(zonal)
             df = df.rename(columns={'sum': 'pop'})
@@ -380,7 +373,7 @@ def getLatestShakemap():
 
             if table is not None:
                 if 'time' in table.columns:
-                    query = text(f"SELECT COUNT(*) FROM all_earthquake_shakemap WHERE time = {unique_time_values}")
+                    query = text(f"SELECT COUNT(*) FROM all_earthquake_shakemap WHERE time = '{unique_time_values}'")
 
                     conn = con.connect()
                     cursor = conn.execute(query)
