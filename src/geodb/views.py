@@ -322,10 +322,9 @@ def getLatestShakemap():
 
                 #Calculating building count =============================================================================
 
-                # (OBS: Change to live database)
-
                 # Load buildings from database
-                buildings = gpd.GeoDataFrame.from_postgis('SELECT * from afg_buildings_microsoft', con)   #afg_buildings_microsoft_centroids
+                buildings = gpd.GeoDataFrame.from_postgis('SELECT * from point_sample', con)   #Dev
+                # buildings = gpd.GeoDataFrame.from_postgis('SELECT * from afg_buildings_microsoft_centroids', con) #Prod
 
                 # Joining the polygon attributes to each point
                 # Creates a point layer of all buildings with the attributes copied from the interesecting polygon uniquely for each point
