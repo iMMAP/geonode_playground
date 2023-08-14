@@ -1,8 +1,10 @@
-from django.shortcuts import render
 from allauth.account.views import SignupView
 from django.conf import settings
-from .models import OchaDashboard
 from django.db.models import Q
+from django.shortcuts import render
+
+from .models import OchaDashboard
+
 
 def ocha_dashboards(request):
     q = request.GET.get('q')
@@ -19,7 +21,7 @@ def ocha_dashboards(request):
 
     context = {'ocha_dashboards': ocha_dashboards,}
 
-    return render(request, 'ocha-dashboard/index.html', context)
+    return render(request, 'myapp/ocha-dashboard/index.html', context)
     
 
 def ocha_dashboard(request, slug):
@@ -27,7 +29,7 @@ def ocha_dashboard(request, slug):
 
     context = {'ocha_dashboard': ocha_dashboard,}
 
-    return render(request, 'ocha-dashboard/show.html', context)
+    return render(request, 'myapp/ocha-dashboard/show.html', context)
 
 
 class CustomSignupView(SignupView):
