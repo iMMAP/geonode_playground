@@ -157,7 +157,7 @@ def getLatestShakemap():
         sorted_features = sorted(data, key=lambda x: x['properties']['time'], reverse=True)
 
         # Get the most recent feature
-        most_recent_feature = sorted_features[-1]
+        most_recent_feature = sorted_features[0]
 
         # Extracting epicenter coordinates and attributes
         attributes = most_recent_feature['properties']
@@ -176,6 +176,7 @@ def getLatestShakemap():
         attributes['time'] = attributes['time'].strftime('%Y-%m-%d %H:%M:%S')
 
         #=============================================================================================
+        
 
         # Create a pandas DataFrame
         data = pd.DataFrame(attributes, index=[0])
