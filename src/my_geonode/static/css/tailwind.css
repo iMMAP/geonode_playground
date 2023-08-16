@@ -180,3 +180,12 @@ li {
 .msgapi .background-list-container {
   margin-bottom: 40px !important;
 }
+
+.msgapi .gn-share-permissions-container {
+  border-style: solid;
+  border-width: 1px;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  position: relative;
+  visibility: hidden !important;
+}
