@@ -235,6 +235,10 @@
     .hero_intro_img{
         visibility: hidden;
     }
+
+    .landing_hero_container{
+        width: 100%;
+    }
     
     .landing_hero_container .landing_hero_right{
         display: none;
