@@ -208,11 +208,36 @@
     align-items: center;
 }
 
+.features_container .feature_container_cards{
+    display: grid;
+}
+
+@media (min-width: 1400px) {
+    .features_container .feature_container_cards{
+        display: flex;
+    }
+}
+
+@media (max-width: 1400px) and (min-width: 1050px) {
+    .features_container .feature_container_cards{
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important
+    }
+}
+
 @media only screen and (max-width: 1024px) {
     .landing_hero_container .landing_hero_left{
         width: 100%;
         height: auto;
         padding: 1rem;
+    }
+
+    .hero_intro_img{
+        display: none;
+    }
+
+    .landing_intro_text{
+        width: 100%;
     }
     
     .landing_hero_container .landing_hero_right{
