@@ -233,7 +233,7 @@
     }
 
     .hero_intro_img{
-        visibility: hidden;
+        display: none;
     }
 
     .landing_intro_text{
