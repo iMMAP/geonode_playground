@@ -581,10 +581,6 @@
                         },
                         {
                             "type": "plugin",
-                            "name": "Share"
-                        },
-                        {
-                            "type": "plugin",
                             "name": "DeleteResource",
                             "disableIf": "{!context.resourceHasPermission(state('gnResourceData'), 'delete_resourcebase')}"
                         },
@@ -654,13 +650,6 @@
                 "name": "MapThumbnail"
             },
             {
-                "name": "Share",
-                "cfg": {
-                    "containerPosition": "rightOverlay",
-                    "enableGeoLimits": true
-                }
-            },
-            {
                 "name": "DetailViewer",
                 "cfg": {
                     "containerPosition": "rightOverlay",
@@ -717,12 +706,6 @@
                                     "query": {
                                         "filter{category.identifier.in}": "{context.get(state('gnResourceData'), 'category.identifier')}"
                                     }
-                                },
-                                {
-                                    "type": "link",
-                                    "labelId": "gnviewer.pointOfContact",
-                                    "value": "{context.getUserResourceNames(context.get(state('gnResourceData'), 'poc'))}",
-                                    "disableIf": "{!context.get(state('gnResourceData'), 'poc')}"
                                 },
                                 {
                                     "type": "query",
@@ -1493,10 +1476,6 @@
                         },
                         {
                             "type": "plugin",
-                            "name": "Share"
-                        },
-                        {
-                            "type": "plugin",
                             "name": "DeleteResource",
                             "disableIf": "{!context.resourceHasPermission(state('gnResourceData'), 'delete_resourcebase')}"
                         },
@@ -1591,12 +1570,6 @@
                                     "query": {
                                         "filter{category.identifier.in}": "{context.get(state('gnResourceData'), 'category.identifier')}"
                                     }
-                                },
-                                {
-                                    "type": "link",
-                                    "labelId": "gnviewer.pointOfContact",
-                                    "value": "{context.getUserResourceNames(context.get(state('gnResourceData'), 'poc'))}",
-                                    "disableIf": "{!context.get(state('gnResourceData'), 'poc')}"
                                 },
                                 {
                                     "type": "query",
@@ -2030,12 +2003,6 @@
                 "name": "Notifications"
             },
             {
-                "name": "Share",
-                "cfg": {
-                    "containerPosition": "rightOverlay"
-                }
-            },
-            {
                 "name": "Swipe"
             },
             {
@@ -2161,10 +2128,6 @@
                         },
                         {
                             "type": "plugin",
-                            "name": "Share"
-                        },
-                        {
-                            "type": "plugin",
                             "name": "DeleteResource",
                             "disableIf": "{!context.resourceHasPermission(state('gnResourceData'), 'delete_resourcebase')}"
                         }
@@ -2234,12 +2197,6 @@
                                     "query": {
                                         "filter{category.identifier.in}": "{context.get(state('gnResourceData'), 'category.identifier')}"
                                     }
-                                },
-                                {
-                                    "type": "link",
-                                    "labelId": "gnviewer.pointOfContact",
-                                    "value": "{context.getUserResourceNames(context.get(state('gnResourceData'), 'poc'))}",
-                                    "disableIf": "{!context.get(state('gnResourceData'), 'poc')}"
                                 },
                                 {
                                     "type": "query",
@@ -2391,12 +2348,6 @@
                 "name": "SaveAs"
             },
             {
-                "name": "Share",
-                "cfg": {
-                    "containerPosition": "rightOverlay"
-                }
-            },
-            {
                 "name": "Sync"
             }
         ],
@@ -2455,10 +2406,6 @@
                                     "labelId": "gnviewer.editMetadata"
                                 }
                             ]
-                        },
-                        {
-                            "type": "plugin",
-                            "name": "Share"
                         },
                         {
                             "type": "plugin",
@@ -2546,12 +2493,6 @@
                                     }
                                 },
                                 {
-                                    "type": "link",
-                                    "labelId": "gnviewer.pointOfContact",
-                                    "value": "{context.getUserResourceNames(context.get(state('gnResourceData'), 'poc'))}",
-                                    "disableIf": "{!context.get(state('gnResourceData'), 'poc')}"
-                                },
-                                {
                                     "type": "query",
                                     "labelId": "gnviewer.keywords",
                                     "value": "{context.get(state('gnResourceData'), 'keywords')}",
@@ -2623,12 +2564,6 @@
                 "name": "SaveAs"
             },
             {
-                "name": "Share",
-                "cfg": {
-                    "containerPosition": "rightOverlay"
-                }
-            },
-            {
                 "name": "MediaViewer"
             }
         ],
@@ -2692,10 +2627,6 @@
                                     "labelId": "gnviewer.editMetadata"
                                 }
                             ]
-                        },
-                        {
-                            "type": "plugin",
-                            "name": "Share"
                         },
                         {
                             "type": "plugin",
@@ -2774,12 +2705,6 @@
                                     }
                                 },
                                 {
-                                    "type": "link",
-                                    "labelId": "gnviewer.pointOfContact",
-                                    "value": "{context.getUserResourceNames(context.get(state('gnResourceData'), 'poc'))}",
-                                    "disableIf": "{!context.get(state('gnResourceData'), 'poc')}"
-                                },
-                                {
                                     "type": "query",
                                     "labelId": "gnviewer.keywords",
                                     "value": "{context.get(state('gnResourceData'), 'keywords')}",
@@ -2852,12 +2777,6 @@
             },
             {
                 "name": "Sync"
-            },
-            {
-                "name": "Share",
-                "cfg": {
-                    "containerPosition": "rightOverlay"
-                }
             },
             {
                 "name": "DashboardEditor",
@@ -3293,12 +3212,6 @@
                                     "query": {
                                         "filter{category.identifier.in}": "{context.get(state('gnResourceData'), 'category.identifier')}"
                                     }
-                                },
-                                {
-                                    "type": "link",
-                                    "labelId": "gnviewer.pointOfContact",
-                                    "value": "{context.getUserResourceNames(context.get(state('gnResourceData'), 'poc'))}",
-                                    "disableIf": "{!context.get(state('gnResourceData'), 'poc')}"
                                 },
                                 {
                                     "type": "query",
