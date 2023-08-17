@@ -84,7 +84,8 @@ def getLatestEarthQuake():
         # =============================================================================================
 
         if count > 0:
-
+            print('The earthquake feature already exist')
+        else:
             data = pd.DataFrame(attributes, index=[0])
             dataAttr = ['title','place','mag','time','type','cdi','mmi','alert','geometry']
             data['geometry'] = Point(coordinates['coordinates'])
@@ -122,9 +123,6 @@ def getLatestEarthQuake():
                 epicenter.crs = 'EPSG:4326'
                 epicenter.to_postgis("all_earthquake_epicenter", con, if_exists="append")
                 print('All earthquake Epicenter saved successfully')
-
-        else:
-            print('The earthquake feature already exist')
     else:
         print('Error:', response.status_code)
 
@@ -209,7 +207,8 @@ def getLatestShakemap():
         # =============================================================================================
 
         if count > 0:
-            
+            print('The earthquake feature already exist')
+        else:
             # Create a pandas DataFrame
             data = pd.DataFrame(attributes, index=[0])
             data['geometry'] = Point(coordinates['coordinates'])
@@ -418,8 +417,5 @@ def getLatestShakemap():
                     print('All earthquake Shakemap saved successfully')
             else:
                 print("The earthquake doesn't have a shakemap")
-        else:
-            print('The earthquake feature already exist')
-
     else:
         print('Error:', response.status_code)
