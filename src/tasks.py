@@ -234,7 +234,7 @@ def prepare(ctx):
 
 @task
 def fixtures(ctx):
-    print("**************************fixtures********************************")
+    print("**************************fixtures shahryar********************************")
     ctx.run("python manage.py loaddata sample_admin \
 --settings={0}".format(_localsettings()), pty=True)
     ctx.run("python manage.py loaddata /tmp/default_oauth_apps_docker.json \
