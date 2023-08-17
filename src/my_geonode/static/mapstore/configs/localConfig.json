@@ -650,13 +650,6 @@
                 "name": "MapThumbnail"
             },
             {
-                "name": "Share",
-                "cfg": {
-                    "containerPosition": "rightOverlay",
-                    "enableGeoLimits": true
-                }
-            },
-            {
                 "name": "DetailViewer",
                 "cfg": {
                     "containerPosition": "rightOverlay",
@@ -1489,10 +1482,6 @@
                         },
                         {
                             "type": "plugin",
-                            "name": "Share"
-                        },
-                        {
-                            "type": "plugin",
                             "name": "DeleteResource",
                             "disableIf": "{!context.resourceHasPermission(state('gnResourceData'), 'delete_resourcebase')}"
                         },
@@ -2026,12 +2015,6 @@
                 "name": "Notifications"
             },
             {
-                "name": "Share",
-                "cfg": {
-                    "containerPosition": "rightOverlay"
-                }
-            },
-            {
                 "name": "Swipe"
             },
             {
@@ -2154,10 +2137,6 @@
                                     "labelId": "gnviewer.editMetadata"
                                 }
                             ]
-                        },
-                        {
-                            "type": "plugin",
-                            "name": "Share"
                         },
                         {
                             "type": "plugin",
@@ -2387,12 +2366,6 @@
                 "name": "SaveAs"
             },
             {
-                "name": "Share",
-                "cfg": {
-                    "containerPosition": "rightOverlay"
-                }
-            },
-            {
                 "name": "Sync"
             }
         ],
@@ -2451,10 +2424,6 @@
                                     "labelId": "gnviewer.editMetadata"
                                 }
                             ]
-                        },
-                        {
-                            "type": "plugin",
-                            "name": "Share"
                         },
                         {
                             "type": "plugin",
@@ -2619,12 +2588,6 @@
                 "name": "SaveAs"
             },
             {
-                "name": "Share",
-                "cfg": {
-                    "containerPosition": "rightOverlay"
-                }
-            },
-            {
                 "name": "MediaViewer"
             }
         ],
@@ -2688,10 +2651,6 @@
                                     "labelId": "gnviewer.editMetadata"
                                 }
                             ]
-                        },
-                        {
-                            "type": "plugin",
-                            "name": "Share"
                         },
                         {
                             "type": "plugin",
@@ -2848,12 +2807,6 @@
             },
             {
                 "name": "Sync"
-            },
-            {
-                "name": "Share",
-                "cfg": {
-                    "containerPosition": "rightOverlay"
-                }
             },
             {
                 "name": "DashboardEditor",
