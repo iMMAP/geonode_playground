@@ -187,5 +187,9 @@ li {
   margin: 0.5rem;
   padding: 0.5rem;
   position: relative;
-  visibility: hidden !important;
+  /* visibility: hidden !important; */
+}
+
+.panel-collapse {
+  visibility: visible !important;
 }
