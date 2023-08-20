@@ -42,13 +42,13 @@ RUN pip install pylibmc \
     && pip install sherlock
 
 # to not run the whole build process when pip dep changes
-# COPY src/requirements.txt /usr/src/my_geonode/requirements.txt
-# WORKDIR /opt/app
-# RUN pip install -r requirements.txt
+COPY src/requirements_other.txt /usr/src/my_geonode/requirements_other.txt
+WORKDIR /usr/src/my_geonode
+RUN pip install -r requirements_other.txt
 
 # add bower and grunt command
 COPY src /usr/src/my_geonode/
-WORKDIR /usr/src/my_geonode
+# WORKDIR /usr/src/my_geonode
 
 COPY src/monitoring-cron /etc/cron.d/monitoring-cron
 RUN chmod 0644 /etc/cron.d/monitoring-cron
