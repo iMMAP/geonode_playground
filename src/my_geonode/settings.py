@@ -81,6 +81,10 @@ loaders = TEMPLATES[0]['OPTIONS'].get('loaders') or [
 TEMPLATES[0]['OPTIONS']['loaders'] = loaders
 TEMPLATES[0].pop('APP_DIRS', None)
 
+
+TEMPLATES[0]['OPTIONS']['context_processors'] += ('django.contrib.auth.context_processors.auth','my_geonode.context_processors.export_vars')   
+
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
