@@ -193,3 +193,7 @@ li {
 .panel-collapse {
   visibility: visible !important;
 }
+
+.panel-default .panel-heading .panel-title a:hover {
+  color: #a72824;
+}
