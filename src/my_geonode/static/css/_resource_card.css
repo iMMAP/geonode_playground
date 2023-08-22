@@ -134,6 +134,14 @@ p.card-text.gn-card-description.grid{
   /* top: 70px !important; */
 }
 
+.msgapi .gn-share-permissions-pinned {
+  background-color: #f2f0f0;
+  background-color: var(--gn-main-variant-bg,#f2f0f0);
+  color: #000;
+  color: var(--gn-main-variant-color,#000);
+  display: none !important;
+}
+
 @media only screen and (max-width: 640px) {
   .msgapi .gn-default {
     /* top: 94px !important; */
