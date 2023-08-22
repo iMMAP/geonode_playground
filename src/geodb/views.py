@@ -73,10 +73,21 @@ def getLatestEarthQuake():
         attributes = most_recent_feature['properties']
         coordinates = most_recent_feature['geometry']
 
+        # Creating a temp earthquake table (Uncomment this section if haven't that table then comment it after) =========================================================================
+        
+        metadata = MetaData()
+        metadata.reflect(bind=con)
+        table = metadata.tables.get('temp_earthquake_epicenter')
+        if table is None:
+            temp_query = text(f"CREATE TABLE temp_earthquake_epicenter as (SELECT * FROM earthquake_epicenter)")
+            temp_conn = con.connect()
+            temp_conn.execute(temp_query)
+            temp_conn.commit()
+
         # Check the feature record =========================================================================
 
         feature_time_values = attributes['time']
-        query = text(f"SELECT COUNT(*) FROM earthquake_epicenter WHERE time = '{feature_time_values}'")
+        query = text(f"SELECT COUNT(*) FROM temp_earthquake_epicenter WHERE time = '{feature_time_values}'")
         conn = con.connect()
         cursor = conn.execute(query)
         count = cursor.fetchone()[0]
@@ -93,6 +104,7 @@ def getLatestEarthQuake():
             epicenter = gpd.GeoDataFrame(earthquake_epic)
             epicenter = epicenter.set_crs(4326, allow_override=True)
 
+            epicenter.to_postgis("temp_earthquake_epicenter", con, if_exists="append")
             epicenter.to_postgis("earthquake_epicenter", con, if_exists="replace")
             print('Earthquake Epicenter saved successfully')
 
@@ -196,10 +208,21 @@ def getLatestShakemap():
 
         # =============================================================================================
 
+        # Creating a temp earthquake table (Uncomment this section if haven't that table then comment it after) =========================================================================
+        
+        metadata = MetaData()
+        metadata.reflect(bind=con)
+        table = metadata.tables.get('temp_earthquake_shakemap')
+        if table is None:
+            temp_query = text(f"CREATE TABLE temp_earthquake_shakemap as (SELECT * FROM earthquake_shakemap)")
+            temp_conn = con.connect()
+            temp_conn.execute(temp_query)
+            temp_conn.commit()
+    
         # Check the feature record =========================================================================
 
         feature_time_values = attributes['time']
-        query = text(f"SELECT COUNT(*) FROM earthquake_shakemap WHERE time = '{feature_time_values}'")
+        query = text(f"SELECT COUNT(*) FROM temp_earthquake_shakemap WHERE time = '{feature_time_values}'")
         conn = con.connect()
         cursor = conn.execute(query)
         count = cursor.fetchone()[0]
