@@ -360,10 +360,10 @@ def getLatestShakemap():
                 build_count = joined_df.groupby(
                     ['PARAMVALUE'],
                     as_index=False,
-                )['geom'].count() # column is arbitrary
+                )['geometry'].count() # column is arbitrary
 
                 # Change column name to build_count
-                build_count.rename(columns = {'geom': 'buildings'}, inplace = True)
+                build_count.rename(columns = {'geometry': 'buildings'}, inplace = True)
 
                 # Merge build count back on to shakemap
                 shakemap = shakemap.merge(
