@@ -79,7 +79,7 @@ def getLatestEarthQuake():
         metadata.reflect(bind=con)
         table = metadata.tables.get('temp_earthquake_epicenter')
         if table is None:
-            temp_query = text(f"CREATE TABLE temp_earthquake_epicenter as (SELECT * FROM earthquake_epicenter)")
+            temp_query = text(f"CREATE TABLE temp_earthquake_epicenter as (SELECT * FROM all_earthquake_epicenter)")
             temp_conn = con.connect()
             temp_conn.execute(temp_query)
             temp_conn.commit()
@@ -214,7 +214,7 @@ def getLatestShakemap():
         metadata.reflect(bind=con)
         table = metadata.tables.get('temp_earthquake_shakemap')
         if table is None:
-            temp_query = text(f"CREATE TABLE temp_earthquake_shakemap as (SELECT * FROM earthquake_shakemap)")
+            temp_query = text(f"CREATE TABLE temp_earthquake_shakemap as (SELECT * FROM all_earthquake_shakemap)")
             temp_conn = con.connect()
             temp_conn.execute(temp_query)
             temp_conn.commit()
@@ -301,24 +301,24 @@ def getLatestShakemap():
                 # Merging Shakemap =================================================================================    
 
                 # Define the merge categories
-                merge_categories = [(4, 5), (5, 6), (6, 7), (7, 8), (8, 9)] #(1, 2),(2, 3),(3, 4),
+                # merge_categories = [(4, 5), (5, 6), (6, 7), (7, 8), (8, 9)] #(1, 2),(2, 3),(3, 4),
 
-                # Create a new column to store the merged categories
-                shakemap['MergeCategory'] = None
+                # # Create a new column to store the merged categories
+                # shakemap['MergeCategory'] = None
 
-                # Iterate over the merge categories
-                for category in merge_categories:
-                    # Extract the minimum and maximum values of the category
-                    min_value, max_value = category
+                # # Iterate over the merge categories
+                # for category in merge_categories:
+                #     # Extract the minimum and maximum values of the category
+                #     min_value, max_value = category
                     
-                    # Select polygons within the current category
-                    category_polygons = shakemap[(shakemap['PARAMVALUE'] >= min_value) & (shakemap['PARAMVALUE'] < max_value)]
+                #     # Select polygons within the current category
+                #     category_polygons = shakemap[(shakemap['PARAMVALUE'] >= min_value) & (shakemap['PARAMVALUE'] < max_value)]
                     
-                    # Assign the merge category to the selected polygons
-                    shakemap.loc[category_polygons.index, 'MergeCategory'] = f'{min_value}-{max_value}'
+                #     # Assign the merge category to the selected polygons
+                #     shakemap.loc[category_polygons.index, 'MergeCategory'] = f'{min_value}-{max_value}'
                     
-                # Dissolve the polygons based on the merge category
-                shakemap = shakemap.dissolve(by='MergeCategory')
+                # # Dissolve the polygons based on the merge category
+                # shakemap = shakemap.dissolve(by='MergeCategory')
 
                 #======================================================================================================
 
@@ -345,8 +345,8 @@ def getLatestShakemap():
                 #Calculating building count =============================================================================
 
                 # Load buildings from database
-                buildings = gpd.GeoDataFrame.from_postgis('SELECT * from point_sample', con)   #Dev
-                # buildings = gpd.GeoDataFrame.from_postgis('SELECT * from afg_buildings_microsoft_centroids', con) #Prod
+                # buildings = gpd.GeoDataFrame.from_postgis('SELECT * from point_sample', con, geom_col='geometry')   #Dev
+                buildings = gpd.GeoDataFrame.from_postgis('SELECT * from afg_buildings_microsoft_centroids', con, geom_col='geom')  #Prod
 
                 # Joining the polygon attributes to each point
                 # Creates a point layer of all buildings with the attributes copied from the interesecting polygon uniquely for each point
@@ -377,31 +377,20 @@ def getLatestShakemap():
 
                 shakemap['km2'] = shakemap['geometry'].area.div(1000000)
 
-                # Get area from a reprojected version of shakemap
-                shakemap_repro = shakemap.to_crs('+proj=cea')
-                shakemap['km2'] = shakemap_repro['geometry'].area.div(1000000)
-
                 # ===========================================================================================================
 
                 # Cleaning tables ===========================================================================================
 
                 columns_shakemap = [
-                'title',
-                'place',
-                'mag',
-                'time',
-                'type',
-                'cdi',
-                'mmi',
-                'alert',
-                'PARAMVALUE',
-                'pop',
-                'buildings',
-                'km2',
-                'geometry']
+                 'PARAMVALUE',
+                 'pop',
+                 'buildings',
+                 'time',
+                 'km2',
+                 'geometry']
 
                 new_shakemap = shakemap[columns_shakemap]
-                new_shakemap = new_shakemap.rename(columns={'PARAMVALUE': 'mag_zone'})
+                new_shakemap = new_shakemap.rename(columns={'PARAMVALUE': 'distance'})
 
                 # ============================================================================================================
 
@@ -429,7 +418,7 @@ def getLatestShakemap():
                             print('The shakemap record already exits')
                             
                         else:
-                            new_shakemap['mag'] = new_shakemap['mag'].astype(float)
+                            new_shakemap['buildings'] = new_shakemap['buildings'].astype(float)
                             new_shakemap.to_postgis("all_earthquake_shakemap", con, if_exists="append")
                             print('All Earthquake Shakemap added successfully')
                     else:
