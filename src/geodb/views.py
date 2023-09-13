@@ -110,7 +110,6 @@ def getLatestEarthQuake():
             epicenter = gpd.GeoDataFrame(earthquake_epic)
             epicenter = epicenter.set_crs(4326, allow_override=True)
 
-            epicenter.to_postgis("temp_earthquake_epicenter", con, if_exists="append")
             epicenter.to_postgis("earthquake_epicenter", con, if_exists="replace")
             print('Earthquake Epicenter saved successfully')
 
