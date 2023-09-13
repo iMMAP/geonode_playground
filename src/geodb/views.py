@@ -208,16 +208,22 @@ def getLatestShakemap():
 
         # =============================================================================================
 
-        # Creating a temp earthquake table (Uncomment this section if haven't that table then comment it after) =========================================================================
+        # Creating a temp earthquake table =========================================================================
         
         metadata = MetaData()
         metadata.reflect(bind=con)
         table = metadata.tables.get('temp_earthquake_shakemap')
-        if table is None:
-            temp_query = text(f"CREATE TABLE temp_earthquake_shakemap as (SELECT * FROM all_earthquake_shakemap)")
+
+        if table is not None:
+            temp_query = text(f"DROP TABLE temp_earthquake_shakemap")
             temp_conn = con.connect()
             temp_conn.execute(temp_query)
             temp_conn.commit()
+
+        temp_query = text(f"CREATE TABLE temp_earthquake_shakemap as (SELECT * FROM all_earthquake_shakemap)")
+        temp_conn = con.connect()
+        temp_conn.execute(temp_query)
+        temp_conn.commit()
     
         # Check the feature record =========================================================================
 
