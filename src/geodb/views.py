@@ -309,7 +309,7 @@ def getLatestShakemap():
                 #setting shakemap crs
                 shakemap = shakemap.set_crs(4326, allow_override=True)
 
-                # Merging Shakemap =================================================================================    
+                # Merging Shakemap =================================================================================
 
                 # Define the merge categories
                 # merge_categories = [(4, 5), (5, 6), (6, 7), (7, 8), (8, 9)] #(1, 2),(2, 3),(3, 4),
@@ -356,8 +356,8 @@ def getLatestShakemap():
                 #Calculating building count =============================================================================
 
                 # Load buildings from database
-                buildings = gpd.GeoDataFrame.from_postgis('SELECT * from point_sample', con, geom_col='geometry').to_crs('EPSG:4326')   #Dev
-                # buildings = gpd.GeoDataFrame.from_postgis('SELECT * from afg_buildings_microsoft_centroids', con, geom_col='geom')  #Prod
+                buildings = gpd.GeoDataFrame.from_postgis('SELECT * from point_sample', con, geom_col='geometry')  #Dev
+#                buildings = gpd.GeoDataFrame.from_postgis('SELECT * from afg_buildings_microsoft_centroids', con, geom_col='geom')  #Prod
 
                 # Joining the polygon attributes to each point
                 # Creates a point layer of all buildings with the attributes copied from the interesecting polygon uniquely for each point
@@ -378,14 +378,14 @@ def getLatestShakemap():
 
                 # Merge build count back on to shakemap
                 shakemap = shakemap.merge(
-                    build_count, 
-                    on=['PARAMVALUE'], 
+                    build_count,
+                    on=['PARAMVALUE'],
                     how='left')
 
                 # ==========================================================================================================
 
                 # Calculating Area ========================================================================================
-
+                shakemap = shakemap.to_crs('+proj=cea')
                 shakemap['km2'] = shakemap['geometry'].area.div(1000000)
 
                 # ===========================================================================================================
@@ -408,6 +408,7 @@ def getLatestShakemap():
                 # Saving outputs to database ===========================================================================
                 
                 # Saving in shakemap table
+                new_shakemap = new_shakemap.to_crs('EPSG:4326')
                 new_shakemap.to_postgis('earthquake_shakemap', con, if_exists='replace')
                 print('Earthquake Shakemap saved successfully')
 
@@ -438,6 +439,8 @@ def getLatestShakemap():
                 else:
                     new_shakemap.to_postgis("all_earthquake_shakemap", con, if_exists="append")
                     print('All earthquake Shakemap saved successfully')
+            else:
+                print("The earthquake doesn't have a shakemap")
             else:
                 print("The earthquake doesn't have a shakemap")
     else:
