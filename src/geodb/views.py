@@ -101,7 +101,7 @@ def getLatestEarthQuake():
         # =============================================================================================
 
         if count > 0:
-            print('The earthquake feature already exist')
+            print('The earthquake epicenter already exist')
         else:
             data = pd.DataFrame(attributes, index=[0])
             dataAttr = ['title','place','mag','time','type','cdi','mmi','alert','geometry']
@@ -241,7 +241,7 @@ def getLatestShakemap():
         # =============================================================================================
 
         if count > 0:
-            print('The earthquake feature already exist')
+            print('The earthquake shakemap already exist')
         else:
             # Create a pandas DataFrame
             data = pd.DataFrame(attributes, index=[0])
