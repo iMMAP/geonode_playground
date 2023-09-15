@@ -25,7 +25,7 @@ pd.set_option('display.width', 500)
 
 def getLatestEarthQuake():
 
-    start_time = 'now-180days'
+    start_time = 'now-365days'
     min_magnitude = 5
     # min_magnitude = 0
 
@@ -43,7 +43,7 @@ def getLatestEarthQuake():
     # minlongitude = -179
     # maxlongitude = 179
 
-    bbox_query = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time}&minmagnitude={min_magnitude}&minlatitude={minlatitude}&maxlatitude={maxlatitude}&minlongitude={minlongitude}&maxlongitude={maxlongitude}#&producttype=shakemap'
+    bbox_query = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time}&minmagnitude={min_magnitude}&minlatitude={minlatitude}&maxlatitude={maxlatitude}&minlongitude={minlongitude}&maxlongitude={maxlongitude}&producttype=shakemap'
 
     response = requests.get(bbox_query)
     
@@ -165,7 +165,7 @@ def getLatestShakemap():
     # maxlongitude = 179
 
     # Run query and check response
-    bbox_query = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time}&minmagnitude={min_magnitude}&minlatitude={minlatitude}&maxlatitude={maxlatitude}&minlongitude={minlongitude}&maxlongitude={maxlongitude}#&producttype=shakemap'
+    bbox_query = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time}&minmagnitude={min_magnitude}&minlatitude={minlatitude}&maxlatitude={maxlatitude}&minlongitude={minlongitude}&maxlongitude={maxlongitude}&producttype=shakemap'
 
     response = requests.get(bbox_query)
     
