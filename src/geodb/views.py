@@ -165,7 +165,7 @@ def getLatestShakemap():
     # maxlongitude = 179
 
     # Run query and check response
-    bbox_query = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time}&minmagnitude={min_magnitude}&minlatitude={minlatitude}&maxlatitude={maxlatitude}&minlongitude={minlongitude}&maxlongitude={maxlongitude}&producttype=shakemap'
+    bbox_query = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time}&minmagnitude={min_magnitude}&minlatitude={minlatitude}&maxlatitude={maxlatitude}&minlongitude={minlongitude}&maxlongitude={maxlongitude} '
 
     response = requests.get(bbox_query)
     
@@ -356,8 +356,8 @@ def getLatestShakemap():
                 #Calculating building count =============================================================================
 
                 # Load buildings from database
-                # buildings = gpd.GeoDataFrame.from_postgis('SELECT * from point_sample', con, geom_col='geometry')   #Dev
-                buildings = gpd.GeoDataFrame.from_postgis('SELECT * from afg_buildings_microsoft_centroids', con, geom_col='geom')  #Prod
+                buildings = gpd.GeoDataFrame.from_postgis('SELECT * from point_sample', con, geom_col='geometry').to_crs('EPSG:4326')   #Dev
+                # buildings = gpd.GeoDataFrame.from_postgis('SELECT * from afg_buildings_microsoft_centroids', con, geom_col='geom')  #Prod
 
                 # Joining the polygon attributes to each point
                 # Creates a point layer of all buildings with the attributes copied from the interesecting polygon uniquely for each point
