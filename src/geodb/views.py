@@ -441,7 +441,5 @@ def getLatestShakemap():
                     print('All earthquake Shakemap saved successfully')
             else:
                 print("The earthquake doesn't have a shakemap")
-            else:
-                print("The earthquake doesn't have a shakemap")
     else:
         print('Error:', response.status_code)
