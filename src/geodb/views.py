@@ -146,7 +146,7 @@ def getLatestEarthQuake():
 
 def getLatestShakemap():
 
-    start_time = 'now-180days'
+    start_time = 'now-365days'
     min_magnitude = 5
     # min_magnitude = 0
 
