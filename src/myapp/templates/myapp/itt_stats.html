@@ -5,11 +5,63 @@
 
 {% block head_title %}ITT Report{% endblock %}
 
+
+
 {% block middle %}
 <section class="container">
     <h1 class="text-3xl font-bold pb-2">ITT Report</h1>
+
+    <div class="flex space-x-4">
+        {% for month in months %}
+            {% if not month.is_future %}
+                <a href="{% url 'itt_stats' %}?month={{ month.number }}" class="px-4 py-2 cursor-pointer bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200 ">
+                    {{ month.name }}
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    {% comment %} <div class="flex space-x-4">
+        <a href="{% url 'itt_stats' %}?month=1" class="px-4 py-2  cursor-pointer bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+          January
+        </a>
+        <a href="{% url 'itt_stats' %}?month=2" class="px-4 py-2  cursor-pointer bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+          February
+        </a>
+        <a href="{% url 'itt_stats' %}?month=3" class="px-4 py-2 cursor-pointer  bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+          March
+        </a>
+        <a href="{% url 'itt_stats' %}?month=4" class="px-4 py-2 cursor-pointer  bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+            April
+        </a>
+        <a href="{% url 'itt_stats' %}?month=5" class="px-4 py-2 cursor-pointer  bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+            May
+        </a>
+        <a href="{% url 'itt_stats' %}?month=6" class="px-4 py-2 cursor-pointer  bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+            June
+        </a>
+        <a href="{% url 'itt_stats' %}?month=7" class="px-4 py-2 cursor-pointer  bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+            July
+        </a>
+        <a href="{% url 'itt_stats' %}?month=8" class="px-4 py-2 cursor-pointer  bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+            August
+        </a>
+        <a href="{% url 'itt_stats' %}?month=9" class="px-4 py-2 cursor-pointer  bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+            September
+        </a>
+        <a href="{% url 'itt_stats' %}?month=10" class="px-4 py-2 cursor-pointer  bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+            October
+        </a>
+        <a href="{% url 'itt_stats' %}?month=11" class="px-4 py-2 cursor-pointer  bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+            November
+        </a>
+        <a href="{% url 'itt_stats' %}?month=12" class="px-4 py-2 cursor-pointer  bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+            December
+        </a>
+    </div> {% endcomment %}
+    <hr/>
     
-    <div class="grid grid-cols-3 gap-5">
+    <div class="grid grid-cols-3 gap-5 mt-20">
         <div class="flex flex-col bg-gray-200 shadow-md rounded-lg p-6 mx-auto w-64">
             <div class="flex justify-between items-center">
                 <div class="text-gray-700 font-bold text-xl">Active Users</div>
