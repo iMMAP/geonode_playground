@@ -25,13 +25,13 @@ pd.set_option('display.width', 500)
 
 def getLatestEarthQuake():
 
-    start_time = 'now-365days'
-    min_magnitude = 5
+    start_time = 'now-180days'
+    min_magnitude = 4
     # min_magnitude = 0
 
-    latitude = 39.1458
-    longitude = 34.1614
-    max_radius_km = 1500
+    # latitude = 39.1458
+    # longitude = 34.1614
+    # max_radius_km = 1500
 
     minlatitude = 29.377065
     maxlatitude = 38.490842
@@ -43,7 +43,7 @@ def getLatestEarthQuake():
     # minlongitude = -179
     # maxlongitude = 179
 
-    bbox_query = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time}&minmagnitude={min_magnitude}&minlatitude={minlatitude}&maxlatitude={maxlatitude}&minlongitude={minlongitude}&maxlongitude={maxlongitude}&producttype=shakemap'
+    bbox_query = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time}&minmagnitude={min_magnitude}&minlatitude={minlatitude}&maxlatitude={maxlatitude}&minlongitude={minlongitude}&maxlongitude={maxlongitude}'
 
     response = requests.get(bbox_query)
     
@@ -146,13 +146,13 @@ def getLatestEarthQuake():
 
 def getLatestShakemap():
 
-    start_time = 'now-365days'
-    min_magnitude = 5
+    start_time = 'now-180days'
+    min_magnitude = 4
     # min_magnitude = 0
 
-    latitude = 39.1458
-    longitude = 34.1614
-    max_radius_km = 1500
+    # latitude = 39.1458
+    # longitude = 34.1614
+    # max_radius_km = 1500
 
     minlatitude = 29.377065
     maxlatitude = 38.490842
@@ -165,7 +165,7 @@ def getLatestShakemap():
     # maxlongitude = 179
 
     # Run query and check response
-    bbox_query = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time}&minmagnitude={min_magnitude}&minlatitude={minlatitude}&maxlatitude={maxlatitude}&minlongitude={minlongitude}&maxlongitude={maxlongitude}&producttype=shakemap'
+    bbox_query = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time}&minmagnitude={min_magnitude}&minlatitude={minlatitude}&maxlatitude={maxlatitude}&minlongitude={minlongitude}&maxlongitude={maxlongitude}'
 
     response = requests.get(bbox_query)
     
