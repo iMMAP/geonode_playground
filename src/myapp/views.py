@@ -90,64 +90,6 @@ def itt_stats(request):
 
     return render(request, 'myapp/itt_stats.html', context)
 
-
-# @staff_or_404
-# def itt_stats(request):
-#     month_param = request.GET.get('month')
-#     now = timezone.now()
-
-#     if month_param is None:
-#         month = now.month
-#     else:
-#         try:
-#             month = int(month_param)
-#         except ValueError:
-#             raise Http404("Invalid month parameter")
-
-#         if month > 12 or month < 1 or month > now.month:
-#             raise Http404("Invalid month parameter")
-
-#     month_start = timezone.datetime(now.year, month, 1, tzinfo=timezone.utc)
-    
-#     print(month_start)
-    
-#     active_users = Profile.objects.filter(is_active=True, last_login__gte=month_start).count()
-#     staff_count = Profile.objects.filter(is_staff=True, last_login__gte=month_start).count()
-#     active_users_current_month = Profile.objects.filter(last_login__gte=month_start, is_active=True).count()
-    
-#     users_per_position = Profile.objects.filter(last_login__gte=month_start).values('position').annotate(user_count=Count('id'))
-#     users_per_country = Profile.objects.filter(last_login__gte=month_start).values('country').annotate(user_count=Count('id'))
-    
-#     users_per_org = Profile.objects.filter(last_login__gte=month_start).values('organization').annotate(
-#         user_count=Count('id'),
-#         active_user_count=Sum(
-#             Case(
-#                 When(is_active=True, then=1),
-#                 default=0,
-#                 output_field=IntegerField()
-#             )
-#         ),
-#         inactive_user_count=Sum(
-#             Case(
-#                 When(is_active=False, then=1),
-#                 default=0,
-#                 output_field=IntegerField()
-#             )
-#         )
-#     )
-
-#     context = {
-#         "active_users": active_users,
-#         "staff_count": staff_count,
-#         "active_users_current_month": active_users_current_month,
-#         "users_per_position":users_per_position,
-#         "users_per_country":users_per_country,
-#         "users_per_org":users_per_org
-#     }
-    
-#     return render(request, 'myapp/itt_stats.html', context) 
-
-
 def ocha_dashboards(request):
     q = request.GET.get('q')
 
