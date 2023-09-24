@@ -3,6 +3,7 @@ from django.conf import settings
 from django.db.models import Q
 from django.shortcuts import render
 from geonode.people.models import Profile
+from geonode.layers.models import Dataset
 from .models import OchaDashboard
 from .decorators import staff_or_404
 from django.utils import timezone
@@ -70,6 +71,11 @@ def itt_stats(request):
             )
         )
     )
+    
+    # Get all Dataset created in the month range
+    # popular_count(views count), owner
+    datasets_in_month = Dataset.objects.prefetch_related('owner').filter(created__range=(month_start, month_end))
+    
 
     context = {
         "active_users": active_users,
@@ -79,6 +85,7 @@ def itt_stats(request):
         "users_per_country":users_per_country,
         "users_per_org":users_per_org,
         "months": months,
+        "datasets_in_month":datasets_in_month
     }
 
     return render(request, 'myapp/itt_stats.html', context)
