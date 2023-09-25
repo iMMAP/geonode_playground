@@ -155,11 +155,19 @@ CELERY_BEAT_SCHEDULE = {
         }
     },
 
+    'get_earthquake_historical_every_1_second': {
+        'task':'geodb.tasks.updateEarthquakeHistorical',
+        'schedule': timedelta(seconds=1),
+        'options': {
+            'priority': 1
+        }
+    },
+
     'get_latest_earthquake_every_1_second': {
         'task':'geodb.tasks.updateLatestEarthQuake',
         'schedule': timedelta(seconds=1),
         'options': {
-            'priority': 1
+            'priority': 2
         }
     },
 }
