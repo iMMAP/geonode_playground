@@ -25,6 +25,7 @@ pd.set_option('display.width', 500)
 
 def getLatestEarthQuake():
 
+    # TEST COMMENT
     start_time = 'now-180days'
     min_magnitude = 4
     # min_magnitude = 0
