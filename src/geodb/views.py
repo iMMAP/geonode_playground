@@ -61,7 +61,7 @@ def getLatestEarthQuake():
 
         features = featureCollection['features']
         # Sort the features based on the 'time' property
-        features_sorted = sorted(features, key=lambda x: x['properties']['time'], reverse=True)
+        features_sorted = sorted(features, key=lambda x: x['properties']['time'], reverse=False)
         # Get the most recent feature
         feature_newest = features_sorted[-5:]
 
@@ -116,7 +116,7 @@ def getLatestEarthQuake():
                     epicenter = epicenter.set_crs(4326, allow_override=True)
 
                     epicenter.to_postgis("earthquake_epicenter", con, if_exists="replace")
-                    print('Earthquake Epicenter saved successfully')
+                    print('Earthquake Epicenter replaced successfully')
 
                     epicenter.crs = 'EPSG:4326'
                     epicenter.to_postgis("all_earthquake_epicenter", con, if_exists="append")
@@ -130,7 +130,7 @@ def getLatestEarthQuake():
                 epicenter = epicenter.set_crs(4326, allow_override=True)
             
                 epicenter.to_postgis("earthquake_epicenter", con, if_exists="replace")
-                print('Earthquake Epicenter saved successfully')
+                print('Earthquake Epicenter replaced successfully')
 
                 epicenter.to_postgis("all_earthquake_epicenter", con, if_exists="replace")
                 print('All earthquake Epicenter replaced successfully')
@@ -177,7 +177,7 @@ def getLatestShakemap():
         
         features = featureCollection['features']
         # Sort the features based on the 'time' property
-        features_sorted = sorted(features, key=lambda x: x['properties']['time'], reverse=True)
+        features_sorted = sorted(features, key=lambda x: x['properties']['time'], reverse=False)
         # Get the most recent feature
         feature_newest = features_sorted[-5:]
 
@@ -336,7 +336,7 @@ def getLatestShakemap():
                     
                     # Saving shakemap to database
                     new_shakemap.to_postgis('earthquake_shakemap', con, if_exists='replace')
-                    print('Earthquake Shakemap saved successfully')
+                    print('Earthquake Shakemap replaced successfully')
 
                     new_shakemap.to_postgis("all_earthquake_shakemap", con, if_exists="append")
                     print('All earthquake Shakemap saved successfully')
@@ -454,7 +454,7 @@ def getLatestShakemap():
                 new_shakemap = new_shakemap.to_crs('EPSG:4326')
 
                 new_shakemap.to_postgis('earthquake_shakemap', con, if_exists='replace')
-                print('Earthquake Shakemap saved successfully')
+                print('Earthquake Shakemap replaced successfully')
 
                 new_shakemap.to_postgis("all_earthquake_shakemap", con, if_exists="replace")
                 print('All earthquake Shakemap replaced successfully')
