@@ -23,10 +23,10 @@ pd.set_option('display.float_format', lambda x: '%.3f' % x)
 pd.set_option('display.expand_frame_repr', False)
 pd.set_option('display.width', 500)
 
-def getLatestEarthQuake():
 
-    # TEST COMMENT - Some more changes to this comment - more changes
-    start_time = 'now-180days'
+def getEarthquakeHistoricalAnalysis():
+
+    start_time = 'now-365days'
     min_magnitude = 4
     # min_magnitude = 0
 
@@ -61,13 +61,13 @@ def getLatestEarthQuake():
 
         features = featureCollection['features']
         # Sort the features based on the 'time' property
-        features_sorted = sorted(features, key=lambda x: x['properties']['time'], reverse=True)
+        features_sorted = sorted(features, key=lambda x: x['properties']['time'], reverse=False)
         # Get the most recent feature
-        feature_newest = features_sorted[:3]
-
-        for feature in feature_newest:
+        
+        for feature_newest in features_sorted:
             # Open the details url in the feature (contains properties, epicenter and shakemap)
-            detail_url = feature['properties']['detail']
+            detail_url = feature_newest['properties']['detail']
+            #get url
             url = requests.get(detail_url)
 
             # Save to new variable
@@ -87,26 +87,19 @@ def getLatestEarthQuake():
             # Reformat time
             attributes['time'] = attributes['time'].strftime('%Y-%m-%d %H:%M:%S')
             
-
-            # Creating a temp earthquake table (Uncomment this section if haven't that table then comment it after) =========================================================================
-            
             metadata = MetaData()
             metadata.reflect(bind=con)
-            table = metadata.tables.get('all_earthquake_epicenter')
-
+            table = metadata.tables.get('all_earthquake_epicenter_historical')
             if table is not None:
-                # Check the feature record =========================================================================
-
                 feature_time_values = attributes['time']
-                query = text(f"SELECT COUNT(*) FROM all_earthquake_epicenter WHERE time = '{feature_time_values}'")
+                query = text(f"SELECT COUNT(*) FROM all_earthquake_epicenter_historical WHERE time = '{feature_time_values}'")
                 conn = con.connect()
                 cursor = conn.execute(query)
                 count = cursor.fetchone()[0]
-
-                # =============================================================================================
-
+                
                 if count > 0:
-                    print('The earthquake epicenter already exist')
+                    print('This earthquake epicenter already exits')
+                            
                 else:
                     data = pd.DataFrame(attributes, index=[0])
                     dataAttr = ['title','place','mag','time','type','cdi','mmi','alert','geometry']
@@ -114,120 +107,12 @@ def getLatestEarthQuake():
                     earthquake_epic = data[dataAttr]
                     epicenter = gpd.GeoDataFrame(earthquake_epic)
                     epicenter = epicenter.set_crs(4326, allow_override=True)
+                    
+                    epicenter.to_postgis("all_earthquake_epicenter_historical", con, if_exists="append")
+                    print('All earthquake Epicenter historical analysis saved successfully')
 
-                    epicenter.to_postgis("earthquake_epicenter", con, if_exists="replace")
-                    print('Earthquake Epicenter saved successfully')
+                    # ====================================================================================================
 
-                    epicenter.crs = 'EPSG:4326'
-                    epicenter.to_postgis("all_earthquake_epicenter", con, if_exists="append")
-                    print('All earthquake Epicenter saved successfully')
-            else:
-                data = pd.DataFrame(attributes, index=[0])
-                dataAttr = ['title','place','mag','time','type','cdi','mmi','alert','geometry']
-                data['geometry'] = Point(coordinates['coordinates'])
-                earthquake_epic = data[dataAttr]
-                epicenter = gpd.GeoDataFrame(earthquake_epic)
-                epicenter = epicenter.set_crs(4326, allow_override=True)
-            
-                epicenter.to_postgis("earthquake_epicenter", con, if_exists="replace")
-                print('Earthquake Epicenter saved successfully')
-
-                epicenter.to_postgis("all_earthquake_epicenter", con, if_exists="replace")
-                print('All earthquake Epicenter replaced successfully')
-
-    else:
-        print('Error:', response.status_code)
-
-
-def getLatestShakemap():
-
-    start_time = 'now-180days'
-    min_magnitude = 4
-    # min_magnitude = 0
-
-    # latitude = 39.1458
-    # longitude = 34.1614
-    # max_radius_km = 1500
-
-    minlatitude = 29.377065
-    maxlatitude = 38.490842
-    minlongitude = 60.471977
-    maxlongitude = 74.889561
-
-    # minlatitude = -90
-    # maxlatitude = 90
-    # minlongitude = -179
-    # maxlongitude = 179
-
-    # Run query and check response
-    bbox_query = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time}&minmagnitude={min_magnitude}&minlatitude={minlatitude}&maxlatitude={maxlatitude}&minlongitude={minlongitude}&maxlongitude={maxlongitude}'
-
-    response = requests.get(bbox_query)
-    
-    if response.status_code == 200:
-        featureCollection = response.json()
-
-        # Load database configuration from file
-        db_credential_file = r'~/geonode_playground/src/hsdc_postgres_db_config.json'
-        db_credential = os.path.expanduser(db_credential_file)
-        with open(db_credential, 'r') as f:
-            config = json.load(f)
-        db_url = f"postgresql://{config['username']}:{config['password']}@{config['host']}:{config['port']}/{config['database']}"
-        con = create_engine(db_url)
-        
-        features = featureCollection['features']
-        # Sort the features based on the 'time' property
-        features_sorted = sorted(features, key=lambda x: x['properties']['time'], reverse=True)
-        # Get the most recent feature
-        feature_newest = features_sorted[:3]
-
-        for feature in feature_newest:
-            # Open the details url in the feature (contains properties, epicenter and shakemap)
-            detail_url = feature['properties']['detail']
-            url = requests.get(detail_url)
-
-            # Save to new variable
-            feature_newest_detail = url.json()
-            # Extracting epicenter coordinates
-            coordinates = feature_newest_detail['geometry']
-            # Extract the epicenter attributes
-            attributes = feature_newest_detail['properties']
-            
-            ### Convert time
-
-            # Convert UNIX timestamp to normal time
-            attributes['time'] = pd.to_datetime(attributes['time'], unit='ms')
-            # Convert to Kabul time
-            timezone = 'Asia/Kabul'
-            attributes['time'] = attributes['time'].tz_localize('UTC').tz_convert(timezone)
-            # Set time-zone column
-            attributes['tz'] = timezone
-            # Reformat time
-            attributes['time'] = attributes['time'].strftime('%Y-%m-%d %H:%M:%S')
-            
-            metadata = MetaData()
-            metadata.reflect(bind=con)
-            table = metadata.tables.get('all_earthquake_shakemap')
-
-            if table is not None:    
-            # Check the feature record =========================================================================
-
-                feature_time_values = attributes['time']
-                query = text(f"SELECT COUNT(*) FROM all_earthquake_shakemap WHERE time = '{feature_time_values}'")
-                conn = con.connect()
-                cursor = conn.execute(query)
-                count = cursor.fetchone()[0]
-                
-                if count > 0:
-                    print('The earthquake shakemap already exist')
-                else:
-                
-                    # Create a pandas DataFrame
-                    data = pd.DataFrame(attributes, index=[0])
-                    data['geometry'] = Point(coordinates['coordinates'])
-
-                    # Convert to a GeoDataFrame
-                    epicenter = gpd.GeoDataFrame(data)
                     epicenter.rename(columns = {'geom':'buildings'}, inplace = True)
                     #  First define the true original crs
                     epicenter.crs = "EPSG:4326"
@@ -238,13 +123,10 @@ def getLatestShakemap():
                     def create_donut_rings(center, radii):
                         # create circles from radii
                         circles = [center.buffer(radius) for radius in radii]
-                        
                         # create donut rings by subtracting each inner circle from the outer circle
                         donut_rings = [circles[i].difference(circles[i-1]) for i in range(1, len(circles))]
-                        
                         # add the innermost circle
                         donut_rings.insert(0, circles[0])
-                        
                         # create a GeoDataFrame with the donut rings and their corresponding radii
                         donut_rings_gdf = gpd.GeoDataFrame(geometry=donut_rings)
                         donut_rings_gdf['distance'] = radii
@@ -253,15 +135,14 @@ def getLatestShakemap():
 
                     # specify radii of circles: 10km, 20km, 30km, 40km, 50km
                     radii = [10000, 20000, 30000, 40000, 50000]
-
+                    
                     # create a GeoDataFrame of donut rings
                     donut_rings_gdf = create_donut_rings(epicenter.geometry[0], radii)
-
                     donut_rings_gdf.crs = "+proj=cea"
-
                     shakemap = donut_rings_gdf
-
+                    
                     # Create list of columns to user for ordering
+                    
                     shakemap_columns = list(shakemap.columns)
                     epicenter_columns = list(epicenter.drop(columns='geometry').columns)
                     column_order = epicenter_columns + shakemap_columns
@@ -277,23 +158,28 @@ def getLatestShakemap():
                     shakemap = shakemap.drop(columns='_merge_key')
 
                     #shakemap = shakemap.reindex(columns=column_order)
-
                     # Get population raster
                     pop = r'~/raster/afg_worldpop_2020_UNadj_unconstrained_projCEA_comp.tif' #_projCEA
+
                     pop_expanded_path = os.path.expanduser(pop)
                     # Run zonal statistics
+
                     zonal = rasterstats.zonal_stats(shakemap,pop_expanded_path, stats = 'sum')
                     # Convert to pandas dataframe
+
                     df = pd.DataFrame(zonal)
                     df = df.rename(columns={'sum': 'pop'})
                     # Drop index column
+
                     shakemap = shakemap.reset_index(drop=True)
                     # Concatenate pop values and shakemap as a pandas dataframe
+
                     df_concat = pd.concat([df, shakemap], axis=1)
                     # Turn pandas dataframe back into a geodataframe
-                    shakemap = gpd.GeoDataFrame(df_concat, geometry=df_concat.geometry) #wkb_geometry
-                    # OBS: change to correct building dataset
 
+                    shakemap = gpd.GeoDataFrame(df_concat, geometry=df_concat.geometry) #wkb_geometry
+                    
+                    # OBS: change to correct building dataset
                     # Load buildings from database
                     buildings = gpd.GeoDataFrame.from_postgis('SELECT * from afg_buildings_microsoft_centroids', con, geom_col='geom').to_crs('+proj=cea')
 
@@ -313,6 +199,7 @@ def getLatestShakemap():
 
                     # Change column name to build_count
                     build_count.rename(columns = {'geom': 'buildings'}, inplace = True)
+
                     # Merge build count back on to shakemap
                     shakemap = shakemap.merge(
                         build_count,
@@ -323,30 +210,37 @@ def getLatestShakemap():
                     #shakemap_repro = shakemap.to_crs('+proj=cea')
                     shakemap['km2'] = shakemap['geometry'].area.div(1000000)
                     columns_shakemap = [
-                    'distance',
-                    'pop',
-                    'buildings',
-                    'km2',
-                    'time',
-                    'geometry']
-                    
+                     'distance',
+                     'pop',
+                     'buildings',
+                     'km2',
+                     'time',
+                     'geometry']
+                     
                     new_shakemap = shakemap[columns_shakemap]
-                    # Reproject from +proj=cea to 4326 before saving
+                     # Reproject from +proj=cea to 4326 before saving
                     new_shakemap = new_shakemap.to_crs('EPSG:4326')
                     
                     # Saving shakemap to database
-                    new_shakemap.to_postgis('earthquake_shakemap', con, if_exists='replace')
-                    print('Earthquake Shakemap saved successfully')
+        #            new_shakemap.to_postgis('earthquake_shakemap', con, if_exists='replace')
+        #            print('Earthquake Shakemap saved successfully')
 
-                    new_shakemap.to_postgis("all_earthquake_shakemap", con, if_exists="append")
-                    print('All earthquake Shakemap saved successfully')
+                    # Checkint if all shakemap table exist in the databse
+                    new_shakemap.to_postgis("all_earthquake_shakemap_historical", con, if_exists="append")
+                    print('All earthquake Shakemap added successfully')
             else:
-                # Create a pandas DataFrame
                 data = pd.DataFrame(attributes, index=[0])
+                dataAttr = ['title','place','mag','time','type','cdi','mmi','alert','geometry']
                 data['geometry'] = Point(coordinates['coordinates'])
+                earthquake_epic = data[dataAttr]
+                epicenter = gpd.GeoDataFrame(earthquake_epic)
+                epicenter = epicenter.set_crs(4326, allow_override=True)
+                
+                epicenter.to_postgis("all_earthquake_epicenter_historical", con, if_exists="replace")
+                print('All earthquake Epicenter saved successfully')
 
-                # Convert to a GeoDataFrame
-                epicenter = gpd.GeoDataFrame(data)
+                # ===============================================================================================================
+
                 epicenter.rename(columns = {'geom':'buildings'}, inplace = True)
                 #  First define the true original crs
                 epicenter.crs = "EPSG:4326"
@@ -357,30 +251,26 @@ def getLatestShakemap():
                 def create_donut_rings(center, radii):
                     # create circles from radii
                     circles = [center.buffer(radius) for radius in radii]
-            
                     # create donut rings by subtracting each inner circle from the outer circle
                     donut_rings = [circles[i].difference(circles[i-1]) for i in range(1, len(circles))]
-            
                     # add the innermost circle
                     donut_rings.insert(0, circles[0])
-            
                     # create a GeoDataFrame with the donut rings and their corresponding radii
                     donut_rings_gdf = gpd.GeoDataFrame(geometry=donut_rings)
                     donut_rings_gdf['distance'] = radii
-            
-                    return donut_rings_gdf
         
+                    return donut_rings_gdf
+    
                 # specify radii of circles: 10km, 20km, 30km, 40km, 50km
                 radii = [10000, 20000, 30000, 40000, 50000]
-
+    
                 # create a GeoDataFrame of donut rings
                 donut_rings_gdf = create_donut_rings(epicenter.geometry[0], radii)
-
                 donut_rings_gdf.crs = "+proj=cea"
-
                 shakemap = donut_rings_gdf
-
+    
                 # Create list of columns to user for ordering
+    
                 shakemap_columns = list(shakemap.columns)
                 epicenter_columns = list(epicenter.drop(columns='geometry').columns)
                 column_order = epicenter_columns + shakemap_columns
@@ -394,28 +284,33 @@ def getLatestShakemap():
 
                 # Remove the temporary column
                 shakemap = shakemap.drop(columns='_merge_key')
-            
-                #shakemap = shakemap.reindex(columns=column_order)
 
+                #shakemap = shakemap.reindex(columns=column_order)
                 # Get population raster
                 pop = r'~/raster/afg_worldpop_2020_UNadj_unconstrained_projCEA_comp.tif' #_projCEA
+
                 pop_expanded_path = os.path.expanduser(pop)
                 # Run zonal statistics
+
                 zonal = rasterstats.zonal_stats(shakemap,pop_expanded_path, stats = 'sum')
                 # Convert to pandas dataframe
+
                 df = pd.DataFrame(zonal)
                 df = df.rename(columns={'sum': 'pop'})
                 # Drop index column
+
                 shakemap = shakemap.reset_index(drop=True)
                 # Concatenate pop values and shakemap as a pandas dataframe
+
                 df_concat = pd.concat([df, shakemap], axis=1)
                 # Turn pandas dataframe back into a geodataframe
-                shakemap = gpd.GeoDataFrame(df_concat, geometry=df_concat.geometry) #wkb_geometry
-                # OBS: change to correct building dataset
 
+                shakemap = gpd.GeoDataFrame(df_concat, geometry=df_concat.geometry) #wkb_geometry
+    
+                # OBS: change to correct building dataset
                 # Load buildings from database
                 buildings = gpd.GeoDataFrame.from_postgis('SELECT * from afg_buildings_microsoft_centroids', con, geom_col='geom').to_crs('+proj=cea')
-            
+
                 # Joining the polygon attributes to each point
                 # Creates a point layer of all buildings with the attributes copied from the interesecting polygon uniquely for each point
                 joined_df = gpd.sjoin(
@@ -432,31 +327,32 @@ def getLatestShakemap():
 
                 # Change column name to build_count
                 build_count.rename(columns = {'geom': 'buildings'}, inplace = True)
+
                 # Merge build count back on to shakemap
                 shakemap = shakemap.merge(
                     build_count,
                     on=['distance'],
                     how='left')
-            
+        
                 # Get area from a reprojected version of shakemap
                 #shakemap_repro = shakemap.to_crs('+proj=cea')
                 shakemap['km2'] = shakemap['geometry'].area.div(1000000)
                 columns_shakemap = [
-                'distance',
-                'pop',
-                'buildings',
-                'km2',
-                'time',
-                'geometry']
-    
+                 'distance',
+                 'pop',
+                 'buildings',
+                 'km2',
+                 'time',
+                 'geometry']
+     
                 new_shakemap = shakemap[columns_shakemap]
-                # Reproject from +proj=cea to 4326 before saving
+                 # Reproject from +proj=cea to 4326 before saving
                 new_shakemap = new_shakemap.to_crs('EPSG:4326')
-
-                new_shakemap.to_postgis('earthquake_shakemap', con, if_exists='replace')
-                print('Earthquake Shakemap saved successfully')
-
-                new_shakemap.to_postgis("all_earthquake_shakemap", con, if_exists="replace")
-                print('All earthquake Shakemap replaced successfully')
+    
+                # Saving shakemap to database
+                new_shakemap.to_postgis("all_earthquake_shakemap_historical", con, if_exists="replace")
+                print('All earthquake Epicenter historical analysis added successfully')
     else:
         print('Error:', response.status_code)
+
+getEarthquakeHistoricalAnalysis()
