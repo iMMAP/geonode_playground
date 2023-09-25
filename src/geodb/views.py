@@ -499,6 +499,7 @@ def getEarthquakeHistoricalAnalysis():
         for feature_newest in features_sorted:
             # Open the details url in the feature (contains properties, epicenter and shakemap)
             detail_url = feature_newest['properties']['detail']
+            #get url
             url = requests.get(detail_url)
 
             # Save to new variable
