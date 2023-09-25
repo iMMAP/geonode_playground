@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load bootstrap_tags %}
+
+{% block head_title %}ITT Report{% endblock %}
+
+
+
+{% block middle %}
+<section class="container">
+    <h1 class="text-3xl font-bold pb-2">ITT Report</h1>
+
+    <div class="flex space-x-4">
+        {% for month in months %}
+            {% if not month.is_future %}
+                <a href="{% url 'itt_stats' %}?month={{ month.number }}" class="px-4 py-2 cursor-pointer bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200 ">
+                    {{ month.name }}
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    {% comment %} <div class="flex space-x-4">
+        <a href="{% url 'itt_stats' %}?month=1" class="px-4 py-2  cursor-pointer bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+          January
+        </a>
+        <a href="{% url 'itt_stats' %}?month=2" class="px-4 py-2  cursor-pointer bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+          February
+        </a>
+        <a href="{% url 'itt_stats' %}?month=3" class="px-4 py-2 cursor-pointer  bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+          March
+        </a>
+        <a href="{% url 'itt_stats' %}?month=4" class="px-4 py-2 cursor-pointer  bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+            April
+        </a>
+        <a href="{% url 'itt_stats' %}?month=5" class="px-4 py-2 cursor-pointer  bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+            May
+        </a>
+        <a href="{% url 'itt_stats' %}?month=6" class="px-4 py-2 cursor-pointer  bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+            June
+        </a>
+        <a href="{% url 'itt_stats' %}?month=7" class="px-4 py-2 cursor-pointer  bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+            July
+        </a>
+        <a href="{% url 'itt_stats' %}?month=8" class="px-4 py-2 cursor-pointer  bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+            August
+        </a>
+        <a href="{% url 'itt_stats' %}?month=9" class="px-4 py-2 cursor-pointer  bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+            September
+        </a>
+        <a href="{% url 'itt_stats' %}?month=10" class="px-4 py-2 cursor-pointer  bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+            October
+        </a>
+        <a href="{% url 'itt_stats' %}?month=11" class="px-4 py-2 cursor-pointer  bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+            November
+        </a>
+        <a href="{% url 'itt_stats' %}?month=12" class="px-4 py-2 cursor-pointer  bg-gray-200 text-gray-700 rounded-full hover:bg-primary-300 transition-colors duration-200">
+            December
+        </a>
+    </div> {% endcomment %}
+    <hr/>
+    
+    <div class="grid grid-cols-3 gap-5 mt-20">
+        <div class="flex flex-col bg-gray-200 shadow-md rounded-lg p-6 mx-auto w-64">
+            <div class="flex justify-between items-center">
+                <div class="text-gray-700 font-bold text-xl">Active Users</div>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 text-gray-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </div>
+            <div class="mt-2 text-3xl font-semibold text-gray-900">{{ active_users }}</div>
+            <div class="mt-2 text-gray-600">14% more than last month</div>
+        </div>
+
+        <div class="flex flex-col bg-gray-200 shadow-md rounded-lg p-6 mx-auto w-64">
+            <div class="flex justify-between items-center">
+                <div class="text-gray-700 font-bold text-xl">Staff Users</div>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 text-gray-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </div>
+            <div class="mt-2 text-3xl font-semibold text-gray-900">{{ staff_count }}</div>
+        </div>
+
+        <div class="flex flex-col bg-gray-200 shadow-md rounded-lg p-6 mx-auto w-64">
+            <div class="flex justify-between items-center">
+                <div class="text-gray-700 font-bold text-xl">Active Users Current Month</div>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 text-gray-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </div>
+            <div class="mt-2 text-3xl font-semibold text-gray-900">{{ active_users_current_month }}</div>
+        </div>
+    </div>
+    <hr/>
+
+    <h3>Users Per Position</h3>
+    <table class="min-w-full divide-y divide-gray-200 mb-10">
+        <thead class="bg-gray-50">
+            <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Position</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total User Count</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            {% for user in users_per_position %}
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ user.position }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ user.user_count }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <hr/>
+
+    
+    <h3>Users Per Country</h3>
+    <table class="min-w-full divide-y divide-gray-200 mb-10">
+        <thead class="bg-gray-50">
+            <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Country</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total User Count</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            {% for user in users_per_country %}
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ user.country }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ user.user_count }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <hr/>
+
+    <h3>Users Per Organization</h3>
+    <table class="min-w-full divide-y divide-gray-200 mb-10">
+        <thead class="bg-gray-50">
+            <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Organization</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total User Count</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Active User Count</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Inactive User Count</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            {% for org in users_per_org %}
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ org.organization }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ org.user_count }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ org.active_user_count }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ org.inactive_user_count }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Datasets</h3>
+    <table class="min-w-full divide-y divide-gray-200 mb-10">
+        <thead class="bg-gray-50">
+            <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Owner</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Owner Organization</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">popular_count</th>  
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>   
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            {% for dataset in datasets_in_month %}
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ dataset.owner }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ dataset.owner.organization }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ dataset.name }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ dataset.popular_count }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ dataset.created }}</td>
+                    
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+</section>
+{% endblock middle %}

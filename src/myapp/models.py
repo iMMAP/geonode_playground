@@ -1,5 +1,13 @@
 from django.db import models
 from django.utils.text import slugify
+from geonode.people.models import Profile
+
+class ProfileProxy(Profile):
+
+    class Meta:
+        proxy = True
+        verbose_name = 'HSDC User'
+
 
 
 class OchaDashboard(models.Model):
