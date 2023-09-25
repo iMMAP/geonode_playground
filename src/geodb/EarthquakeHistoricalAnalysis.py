@@ -26,7 +26,7 @@ pd.set_option('display.width', 500)
 
 def getEarthquakeHistoricalAnalysis():
 
-    start_time = 'now-365days'
+    start_time = 'now-10days'
     min_magnitude = 4
     # min_magnitude = 0
 
