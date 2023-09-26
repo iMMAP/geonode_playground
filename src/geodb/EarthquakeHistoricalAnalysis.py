@@ -98,7 +98,7 @@ def getEarthquakeHistoricalAnalysis():
                 count = cursor.fetchone()[0]
                 
                 if count > 0:
-                    print('This earthquake epicenter already exits')
+                    print('This earthquake already exits')
                             
                 else:
                     data = pd.DataFrame(attributes, index=[0])
@@ -109,7 +109,7 @@ def getEarthquakeHistoricalAnalysis():
                     epicenter = epicenter.set_crs(4326, allow_override=True)
                     
                     epicenter.to_postgis("all_earthquake_epicenter", con, if_exists="append")
-                    print('All earthquake Epicenter historical analysis saved successfully')
+                    print('All earthquake Epicenter added successfully')
 
                     # ====================================================================================================
 
@@ -210,6 +210,8 @@ def getEarthquakeHistoricalAnalysis():
                     #shakemap_repro = shakemap.to_crs('+proj=cea')
                     shakemap['km2'] = shakemap['geometry'].area.div(1000000)
                     columns_shakemap = [
+                     'place',
+                     'mag',
                      'distance',
                      'pop',
                      'buildings',
@@ -338,6 +340,8 @@ def getEarthquakeHistoricalAnalysis():
                 #shakemap_repro = shakemap.to_crs('+proj=cea')
                 shakemap['km2'] = shakemap['geometry'].area.div(1000000)
                 columns_shakemap = [
+                 'place',
+                 'mag',
                  'distance',
                  'pop',
                  'buildings',
@@ -351,7 +355,7 @@ def getEarthquakeHistoricalAnalysis():
     
                 # Saving shakemap to database
                 new_shakemap.to_postgis("all_earthquake_shakemap", con, if_exists="replace")
-                print('All earthquake Epicenter historical analysis added successfully')
+                print('All earthquake shakemap saved successfully')
     else:
         print('Error:', response.status_code)
 
