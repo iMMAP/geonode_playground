@@ -323,6 +323,8 @@ def getLatestShakemap():
                     #shakemap_repro = shakemap.to_crs('+proj=cea')
                     shakemap['km2'] = shakemap['geometry'].area.div(1000000)
                     columns_shakemap = [
+                    'place',
+                    'mag',
                     'distance',
                     'pop',
                     'buildings',
@@ -442,6 +444,8 @@ def getLatestShakemap():
                 #shakemap_repro = shakemap.to_crs('+proj=cea')
                 shakemap['km2'] = shakemap['geometry'].area.div(1000000)
                 columns_shakemap = [
+                'place',
+                'mag',
                 'distance',
                 'pop',
                 'buildings',

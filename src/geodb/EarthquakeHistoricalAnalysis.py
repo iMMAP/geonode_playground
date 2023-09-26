@@ -26,7 +26,7 @@ pd.set_option('display.width', 500)
 
 def getEarthquakeHistoricalAnalysis():
 
-    start_time = 'now-10days'
+    start_time = 'now-30days'
     min_magnitude = 4
     # min_magnitude = 0
 
@@ -89,10 +89,10 @@ def getEarthquakeHistoricalAnalysis():
             
             metadata = MetaData()
             metadata.reflect(bind=con)
-            table = metadata.tables.get('all_earthquake_epicenter_historical')
+            table = metadata.tables.get('all_earthquake_epicenter')
             if table is not None:
                 feature_time_values = attributes['time']
-                query = text(f"SELECT COUNT(*) FROM all_earthquake_epicenter_historical WHERE time = '{feature_time_values}'")
+                query = text(f"SELECT COUNT(*) FROM all_earthquake_epicenter WHERE time = '{feature_time_values}'")
                 conn = con.connect()
                 cursor = conn.execute(query)
                 count = cursor.fetchone()[0]
@@ -108,7 +108,7 @@ def getEarthquakeHistoricalAnalysis():
                     epicenter = gpd.GeoDataFrame(earthquake_epic)
                     epicenter = epicenter.set_crs(4326, allow_override=True)
                     
-                    epicenter.to_postgis("all_earthquake_epicenter_historical", con, if_exists="append")
+                    epicenter.to_postgis("all_earthquake_epicenter", con, if_exists="append")
                     print('All earthquake Epicenter historical analysis saved successfully')
 
                     # ====================================================================================================
@@ -226,7 +226,7 @@ def getEarthquakeHistoricalAnalysis():
         #            print('Earthquake Shakemap saved successfully')
 
                     # Checkint if all shakemap table exist in the databse
-                    new_shakemap.to_postgis("all_earthquake_shakemap_historical", con, if_exists="append")
+                    new_shakemap.to_postgis("all_earthquake_shakemap", con, if_exists="append")
                     print('All earthquake Shakemap added successfully')
             else:
                 data = pd.DataFrame(attributes, index=[0])
@@ -236,7 +236,7 @@ def getEarthquakeHistoricalAnalysis():
                 epicenter = gpd.GeoDataFrame(earthquake_epic)
                 epicenter = epicenter.set_crs(4326, allow_override=True)
                 
-                epicenter.to_postgis("all_earthquake_epicenter_historical", con, if_exists="replace")
+                epicenter.to_postgis("all_earthquake_epicenter", con, if_exists="replace")
                 print('All earthquake Epicenter saved successfully')
 
                 # ===============================================================================================================
@@ -350,7 +350,7 @@ def getEarthquakeHistoricalAnalysis():
                 new_shakemap = new_shakemap.to_crs('EPSG:4326')
     
                 # Saving shakemap to database
-                new_shakemap.to_postgis("all_earthquake_shakemap_historical", con, if_exists="replace")
+                new_shakemap.to_postgis("all_earthquake_shakemap", con, if_exists="replace")
                 print('All earthquake Epicenter historical analysis added successfully')
     else:
         print('Error:', response.status_code)
