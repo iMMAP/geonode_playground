@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import urllib.request
 import os
 import zipfile
-from geoalchemy2 import Geometry
+# from geoalchemy2 import Geometry
 import psycopg2
 from shapely.geometry import Polygon, MultiPolygon, shape
 from osgeo import ogr
@@ -232,7 +232,7 @@ def getLatestShakemap():
                     #  First define the true original crs
                     epicenter.crs = "EPSG:4326"
                     # Reproject to projected crs before calculating shakemap
-                    epicenter = epicenter.to_crs('+proj=cea')
+                    epicenter = epicenter.to_crs('EPSG:32642')  # +proj=cea
                     # Create shakemap as donut rings from epicenter
 
                     def create_donut_rings(center, radii):
@@ -257,7 +257,7 @@ def getLatestShakemap():
                     # create a GeoDataFrame of donut rings
                     donut_rings_gdf = create_donut_rings(epicenter.geometry[0], radii)
 
-                    donut_rings_gdf.crs = "+proj=cea"
+                    donut_rings_gdf.crs = "EPSG:32642"  # "+proj=cea"
 
                     shakemap = donut_rings_gdf
 
@@ -279,7 +279,7 @@ def getLatestShakemap():
                     #shakemap = shakemap.reindex(columns=column_order)
 
                     # Get population raster
-                    pop = r'~/raster/afg_worldpop_2020_UNadj_unconstrained_projCEA_comp.tif' #_projCEA
+                    pop = r'~/raster/afg_worldpop_2020_UNadj_unconstrained_projUTM_comp.tif' #_projCEA
                     pop_expanded_path = os.path.expanduser(pop)
                     # Run zonal statistics
                     zonal = rasterstats.zonal_stats(shakemap,pop_expanded_path, stats = 'sum')
@@ -295,7 +295,8 @@ def getLatestShakemap():
                     # OBS: change to correct building dataset
 
                     # Load buildings from database
-                    buildings = gpd.GeoDataFrame.from_postgis('SELECT * from afg_buildings_microsoft_centroids', con, geom_col='geom').to_crs('+proj=cea')
+                    buildings = gpd.GeoDataFrame.from_postgis(
+                        'SELECT * from afg_buildings_microsoft_centroids', con, geom_col='geom').to_crs('EPSG:32642')
 
                     # Joining the polygon attributes to each point
                     # Creates a point layer of all buildings with the attributes copied from the interesecting polygon uniquely for each point
@@ -334,8 +335,8 @@ def getLatestShakemap():
                     
                     new_shakemap = shakemap[columns_shakemap]
                     # Reproject from +proj=cea to 4326 before saving
-                    new_shakemap = new_shakemap.to_crs('EPSG:4326')
-                    
+                    new_shakemap = new_shakemap.to_crs('EPSG:32642')
+
                     # Saving shakemap to database
                     new_shakemap.to_postgis('earthquake_shakemap', con, if_exists='replace')
                     print('Earthquake Shakemap replaced successfully')
@@ -353,7 +354,7 @@ def getLatestShakemap():
                 #  First define the true original crs
                 epicenter.crs = "EPSG:4326"
                 # Reproject to projected crs before calculating shakemap
-                epicenter = epicenter.to_crs('+proj=cea')
+                epicenter = epicenter.to_crs('EPSG:32642')
                 # Create shakemap as donut rings from epicenter
 
                 def create_donut_rings(center, radii):
@@ -378,7 +379,7 @@ def getLatestShakemap():
                 # create a GeoDataFrame of donut rings
                 donut_rings_gdf = create_donut_rings(epicenter.geometry[0], radii)
 
-                donut_rings_gdf.crs = "+proj=cea"
+                donut_rings_gdf.crs = "EPSG:32642"
 
                 shakemap = donut_rings_gdf
 
@@ -400,7 +401,7 @@ def getLatestShakemap():
                 #shakemap = shakemap.reindex(columns=column_order)
 
                 # Get population raster
-                pop = r'~/raster/afg_worldpop_2020_UNadj_unconstrained_projCEA_comp.tif' #_projCEA
+                pop = r'~/raster/afg_worldpop_2020_UNadj_unconstrained_projUTM_comp.tif' #_projCEA
                 pop_expanded_path = os.path.expanduser(pop)
                 # Run zonal statistics
                 zonal = rasterstats.zonal_stats(shakemap,pop_expanded_path, stats = 'sum')
@@ -416,8 +417,9 @@ def getLatestShakemap():
                 # OBS: change to correct building dataset
 
                 # Load buildings from database
-                buildings = gpd.GeoDataFrame.from_postgis('SELECT * from afg_buildings_microsoft_centroids', con, geom_col='geom').to_crs('+proj=cea')
-            
+                buildings = gpd.GeoDataFrame.from_postgis(
+                    'SELECT * from afg_buildings_microsoft_centroids', con, geom_col='geom').to_crs('EPSG:32642')
+
                 # Joining the polygon attributes to each point
                 # Creates a point layer of all buildings with the attributes copied from the interesecting polygon uniquely for each point
                 joined_df = gpd.sjoin(
