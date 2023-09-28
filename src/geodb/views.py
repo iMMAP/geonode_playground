@@ -23,120 +23,116 @@ pd.set_option('display.float_format', lambda x: '%.3f' % x)
 pd.set_option('display.expand_frame_repr', False)
 pd.set_option('display.width', 500)
 
+
+EARTHQUAKE_API_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query"
+DB_CREDENTIAL_FILE = "~/geonode_playground/src/hsdc_postgres_db_config.json"
+#DB_CREDENTIAL_FILE = 'D:/iMMAP/code/db_config/hsdc_local_db_config.json'
+TIMEZONE = "Asia/Kabul"
+
+
+def get_db_connection():
+    with open(os.path.expanduser(DB_CREDENTIAL_FILE), 'r') as f:
+        config = json.load(f)
+    db_url = f"postgresql://{config['username']}:{config['password']}@{config['host']}:{config['port']}/{config['database']}"
+    return create_engine(db_url)
+
+
+def get_latest_earthquakes():
+    query_parameters = {
+        "format": "geojson",
+        "starttime": "now-30days",
+        "minmagnitude": 4.5,
+        "minlatitude": 29.377065,
+        "maxlatitude": 38.490842,
+        "minlongitude": 60.471977,
+        "maxlongitude": 74.889561
+    }
+
+    response = requests.get(EARTHQUAKE_API_URL, params=query_parameters)
+
+    if response.status_code != 200:
+        print(f"Error: {response.status_code}")
+        return []
+
+    feature_collection = response.json()
+    features = feature_collection['features']
+    return sorted(features, key=lambda x: x['properties']['time'], reverse=True)[:5]
+
+
+def fetch_earthquake_details(detail_url):
+    response = requests.get(detail_url)
+    return response.json()
+
+
+def prepare_earthquake_data(attributes, coordinates):
+    attributes['time'] = pd.to_datetime(attributes['time'], unit='ms')
+    attributes['time'] = attributes['time'].tz_localize('UTC').tz_convert(TIMEZONE)
+    attributes['tz'] = TIMEZONE
+    attributes['time'] = attributes['time'].strftime('%Y-%m-%d %H:%M:%S')
+
+    # Extract X and Y coordinates and create a 2D point
+    x, y, *_ = coordinates['coordinates']
+    point_2d = Point(x, y)
+
+    data = pd.DataFrame(attributes, index=[0])
+    data_attr = ['title', 'place', 'mag', 'time', 'type', 'cdi', 'mmi', 'alert', 'geometry']
+    data['geometry'] = point_2d
+    earthquake_epic = data[data_attr]
+    epicenter = gpd.GeoDataFrame(earthquake_epic)
+    epicenter.set_crs(4326, allow_override=True, inplace=True)
+    return epicenter
+
+
+def create_table_if_not_exists(con):
+    """Create the table 'all_earthquake_epicenter' if it doesn't exist."""
+    query = text("""
+        CREATE TABLE IF NOT EXISTS all_earthquake_epicenter (
+            title TEXT,
+            place TEXT,
+            mag FLOAT,
+            time TIMESTAMP,
+            type TEXT,
+            cdi FLOAT,
+            mmi FLOAT,
+            alert TEXT,
+            geometry GEOMETRY(Point, 4326)
+        );
+    """)
+    query_conn = con.connect()
+    query_conn.execute(query)
+    query_conn.commit()
+
+
+def save_earthquake_data(con, epicenter):
+    epicenter.to_postgis("earthquake_epicenter", con, if_exists="replace")
+    print('Earthquake Epicenter replaced successfully')
+    epicenter.to_postgis("all_earthquake_epicenter", con, if_exists="append")
+    print('All earthquake Epicenter saved successfully')
+
+
+def earthquake_exists(con, time_value):
+    query = text(f"SELECT COUNT(*) FROM all_earthquake_epicenter WHERE time = '{time_value}'")
+    cursor = con.connect().execute(query)
+    return cursor.fetchone()[0] > 0
+
+
 def getLatestEarthQuake():
+    con = get_db_connection()
+    create_table_if_not_exists(con)
 
-    # TEST COMMENT - Some more changes to this comment - more changes
-    start_time = 'now-180days'
-    min_magnitude = 4
-    # min_magnitude = 0
+    latest_earthquakes = get_latest_earthquakes()
 
-    # latitude = 39.1458
-    # longitude = 34.1614
-    # max_radius_km = 1500
+    for feature in latest_earthquakes:
+        details = fetch_earthquake_details(feature['properties']['detail'])
+        coordinates = details['geometry']
+        attributes = details['properties']
+        epicenter = prepare_earthquake_data(attributes, coordinates)
+        if not earthquake_exists(con, attributes['time']):
+            save_earthquake_data(con, epicenter)
+        else:
+            print('The earthquake epicenter already exists')
 
-    minlatitude = 29.377065
-    maxlatitude = 38.490842
-    minlongitude = 60.471977
-    maxlongitude = 74.889561
 
-    # minlatitude = -90
-    # maxlatitude = 90
-    # minlongitude = -179
-    # maxlongitude = 179
-
-    bbox_query = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time}&minmagnitude={min_magnitude}&minlatitude={minlatitude}&maxlatitude={maxlatitude}&minlongitude={minlongitude}&maxlongitude={maxlongitude}'
-
-    response = requests.get(bbox_query)
-    
-    if response.status_code == 200:
-        featureCollection = response.json()
-
-        # Load database configuration from file
-        db_credential_file = r'~/geonode_playground/src/hsdc_postgres_db_config.json'
-        db_credential = os.path.expanduser(db_credential_file)
-        with open(db_credential, 'r') as f:
-            config = json.load(f)
-        db_url = f"postgresql://{config['username']}:{config['password']}@{config['host']}:{config['port']}/{config['database']}"
-        con = create_engine(db_url)
-
-        features = featureCollection['features']
-        # Sort the features based on the 'time' property
-        features_sorted = sorted(features, key=lambda x: x['properties']['time'], reverse=False)
-        # Get the most recent feature
-        feature_newest = features_sorted[-5:]
-
-        for feature in feature_newest:
-            # Open the details url in the feature (contains properties, epicenter and shakemap)
-            detail_url = feature['properties']['detail']
-            url = requests.get(detail_url)
-
-            # Save to new variable
-            feature_newest_detail = url.json()
-            # Extracting epicenter coordinates
-            coordinates = feature_newest_detail['geometry']
-            # Extract the epicenter attributes
-            attributes = feature_newest_detail['properties']
-
-            # Convert UNIX timestamp to normal time
-            attributes['time'] = pd.to_datetime(attributes['time'], unit='ms')
-            # Convert to Kabul time
-            timezone = 'Asia/Kabul'
-            attributes['time'] = attributes['time'].tz_localize('UTC').tz_convert(timezone)
-            # Set time-zone column
-            attributes['tz'] = timezone
-            # Reformat time
-            attributes['time'] = attributes['time'].strftime('%Y-%m-%d %H:%M:%S')
-            
-
-            # Creating a temp earthquake table (Uncomment this section if haven't that table then comment it after) =========================================================================
-            
-            metadata = MetaData()
-            metadata.reflect(bind=con)
-            table = metadata.tables.get('all_earthquake_epicenter')
-
-            if table is not None:
-                # Check the feature record =========================================================================
-
-                feature_time_values = attributes['time']
-                query = text(f"SELECT COUNT(*) FROM all_earthquake_epicenter WHERE time = '{feature_time_values}'")
-                conn = con.connect()
-                cursor = conn.execute(query)
-                count = cursor.fetchone()[0]
-
-                # =============================================================================================
-
-                if count > 0:
-                    print('The earthquake epicenter already exist')
-                else:
-                    data = pd.DataFrame(attributes, index=[0])
-                    dataAttr = ['title','place','mag','time','type','cdi','mmi','alert','geometry']
-                    data['geometry'] = Point(coordinates['coordinates'])
-                    earthquake_epic = data[dataAttr]
-                    epicenter = gpd.GeoDataFrame(earthquake_epic)
-                    epicenter = epicenter.set_crs(4326, allow_override=True)
-
-                    epicenter.to_postgis("earthquake_epicenter", con, if_exists="replace")
-                    print('Earthquake Epicenter replaced successfully')
-
-                    epicenter.crs = 'EPSG:4326'
-                    epicenter.to_postgis("all_earthquake_epicenter", con, if_exists="append")
-                    print('All earthquake Epicenter saved successfully')
-            else:
-                data = pd.DataFrame(attributes, index=[0])
-                dataAttr = ['title','place','mag','time','type','cdi','mmi','alert','geometry']
-                data['geometry'] = Point(coordinates['coordinates'])
-                earthquake_epic = data[dataAttr]
-                epicenter = gpd.GeoDataFrame(earthquake_epic)
-                epicenter = epicenter.set_crs(4326, allow_override=True)
-            
-                epicenter.to_postgis("earthquake_epicenter", con, if_exists="replace")
-                print('Earthquake Epicenter replaced successfully')
-
-                epicenter.to_postgis("all_earthquake_epicenter", con, if_exists="replace")
-                print('All earthquake Epicenter replaced successfully')
-
-    else:
-        print('Error:', response.status_code)
 
 
 def getLatestShakemap():
