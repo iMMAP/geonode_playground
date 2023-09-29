@@ -56,7 +56,7 @@ def get_latest_earthquakes():
 
     feature_collection = response.json()
     features = feature_collection['features']
-    return sorted(features, key=lambda x: x['properties']['time'], reverse=True)[:5]
+    return sorted(features, key=lambda x: x['properties']['time'], reverse=False)[-5:]
 
 
 def fetch_earthquake_details(detail_url):
@@ -193,9 +193,9 @@ def getLatestShakemap():
         
         features = featureCollection['features']
         # Sort the features based on the 'time' property
-        features_sorted = sorted(features, key=lambda x: x['properties']['time'], reverse=True)
+        features_sorted = sorted(features, key=lambda x: x['properties']['time'], reverse=False)
         # Get the most recent feature
-        feature_newest = features_sorted[:5]
+        feature_newest = features_sorted[-5:]
 
         for feature in feature_newest:
             # Open the details url in the feature (contains properties, epicenter and shakemap)
