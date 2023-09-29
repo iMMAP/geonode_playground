@@ -40,7 +40,7 @@ def get_db_connection():
 def get_latest_earthquakes():
     query_parameters = {
         "format": "geojson",
-        "starttime": "now-30days",
+        "starttime": "now-180days",
         "minmagnitude": 4.5,
         "minlatitude": 29.377065,
         "maxlatitude": 38.490842,
@@ -193,9 +193,9 @@ def getLatestShakemap():
         
         features = featureCollection['features']
         # Sort the features based on the 'time' property
-        features_sorted = sorted(features, key=lambda x: x['properties']['time'], reverse=False)
+        features_sorted = sorted(features, key=lambda x: x['properties']['time'], reverse=True)
         # Get the most recent feature
-        feature_newest = features_sorted[-5:]
+        feature_newest = features_sorted[:5]
 
         for feature in feature_newest:
             # Open the details url in the feature (contains properties, epicenter and shakemap)
