@@ -351,7 +351,7 @@ def getLatestShakemap():
                     
                     new_shakemap = shakemap[columns_shakemap]
                     # Reproject from +proj=cea to 4326 before saving
-                    new_shakemap = new_shakemap.to_crs('EPSG:32642')
+                    new_shakemap = new_shakemap.to_crs('EPSG:4326')
 
                     # Saving shakemap to database
                     new_shakemap.to_postgis('earthquake_shakemap', con, if_exists='replace')
