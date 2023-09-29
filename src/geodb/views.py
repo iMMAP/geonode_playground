@@ -158,7 +158,7 @@ def getLatestEarthQuake():
 def getLatestShakemap():
 
     start_time = 'now-180days'
-    min_magnitude = 4
+    min_magnitude = 4.5
     # min_magnitude = 0
 
     # latitude = 39.1458
