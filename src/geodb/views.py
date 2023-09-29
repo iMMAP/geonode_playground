@@ -98,9 +98,29 @@ def create_table_if_not_exists(con):
             geometry GEOMETRY(Point, 4326)
         );
     """)
+
+    """Create the table 'all_earthquake_epicenter' if it doesn't exist."""
+    epic_query = text("""
+        CREATE TABLE IF NOT EXISTS earthquake_epicenter (
+            title TEXT,
+            place TEXT,
+            mag FLOAT,
+            time TIMESTAMP,
+            type TEXT,
+            cdi FLOAT,
+            mmi FLOAT,
+            alert TEXT,
+            geometry GEOMETRY(Point, 4326)
+        );
+    """)
+
     query_conn = con.connect()
     query_conn.execute(query)
     query_conn.commit()
+
+    epic_query_conn = con.connect()
+    epic_query_conn.execute(epic_query)
+    epic_query_conn.commit()
 
 
 def save_earthquake_data(con, epicenter):
