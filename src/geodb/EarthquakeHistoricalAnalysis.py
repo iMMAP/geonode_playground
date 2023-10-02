@@ -27,7 +27,7 @@ pd.set_option('display.width', 500)
 def getEarthquakeHistoricalAnalysis():
 
     start_time = 'now-10years'
-    min_magnitude = 4
+    min_magnitude = 4.5
     # min_magnitude = 0
 
     # latitude = 39.1458
