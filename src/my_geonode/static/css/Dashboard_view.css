@@ -279,3 +279,10 @@
             position: absolute;
             width: 100%;
         }
+
+        .msgapi .btn-group-vertical .square-button-md, .msgapi .square-button-md {
+            height: 30px;
+            outline: 0;
+            padding: 0 !important;
+            width: 30px;
+        }

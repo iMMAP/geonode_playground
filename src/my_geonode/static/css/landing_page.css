@@ -202,7 +202,7 @@
     color: #fff;
   }
 
-.row{
+.landing-login-btn{
     display: flex;
     gap: 8px;
     align-items: center;
