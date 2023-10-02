@@ -84,9 +84,9 @@ def prepare_earthquake_data(attributes, coordinates):
 
 
 def create_table_if_not_exists(con):
-    """Create the table 'all_earthquake_epicenter' if it doesn't exist."""
+    """Create the table 'earthquake_epicenter_all' if it doesn't exist."""
     query = text("""
-        CREATE TABLE IF NOT EXISTS all_earthquake_epicenter (
+        CREATE TABLE IF NOT EXISTS earthquake_epicenter_all (
             title TEXT,
             place TEXT,
             mag FLOAT,
@@ -99,9 +99,9 @@ def create_table_if_not_exists(con):
         );
     """)
 
-    """Create the table 'all_earthquake_epicenter' if it doesn't exist."""
+    """Create the table 'earthquake_epicenter_latest' if it doesn't exist."""
     epic_query = text("""
-        CREATE TABLE IF NOT EXISTS earthquake_epicenter (
+        CREATE TABLE IF NOT EXISTS earthquake_epicenter_latest (
             title TEXT,
             place TEXT,
             mag FLOAT,
@@ -124,14 +124,14 @@ def create_table_if_not_exists(con):
 
 
 def save_earthquake_data(con, epicenter):
-    epicenter.to_postgis("earthquake_epicenter", con, if_exists="replace")
+    epicenter.to_postgis("earthquake_epicenter_latest", con, if_exists="replace")
     print('Earthquake Epicenter replaced successfully')
-    epicenter.to_postgis("all_earthquake_epicenter", con, if_exists="append")
+    epicenter.to_postgis("earthquake_epicenter_all", con, if_exists="append")
     print('All earthquake Epicenter saved successfully')
 
 
 def earthquake_exists(con, time_value):
-    query = text(f"SELECT COUNT(*) FROM all_earthquake_epicenter WHERE time = '{time_value}'")
+    query = text(f"SELECT COUNT(*) FROM earthquake_epicenter_all WHERE time = '{time_value}'")
     cursor = con.connect().execute(query)
     return cursor.fetchone()[0] > 0
 
@@ -354,10 +354,10 @@ def getLatestShakemap():
                     new_shakemap = new_shakemap.to_crs('EPSG:4326')
 
                     # Saving shakemap to database
-                    new_shakemap.to_postgis('earthquake_shakemap', con, if_exists='replace')
+                    new_shakemap.to_postgis('earthquake_shakemap_latest', con, if_exists='replace')
                     print('Earthquake Shakemap replaced successfully')
 
-                    new_shakemap.to_postgis("all_earthquake_shakemap", con, if_exists="append")
+                    new_shakemap.to_postgis("earthquake_shakemap_all", con, if_exists="append")
                     print('All earthquake Shakemap saved successfully')
             else:
                 # Create a pandas DataFrame
@@ -475,10 +475,10 @@ def getLatestShakemap():
                 # Reproject from +proj=cea to 4326 before saving
                 new_shakemap = new_shakemap.to_crs('EPSG:4326')
 
-                new_shakemap.to_postgis('earthquake_shakemap', con, if_exists='replace')
+                new_shakemap.to_postgis('earthquake_shakemap_latest', con, if_exists='replace')
                 print('Earthquake Shakemap replaced successfully')
 
-                new_shakemap.to_postgis("all_earthquake_shakemap", con, if_exists="replace")
+                new_shakemap.to_postgis("earthquake_shakemap_all", con, if_exists="replace")
                 print('All earthquake Shakemap replaced successfully')
     else:
         print('Error:', response.status_code)
