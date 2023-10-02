@@ -15,5 +15,5 @@ def updateLatestShakemap():
 	getLatestShakemap()
 
 @shared_task
-def getEarthquakeHistorical:
+def getEarthquakeHistorical():
 	getEarthquakeHistoricalAnalysis()
