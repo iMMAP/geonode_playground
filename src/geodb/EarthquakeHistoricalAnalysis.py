@@ -358,5 +358,3 @@ def getEarthquakeHistoricalAnalysis():
                 print('All earthquake shakemap saved successfully')
     else:
         print('Error:', response.status_code)
-
-getEarthquakeHistoricalAnalysis()
