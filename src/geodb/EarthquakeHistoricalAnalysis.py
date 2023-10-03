@@ -159,7 +159,7 @@ def getEarthquakeHistoricalAnalysis():
 
                     #shakemap = shakemap.reindex(columns=column_order)
                     # Get population raster
-                    pop = r'~/raster/afg_worldpop_2020_UNadj_unconstrained_projCEA_comp.tif' #_projCEA
+                    pop = r'~/raster/afg_worldpop_2020_UNadj_unconstrained_projUTM_comp.tif' #_projCEA
 
                     pop_expanded_path = os.path.expanduser(pop)
                     # Run zonal statistics
