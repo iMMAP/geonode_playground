@@ -1,3 +1,15 @@
+
 {% load i18n %}
-{% trans "Your account has been approved and is now active." %}<br/>
-{% trans "You can use the login form at" %}: http://{{ current_site }}
+
+<tr>
+    <td style="padding:0 0 17px;">
+        {% trans "Your account has been approved and is now active." %}<br/>
+        {% trans "You can use the login form at" %}: 
+            <a href="http://{{ current_site }}">Login to HSDC</a>
+    </td>
+</tr>
+
+
+
+
+

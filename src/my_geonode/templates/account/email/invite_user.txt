@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% blocktrans with site_name=current_site.name %}
-    You have been invited to sign up at {{ site_name|urlencode }}.
+    You have been invited to sign up at {{ current_site|urlencode }}
 {% endblocktrans %}
 
 {{ signup_url }}

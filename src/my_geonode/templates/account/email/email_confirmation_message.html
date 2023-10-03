@@ -1,0 +1,46 @@
+{% extends "email_base.html" %}
+{% load account %}
+{% user_display user as user_display %}
+{% load i18n %}
+
+{% block email-title %}
+    Email Verification
+{% endblock email-title %}
+
+{% block email-body  %} 
+
+<tr>
+    <td style="padding:0 0 17px;">
+        {% autoescape off %}
+
+        {% blocktrans with site_name=current_site.name site_domain=current_site.domain %}
+        Hello from {{current_site.name }}
+
+        <p>
+            Dear {{ user_display }}
+        </p>
+
+        <p>
+            Thank you for requesting access to the Humanitarian Spatial Data Center! To complete your registration, we need to verify your email address.
+        </p>
+
+        <p>
+            Please click on the following link or copy and paste it into your web browser to verify your email address:
+        </p>
+
+        <button class="btn-primary">
+            {{ activate_url }}
+        </button>
+
+        {% endblocktrans %}
+        {% endautoescape %}
+
+        <p>
+            {% blocktrans with site_name=current_site.name site_domain=current_site.domain %}
+            Thank you from {{ site_name|urlencode }}! Humanitarian Spatial Data Center
+            {{ site_domain }}
+            {% endblocktrans %}
+        </p>
+    </td>
+</tr>
+{% endblock email-body  %}

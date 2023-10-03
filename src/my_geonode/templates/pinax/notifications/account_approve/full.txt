@@ -1,11 +1,24 @@
 {% load i18n %}
-{% trans "User" %} "{{from_user}}" ({{from_user.email}}) 
-{% if account_approval_required %}
-    {% trans "has requested access to the site." %} 
-    {% trans "You can enable access by setting the user as active on the admin section" %}: 
-    <button>
-        http://{{current_site}}/admin/people/profile/{{from_user.id}}
-    </button>
-{% else %}
-    {% trans "has created an account and has access to the site." %}
-{% endif %}
+
+<tr>
+    <td style="padding:0 0 17px;">
+
+        {% trans "User" %} "{{from_user}}" ({{from_user.email}}) 
+        {% if account_approval_required %}
+            {% trans "has requested access to the site." %} 
+            <p>
+                {% trans "You can enable access by setting the user as active on the admin section" %}: 
+            </p>
+            <button class="btn-primary">
+                <a href="http://{{current_site}}/admin/people/profile/{{from_user.id}}">
+                    Go to user 
+                </a>
+            </button>
+        {% else %}
+        <p>
+            {% trans "has created an account and has access to the site." %}
+        </p>
+        {% endif %}
+
+   </td>
+</tr>

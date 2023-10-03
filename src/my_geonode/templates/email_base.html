@@ -1,4 +1,3 @@
-{% load i18n %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -192,10 +191,7 @@
                         letter-spacing: -0.25px;
                       "
                     >
-                        {% url "notice_settings" as notices_url %}
-                        {% blocktrans %}You have received the following notice from{% endblocktrans %} <a href="{{ current_site }}">HSDC</a>:
-
-                      {% comment %} {% block email-title %} {% endblock email-title %} {% endcomment %}
+                      {% block email-title %} {% endblock email-title %}
                     </td>
                   </tr>
                   <tr>
@@ -223,14 +219,7 @@
                     </td>
                   </tr>
 
-                   {{ message }}
-
-                   <tr>
-                    <td>
-                        To change how you receive notifications, please go to 
-                        <a href="{{ default_http_protocol }}://{{ current_site }}{{ notice_settings_url }}">Notification Settings</a>
-                    </td>
-                   </tr>
+                  {% block email-body %} {% endblock email-body %}
 
                   <tr>
                     <td style="padding: 0 0 7px">
