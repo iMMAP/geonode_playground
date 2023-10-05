@@ -63,6 +63,7 @@ def getEarthquakeHistoricalAnalysis():
         # Sort the features based on the 'time' property
         features_sorted = sorted(features, key=lambda x: x['properties']['time'], reverse=False)
         # Get the most recent feature
+
         
         for feature_newest in features_sorted:
             # Open the details url in the feature (contains properties, epicenter and shakemap)
@@ -181,7 +182,7 @@ def getEarthquakeHistoricalAnalysis():
                     
                     # OBS: change to correct building dataset
                     # Load buildings from database
-                    buildings = gpd.GeoDataFrame.from_postgis('SELECT * from afg_buildings_microsoft_centroids', con, geom_col='geom').to_crs('EPSG:32642')
+                    buildings = gpd.GeoDataFrame.from_postgis('SELECT * from afg_buildings_microsoft_centroids LIMIT 500000', con, geom_col='geom').to_crs('EPSG:32642')
 
                     # Joining the polygon attributes to each point
                     # Creates a point layer of all buildings with the attributes copied from the interesecting polygon uniquely for each point
