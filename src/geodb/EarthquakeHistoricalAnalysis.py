@@ -108,9 +108,19 @@ def getEarthquakeHistoricalAnalysis():
                     earthquake_epic = data[dataAttr]
                     epicenter = gpd.GeoDataFrame(earthquake_epic)
                     epicenter = epicenter.set_crs(4326, allow_override=True)
-                    
-                    epicenter.to_postgis("earthquake_epicenter_all", con, if_exists="append")
-                    print('All earthquake Epicenter added successfully')
+                           
+                    epicenter_time_values = attributes['time']
+                    print(feature_time_values)
+                    epic_query = text(f"SELECT COUNT(*) FROM earthquake_epicenter_all WHERE time = '{epicenter_time_values}'")
+                    epic_conn = con.connect()
+                    epic_cursor = epic_conn.execute(epic_query)
+                    epic_count = epic_cursor.fetchone()[0]
+#
+                    if epic_count > 0:
+                        print('This epicenter already exits')
+                    else:
+                        epicenter.to_postgis("earthquake_epicenter_all", con, if_exists="append")
+                        print('All earthquake Epicenter added successfully')
 
                     # ====================================================================================================
 
@@ -182,7 +192,7 @@ def getEarthquakeHistoricalAnalysis():
                     
                     # OBS: change to correct building dataset
                     # Load buildings from database
-                    buildings = gpd.GeoDataFrame.from_postgis('SELECT * from afg_buildings_microsoft_centroids LIMIT 500000', con, geom_col='geom').to_crs('EPSG:32642')
+                    buildings = gpd.GeoDataFrame.from_postgis('SELECT * from afg_buildings_microsoft_centroids', con, geom_col='geom').to_crs('EPSG:32642')
 
                     # Joining the polygon attributes to each point
                     # Creates a point layer of all buildings with the attributes copied from the interesecting polygon uniquely for each point
