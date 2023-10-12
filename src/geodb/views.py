@@ -223,13 +223,13 @@ def getLatestShakemap():
             
             metadata = MetaData()
             metadata.reflect(bind=con)
-            table = metadata.tables.get('all_earthquake_shakemap')
+            table = metadata.tables.get('earthquake_shakemap_all')
 
             if table is not None:    
             # Check the feature record =========================================================================
 
                 feature_time_values = attributes['time']
-                query = text(f"SELECT COUNT(*) FROM all_earthquake_shakemap WHERE time = '{feature_time_values}'")
+                query = text(f"SELECT COUNT(*) FROM earthquake_shakemap_all WHERE time = '{feature_time_values}'")
                 conn = con.connect()
                 cursor = conn.execute(query)
                 count = cursor.fetchone()[0]
