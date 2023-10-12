@@ -26,7 +26,7 @@ pd.set_option('display.width', 500)
 
 def getEarthquakeHistoricalAnalysis():
 
-    start_time = 'now-10years'
+    start_time = 'now-2years'
     min_magnitude = 4.5
     # min_magnitude = 0
 
@@ -63,6 +63,7 @@ def getEarthquakeHistoricalAnalysis():
         # Sort the features based on the 'time' property
         features_sorted = sorted(features, key=lambda x: x['properties']['time'], reverse=False)
         # Get the most recent feature
+
         
         for feature_newest in features_sorted:
             # Open the details url in the feature (contains properties, epicenter and shakemap)
@@ -107,9 +108,19 @@ def getEarthquakeHistoricalAnalysis():
                     earthquake_epic = data[dataAttr]
                     epicenter = gpd.GeoDataFrame(earthquake_epic)
                     epicenter = epicenter.set_crs(4326, allow_override=True)
-                    
-                    epicenter.to_postgis("earthquake_epicenter_all", con, if_exists="append")
-                    print('All earthquake Epicenter added successfully')
+                           
+                    epicenter_time_values = attributes['time']
+                    print(feature_time_values)
+                    epic_query = text(f"SELECT COUNT(*) FROM earthquake_epicenter_all WHERE time = '{epicenter_time_values}'")
+                    epic_conn = con.connect()
+                    epic_cursor = epic_conn.execute(epic_query)
+                    epic_count = epic_cursor.fetchone()[0]
+#
+                    if epic_count > 0:
+                        print('This epicenter already exits')
+                    else:
+                        epicenter.to_postgis("earthquake_epicenter_all", con, if_exists="append")
+                        print('All earthquake Epicenter added successfully')
 
                     # ====================================================================================================
 
