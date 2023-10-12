@@ -1,4 +1,4 @@
 {% load i18n %}
 {% blocktrans with site_name=current_site.name %}
-    Create an account on {{ site_name|urlencode }}
+    Create an account on {{current_site|urlencode }}.
 {% endblocktrans %}

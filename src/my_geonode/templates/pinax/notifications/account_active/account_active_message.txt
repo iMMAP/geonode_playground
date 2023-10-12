@@ -1,10 +1,26 @@
+
 {% load i18n %}
-{% trans "Dear" %} {{ username }}:
 
-Your request to access the Humanitarian Spatial Data Center has been approved! 
+<tr>
+    <td style="padding:0 0 17px;">
+        {% trans "Dear" %} {{ username }}:
 
-Please login with your account at https://hsdc.immap.org/account/login/
+        <p>
+            Your request to access the Humanitarian Spatial Data Center has been approved! 
+        </p>
 
-Best regards,
+        <p>
+            Please login with your account at <a href="https://hsdc.immap.org/account/login/">HSDC login page.</a>
+        </p>
 
-HSDC Support - iMMAP
+        <p>    
+            Best regards,
+        </p>
+
+        <p>
+            HSDC Support - iMMAP
+        </p>
+
+    </td>
+</tr>
+

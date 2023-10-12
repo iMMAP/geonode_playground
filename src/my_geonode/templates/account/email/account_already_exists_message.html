@@ -1,0 +1,32 @@
+{% extends "email_base.html" %}
+{% load i18n %}
+
+{% block email-title %}
+    Acount Exists
+{% endblock email-title %}
+
+{% block email-body  %} 
+<tr>
+    <td style="padding:0 0 17px;">
+
+        <p>
+            {% autoescape off %}{% blocktrans %}You are receiving this e-mail because you or someone else tried to signup for an account using e-mail address:
+        </p>
+
+            <strong>
+                {{ email }}
+            </strong>
+
+            <p>
+                However, an account using that e-mail address already exists.  In case you have
+                forgotten about this, please use the password forgotten procedure to recover
+                your account:
+            </p>
+
+            <button class="btn-primary">
+                <a href="{{ password_reset_url }}">Reset Your Password</a>
+            </button>
+
+        </td>
+    </tr>
+{% endblock email-body  %}
