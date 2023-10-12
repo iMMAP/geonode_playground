@@ -4,12 +4,16 @@ from django import forms
 from myapp.models import OchaDashboard,ProfileProxy
 from import_export.admin import ExportActionMixin
 from django.utils.translation import gettext_lazy as _
+from django.contrib.admin import DateFieldListFilter
+from rangefilter.filters import (
+    DateRangeFilterBuilder,
+)
 
 
 
 class ProfileProxyAdmin(ExportActionMixin,admin.ModelAdmin):
     list_display = ("id", "username", "organization", "email", "first_name", "last_name", "is_staff", "is_active","last_login","date_joined")
-    list_filter = ("is_staff", "is_superuser", "is_active", "groups",'date_joined')
+    list_filter = ("is_staff", "is_superuser", "is_active", "groups",("date_joined", DateRangeFilterBuilder()),('last_login', DateRangeFilterBuilder()))
     search_fields = ("username", "organization", "profile", "first_name", "last_name", "email")
     # readonly_fields = ("groups", )
     ordering = ("date_joined",)
