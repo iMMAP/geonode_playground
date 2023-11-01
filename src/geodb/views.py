@@ -197,6 +197,9 @@ def getLatestShakemap():
         # Get the most recent feature
         feature_newest = features_sorted[-5:]
 
+        # Load buildings from database
+        buildings = gpd.GeoDataFrame.from_postgis('SELECT * from afg_buildings_microsoft_centroids', con, geom_col='geom').to_crs('EPSG:32642')
+
         for feature in feature_newest:
             # Open the details url in the feature (contains properties, epicenter and shakemap)
             detail_url = feature['properties']['detail']
@@ -309,10 +312,6 @@ def getLatestShakemap():
                     # Turn pandas dataframe back into a geodataframe
                     shakemap = gpd.GeoDataFrame(df_concat, geometry=df_concat.geometry) #wkb_geometry
                     # OBS: change to correct building dataset
-
-                    # Load buildings from database
-                    buildings = gpd.GeoDataFrame.from_postgis(
-                        'SELECT * from afg_buildings_microsoft_centroids', con, geom_col='geom').to_crs('EPSG:32642')
 
                     # Joining the polygon attributes to each point
                     # Creates a point layer of all buildings with the attributes copied from the interesecting polygon uniquely for each point
