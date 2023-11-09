@@ -352,6 +352,10 @@ def getLatestShakemap():
                     # Reproject from +proj=cea to 4326 before saving
                     new_shakemap = new_shakemap.to_crs('EPSG:4326')
 
+                    # Convert 'pop' and 'km2' to integers
+                    new_shakemap['pop'] = new_shakemap['pop'].astype(int)
+                    new_shakemap['km2'] = new_shakemap['km2'].astype(int)
+
                     # Saving shakemap to database
                     new_shakemap.to_postgis('earthquake_shakemap_latest', con, if_exists='replace')
                     print('Earthquake Shakemap replaced successfully')
@@ -431,10 +435,6 @@ def getLatestShakemap():
                 shakemap = gpd.GeoDataFrame(df_concat, geometry=df_concat.geometry) #wkb_geometry
                 # OBS: change to correct building dataset
 
-                # Load buildings from database
-                buildings = gpd.GeoDataFrame.from_postgis(
-                    'SELECT * from afg_buildings_microsoft_centroids', con, geom_col='geom').to_crs('EPSG:32642')
-
                 # Joining the polygon attributes to each point
                 # Creates a point layer of all buildings with the attributes copied from the interesecting polygon uniquely for each point
                 joined_df = gpd.sjoin(
@@ -473,6 +473,10 @@ def getLatestShakemap():
                 new_shakemap = shakemap[columns_shakemap]
                 # Reproject from +proj=cea to 4326 before saving
                 new_shakemap = new_shakemap.to_crs('EPSG:4326')
+
+                # Convert 'pop' and 'km2' to integers
+                new_shakemap['pop'] = new_shakemap['pop'].astype(int)
+                new_shakemap['km2'] = new_shakemap['km2'].astype(int)
 
                 new_shakemap.to_postgis('earthquake_shakemap_latest', con, if_exists='replace')
                 print('Earthquake Shakemap replaced successfully')
