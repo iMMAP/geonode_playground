@@ -353,8 +353,8 @@ def getLatestShakemap():
                     new_shakemap = new_shakemap.to_crs('EPSG:4326')
 
                     # Convert 'pop' and 'km2' to integers
-                    new_shakemap['pop'] = new_shakemap['pop'].astype(int)
-                    new_shakemap['km2'] = new_shakemap['km2'].astype(int)
+                    new_shakemap['pop'] = new_shakemap['pop'].astype('Int64')
+                    new_shakemap['km2'] = new_shakemap['km2'].astype('Int64')
 
                     # Saving shakemap to database
                     new_shakemap.to_postgis('earthquake_shakemap_latest', con, if_exists='replace')
@@ -475,8 +475,8 @@ def getLatestShakemap():
                 new_shakemap = new_shakemap.to_crs('EPSG:4326')
 
                 # Convert 'pop' and 'km2' to integers
-                new_shakemap['pop'] = new_shakemap['pop'].astype(int)
-                new_shakemap['km2'] = new_shakemap['km2'].astype(int)
+                new_shakemap['pop'] = new_shakemap['pop'].astype('Int64')
+                new_shakemap['km2'] = new_shakemap['km2'].astype('Int64')
 
                 new_shakemap.to_postgis('earthquake_shakemap_latest', con, if_exists='replace')
                 print('Earthquake Shakemap replaced successfully')
