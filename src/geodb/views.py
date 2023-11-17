@@ -355,7 +355,7 @@ def getLatestShakemap():
                     # Convert columns to integers and treating NaN values as None
                     new_shakemap['pop'] = new_shakemap['pop'].fillna(0).astype(int)
                     new_shakemap['km2'] = new_shakemap['km2'].fillna(0).astype(int)
-                    new_shakemap['buildings'] = new_shakemap['pop'].fillna(0)
+                    new_shakemap['buildings'] = new_shakemap['buildings'].fillna(0)
 
                     # Saving shakemap to database
                     new_shakemap.to_postgis('earthquake_shakemap_latest', con, if_exists='replace')
