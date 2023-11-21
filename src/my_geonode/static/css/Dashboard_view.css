@@ -216,16 +216,6 @@
         .gn-page-wrapper.gn-desktop {
             background-color: #F6EAE9;
         }
-
-        .footer_container {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: white;
-            padding: 0.5rem 4rem !important;
-            z-index: 9999;
-        }
-
         .msgapi .gn-card-grid .gn-card-grid-pagination {
             padding: 1rem 1rem 3rem;
             text-align: center;
