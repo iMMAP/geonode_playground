@@ -35,7 +35,7 @@ DB_CREDENTIAL_FILE = "~/geonode_playground/src/hsdc_postgres_db_config.json"
 #DB_CREDENTIAL_FILE = 'D:/iMMAP/code/db_config/hsdc_local_db_config.json'
 TIMEZONE = "Asia/Kabul"
 
- os.chdir(r'/home/ubuntu/data/GLOFAS/alerts/')
+os.chdir(r'/home/ubuntu/data/GLOFAS/alerts/')
 
 
 def get_db_connection():
