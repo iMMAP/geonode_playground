@@ -16,6 +16,12 @@ from shapely.geometry import Polygon, MultiPolygon, shape
 from osgeo import ogr
 from shapely.wkt import loads
 import rasterstats
+from netCDF4 import Dataset
+from osgeo import gdal
+import numpy as np
+import numpy.ma as ma
+from ftplib import FTP
+from django.conf import settings
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
@@ -509,3 +515,76 @@ def get_nc_file_from_ftp(date):
         print(f"An error occurred: {e}")
         server.close()
         return False
+
+
+
+def getLatestGlofasFlood(date):
+    # Open source file
+    # Select based on date
+    date_arr = date.split('-')
+    directory_path = '/home/ubuntu/data/GLOFAS/'
+    input_file = directory_path + "glofas_areagrid_for_IMMAP_in_Afghanistan_" + date_arr[0] + date_arr[1] + date_arr[2] + "00.nc" # Path to the input NetCDF file with discharge data.
+    reference_tif_path = r"/home/ubuntu/data/GLOFAS/reference_tif.tif"  # Path to the GeoTIFF file used for georeferencing.
+    discharge_tif_paths = ['/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmp0_59ziks/discharge_day1_3.tif', '/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmpt_yo98g6/discharge_day4_10.tif', '/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmpinmh2_mr/discharge_day11_30.tif']  # Output paths for average discharge TIFFs.
+    alert_tif_paths = ['/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmpr6onmi52/alert_day1_3.tif', '/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmpfpvy4t0u/alert_day4_10.tif', '/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmp5_4vilax/alert_day11_30.tif']  # Output paths for alert TIFFs.
+    time_ranges = [(0, 3), (3, 10), (10, 30)]  # Time ranges corresponding to the categories.
+
+    # Read geotransform and projection from reference GeoTIFF
+    reference_tif = gdal.Open(reference_tif_path)
+    gt = reference_tif.GetGeoTransform()  # Geotransform for output TIFFs.
+    proj = reference_tif.GetProjection()  # Projection for output TIFFs.
+    reference_tif = None  # Close the reference TIFF.
+
+    # Function to save a TIFF file with no data value handling
+    def save_tif_file(array, output_path, geotransform, projection, datatype, no_data_value=None):
+        driver = gdal.GetDriverByName("GTiff")
+        y_size, x_size = array.shape
+        dataset = driver.Create(output_path, x_size, y_size, 1, datatype)
+        dataset.SetGeoTransform(geotransform)
+        dataset.SetProjection(projection)
+        band = dataset.GetRasterBand(1)
+        if no_data_value is not None:
+            # Explicitly cast no_data_value to float
+            band.SetNoDataValue(float(no_data_value))
+        band.WriteArray(array)
+        band.FlushCache()
+        dataset = None  # Ensure the dataset is properly closed.
+        
+        
+    # Function to create alert .tif file with no data values
+    def create_alert_tif(discharge, return_level, output_path, gt, proj, no_data_value):
+        # Initialize an array with the no_data_value where the discharge is no data
+        alert_array = np.full(discharge.shape, no_data_value, dtype='float32')
+
+        # Apply alert conditions only where discharge data is valid
+        valid_data_mask = (discharge != no_data_value)
+        alert_conditions = np.where((discharge >= return_level) & valid_data_mask, 1, 0)
+        
+        # Place the alert conditions into the alert array, preserving no data values
+        alert_array[valid_data_mask] = alert_conditions[valid_data_mask]
+
+        # Save the alert array to a .tif file
+        save_tif_file(alert_array, output_path, gt, proj, gdal.GDT_Float32, no_data_value)
+
+    # Process data and save TIFFs (as before)
+    with Dataset(input_file, 'r') as nc:
+        dis_var = nc.variables['dis']
+        rl2 = nc.variables['rl2'][:]
+        no_data_value = dis_var.getncattr('_FillValue')
+        
+        # Convert dis_var to a masked array
+        dis_var_masked = ma.masked_values(dis_var[:], no_data_value)
+        
+        # Calculate average discharge considering the no data values
+        for (start_day, end_day), discharge_path, alert_path in zip(time_ranges, discharge_tif_paths, alert_tif_paths):
+            average_discharge = ma.mean(dis_var_masked[:, start_day:end_day, :, :], axis=(0, 1))
+            average_discharge.set_fill_value(no_data_value)
+            
+            # Save the average discharge as a TIFF
+            save_tif_file(average_discharge.filled(), discharge_path, gt, proj, gdal.GDT_Float32, no_data_value)
+            
+            # Generate and save the alert TIFF based on rl2 thresholds
+            create_alert_tif(average_discharge.filled(), rl2, alert_path, gt, proj, no_data_value)
+
+    # Confirmation message
+    print("TIF files have been created and saved.")

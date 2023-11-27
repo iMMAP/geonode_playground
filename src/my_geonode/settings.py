@@ -36,6 +36,11 @@ try:
 except ImportError:
     from geonode.settings import *
 
+# import glofas flood settings
+try:
+    from my_geonode.glofas_settings import *
+except ImportError:
+    pass
 #
 # General Django development settings
 #
@@ -147,27 +152,27 @@ CELERY_TASK_DEFAULT_EXCHANGE_TYPE = "direct"
 
 # Celery Beat Configuration (optional)
 CELERY_BEAT_SCHEDULE = {
-    # 'get_latest_shakemap_every_1_second': {
-    #     'task':'geodb.tasks.updateLatestShakemap',
-    #     'schedule': timedelta(seconds=1),
-    #     'options': {
-    #         'priority': 0
-    #     }
-    # },
+    'get_latest_shakemap_every_1_second': {
+        'task':'geodb.tasks.updateLatestShakemap',
+        'schedule': timedelta(seconds=1),
+        'options': {
+            'priority': 0
+        }
+    },
 
-    # 'get_latest_earthquake_every_1_second': {
-    #     'task':'geodb.tasks.updateLatestEarthQuake',
-    #     'schedule': timedelta(seconds=1),
-    #     'options': {
-    #         'priority': 1
-    #     }
-    # },
-
-    'get_latest_glofas_every_1_second': {
-        'task':'geodb.tasks.UpdateLatestGlofasFlood',
+    'get_latest_earthquake_every_1_second': {
+        'task':'geodb.tasks.updateLatestEarthQuake',
         'schedule': timedelta(seconds=1),
         'options': {
             'priority': 1
+        }
+    },
+        
+    'get_latest_glofas_flood_every_1_second': {
+        'task':'geodb.tasks.UpdateLatestGlofasFlood',
+        'schedule': timedelta(hours=24),
+        'options': {
+            'priority': 2
         }
     },
 }
