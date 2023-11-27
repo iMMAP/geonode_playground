@@ -1,7 +1,7 @@
 
 from celery import shared_task
 from celery.utils.log import get_task_logger
-from geodb.views import getLatestEarthQuake, getLatestShakemap
+from geodb.views import getLatestEarthQuake, getLatestShakemap, get_nc_file_from_ftp
 # from geodb.EarthquakeHistoricalAnalysis import getEarthquakeHistoricalAnalysis
 
 logger = get_task_logger(__name__)
@@ -17,3 +17,10 @@ def updateLatestShakemap():
 # @shared_task
 # def getEarthquakeHistorical():
 # 	getEarthquakeHistoricalAnalysis()
+
+@shared_task
+def UpdateLatestGlofasFlood():
+    current_date = datetime.now().date()
+    date = current_date.strftime("%Y-%m-%d")
+	# date = '2023-11-24'
+    get_nc_file_from_ftp(date)

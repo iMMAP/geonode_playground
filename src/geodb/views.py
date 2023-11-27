@@ -29,6 +29,8 @@ DB_CREDENTIAL_FILE = "~/geonode_playground/src/hsdc_postgres_db_config.json"
 #DB_CREDENTIAL_FILE = 'D:/iMMAP/code/db_config/hsdc_local_db_config.json'
 TIMEZONE = "Asia/Kabul"
 
+ os.chdir(r'/home/ubuntu/data/GLOFAS/alerts/')
+
 
 def get_db_connection():
     with open(os.path.expanduser(DB_CREDENTIAL_FILE), 'r') as f:
@@ -487,3 +489,23 @@ def getLatestShakemap():
                 print('All earthquake Shakemap replaced successfully')
     else:
         print('Error:', response.status_code)
+
+
+def get_nc_file_from_ftp(date):
+    date_arr = date.split('-')
+    server = FTP()
+    try:
+        server.connect('aux.ecmwf.int')
+        server.login(getattr(settings, 'GLOFAS_FTP_UNAME'), getattr(settings, 'GLOFAS_FTP_UPASS'))
+        server.cwd("/for_IMMAP/")
+        filename = "glofas_areagrid_for_IMMAP_in_Afghanistan_" + date_arr[0] + date_arr[1] + date_arr[2] + "00.nc"
+        local_path = getattr(settings, 'GLOFAS_NC_FILES') + filename
+        with open(local_path, "wb") as file:
+            print(f"Saving file to: {local_path}")
+            server.retrbinary("RETR " + filename, file.write)
+        server.quit()
+        return True
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        server.close()
+        return False
