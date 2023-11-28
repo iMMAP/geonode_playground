@@ -174,7 +174,7 @@ CELERY_BEAT_SCHEDULE = {
         'task':'geodb.tasks.getNCGlofasFlood',
         'schedule': crontab(hour=1, minute=0),
         'options': {
-            'priority': 0
+            'priority': 2
         }
     },
     
@@ -182,7 +182,7 @@ CELERY_BEAT_SCHEDULE = {
         'task':'geodb.tasks.UpdateLatestGlofasFlood',
         'schedule': crontab(hour=1, minute=0),
         'options': {
-            'priority': 1
+            'priority': 3
         }
     },
 }
