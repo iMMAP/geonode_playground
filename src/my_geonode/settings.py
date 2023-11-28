@@ -41,6 +41,8 @@ try:
     from my_geonode.glofas_settings import *
 except ImportError:
     pass
+
+from celery.schedules import crontab
 #
 # General Django development settings
 #
@@ -168,11 +170,19 @@ CELERY_BEAT_SCHEDULE = {
         }
     },
         
-    'get_latest_glofas_flood_every_1_second': {
-        'task':'geodb.tasks.UpdateLatestGlofasFlood',
-        'schedule': timedelta(hours=24),
+    'get_get_nc_glofas_file_every_at_1_am': {
+        'task':'geodb.tasks.getNCGlofasFlood',
+        'schedule': crontab(hour=1, minute=0),
         'options': {
-            'priority': 2
+            'priority': 0
+        }
+    },
+    
+    'get_latest_glofas_flood_every_at_1_am': {
+        'task':'geodb.tasks.UpdateLatestGlofasFlood',
+        'schedule': crontab(hour=1, minute=0),
+        'options': {
+            'priority': 1
         }
     },
 }
