@@ -169,10 +169,27 @@ CELERY_BEAT_SCHEDULE = {
             'priority': 1
         }
     },
-        
+    # PRODUCTION GLOFAS TASKS
+    # 'get_get_nc_glofas_file_every_at_1_am': {
+    #     'task':'geodb.tasks.getNCGlofasFlood',
+    #     'schedule': crontab(hour=1, minute=0),
+    #     'options': {
+    #         'priority': 2
+    #     }
+    # },
+    
+    # 'get_latest_glofas_flood_every_at_1_am': {
+    #     'task':'geodb.tasks.UpdateLatestGlofasFlood',
+    #     'schedule': crontab(hour=1, minute=0),
+    #     'options': {
+    #         'priority': 3
+    #     }
+    # },
+
+    # DEV GLOFAS TASKS
     'get_get_nc_glofas_file_every_at_1_am': {
         'task':'geodb.tasks.getNCGlofasFlood',
-        'schedule': crontab(hour=1, minute=0),
+        'schedule': timedelta(seconds=1),
         'options': {
             'priority': 2
         }
@@ -180,7 +197,7 @@ CELERY_BEAT_SCHEDULE = {
     
     'get_latest_glofas_flood_every_at_1_am': {
         'task':'geodb.tasks.UpdateLatestGlofasFlood',
-        'schedule': crontab(hour=1, minute=0),
+        'schedule': timedelta(seconds=1),
         'options': {
             'priority': 3
         }
