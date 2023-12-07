@@ -16,6 +16,7 @@ from shapely.geometry import Polygon, MultiPolygon, shape
 from osgeo import ogr
 from shapely.wkt import loads
 import rasterstats
+import rasterio
 from netCDF4 import Dataset
 from osgeo import gdal
 import numpy as np
@@ -518,12 +519,13 @@ def get_nc_file_from_ftp(date):
 
 
 
-def getLatestGlofasFlood(date):
+def getLatestGlofasFlood(date, raster_paths, column_names, db_connection_string):
     # Open source file
     # Select based on date
     date_arr = date.split('-')
     directory_path = '/home/ubuntu/data/GLOFAS/'
-    input_file = directory_path + "glofas_areagrid_for_IMMAP_in_Afghanistan_" + date_arr[0] + date_arr[1] + date_arr[2] + "00.nc" # Path to the input NetCDF file with discharge data.
+    # input_file = directory_path + "glofas_areagrid_for_IMMAP_in_Afghanistan_" + date_arr[0] + date_arr[1] + date_arr[2] + "00.nc"
+    input_file = directory_path + "glofas_areagrid_for_IMMAP_in_Afghanistan_2023110700_FAKE_QA_VERSION.nc" # Path to the input NetCDF file with discharge data.
     reference_tif_path = r"/home/ubuntu/data/GLOFAS/reference_tif.tif"  # Path to the GeoTIFF file used for georeferencing.
     discharge_tif_paths = ['/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmp0_59ziks/discharge_day1_3.tif', '/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmpt_yo98g6/discharge_day4_10.tif', '/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmpinmh2_mr/discharge_day11_30.tif']  # Output paths for average discharge TIFFs.
     alert_tif_paths = ['/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmpr6onmi52/alert_day1_3.tif', '/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmpfpvy4t0u/alert_day4_10.tif', '/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmp5_4vilax/alert_day11_30.tif']  # Output paths for alert TIFFs.
@@ -588,3 +590,125 @@ def getLatestGlofasFlood(date):
 
     # Confirmation message
     print("TIF files have been created and saved.")
+    
+    # Create a database connection using SQLAlchemy
+    engine = create_engine(db_connection_string)
+    # Load the point geometry table into a GeoDataFrame
+    conn = engine.connect()
+    glofas_points = gpd.read_postgis('SELECT * FROM glofas_points_basin', conn)
+    
+#    with engine.connect() as conn:
+#        glofas_points = gpd.read_postgis('SELECT * FROM glofas_points_basin', conn)
+
+    # Process each raster file
+    for raster_path, column_name in zip(raster_paths, column_names):
+        with rasterio.open(raster_path) as src:
+            # Read the entire raster as a numpy array
+            raster_array = src.read(1)
+            transform = src.transform
+
+                # Iterate over points in the GeoDataFrame
+            for index, row in glofas_points.iterrows():
+                # Convert the point geometry to raster space
+                row_x, row_y = row.geom.x, row.geom.y
+
+                # Calculate raster indices manually
+                row_col, row_row = ~transform * (row_x, row_y)
+                row_col, row_row = int(row_col), int(row_row)
+
+                # Extract the raster value for the point
+                raster_value = raster_array[row_row, row_col]
+
+                # Update the specified column with the raster value
+                update_query = f"UPDATE glofas_points_basin SET {column_name} = {raster_value} WHERE id_glofas = {row['id_glofas']}"
+                conn.execute(update_query)
+                    
+    try:
+        # SQLAlchemy connection string
+        conn_string = db_connection_string
+        
+        # Create an engine instance
+        engine = create_engine(conn_string)
+
+        # Connect to PostgreSQL server
+        with engine.connect() as conn:
+
+            # SQL query to update basin_flood_adm2_overlay_stats
+            update_query = text("""
+            UPDATE basin_flood_adm2_overlay_stats b
+            SET alert_1_3 = g.alert_1_3,
+                alert_4_10 = g.alert_4_10,
+                alert_11_30 = g.alert_11_30
+            FROM glofas_points_basin g
+            WHERE b.basin_id = g.id_basin;
+            """)
+
+            # Execute the update query
+            conn.execute(update_query)
+
+            # SQL query to update data for adm2_summary
+            update_adm2_query = text("""
+            UPDATE adm2_summary a
+            SET pop_fl_1_3 = sub.pop_fl_1_3,
+                pop_fl_4_1 = sub.pop_fl_4_10,
+                pop_fl_11_ = sub.pop_fl_11_30,
+                build_fl_1 = sub.build_fl_1_3,
+                build_fl_4 = sub.build_fl_4_10,
+                build_fl_2 = sub.build_fl_11_30,
+                km2_fl_1_3 = sub.km2_fl_1_3,
+                km2_fl_4_1 = sub.km2_fl_4_10,
+                km2_fl_11_ = sub.km2_fl_11_30
+            FROM (
+                SELECT adm2_pcode,
+                       SUM(CASE WHEN alert_1_3 = 1 THEN pop ELSE 0 END) as pop_fl_1_3,
+                       SUM(CASE WHEN alert_4_10 = 1 THEN pop ELSE 0 END) as pop_fl_4_10,
+                       SUM(CASE WHEN alert_11_30 = 1 THEN pop ELSE 0 END) as pop_fl_11_30,
+                       SUM(CASE WHEN alert_1_3 = 1 THEN bld ELSE 0 END) as build_fl_1_3,
+                       SUM(CASE WHEN alert_4_10 = 1 THEN bld ELSE 0 END) as build_fl_4_10,
+                       SUM(CASE WHEN alert_11_30 = 1 THEN bld ELSE 0 END) as build_fl_11_30,
+                       SUM(CASE WHEN alert_1_3 = 1 THEN km2 ELSE 0 END) as km2_fl_1_3,
+                       SUM(CASE WHEN alert_4_10 = 1 THEN km2 ELSE 0 END) as km2_fl_4_10,
+                       SUM(CASE WHEN alert_11_30 = 1 THEN km2 ELSE 0 END) as km2_fl_11_30
+                FROM basin_flood_adm2_overlay_stats
+                GROUP BY adm2_pcode
+            ) sub
+            WHERE a.adm2_pcode = sub.adm2_pcode;
+            """)
+
+            # Execute the update query for adm2_summary
+            conn.execute(update_adm2_query)
+
+            # SQL query to update data for basin_summary
+            update_basin_query = text("""
+            UPDATE basin_summary b
+            SET pop_fl_1_3 = sub.pop_fl_1_3,
+                pop_fl_4_1 = sub.pop_fl_4_10,
+                pop_fl_11_ = sub.pop_fl_11_30,
+                build_fl_1 = sub.build_fl_1_3,
+                build_fl_4 = sub.build_fl_4_10,
+                build_fl_2 = sub.build_fl_11_30,
+                km2_fl_1_3 = sub.km2_fl_1_3,
+                km2_fl_4_1 = sub.km2_fl_4_10,
+                km2_fl_11_ = sub.km2_fl_11_30
+            FROM (
+                SELECT basin_id,
+                       SUM(CASE WHEN alert_1_3 = 1 THEN pop ELSE 0 END) as pop_fl_1_3,
+                       SUM(CASE WHEN alert_4_10 = 1 THEN pop ELSE 0 END) as pop_fl_4_10,
+                       SUM(CASE WHEN alert_11_30 = 1 THEN pop ELSE 0 END) as pop_fl_11_30,
+                       SUM(CASE WHEN alert_1_3 = 1 THEN bld ELSE 0 END) as build_fl_1_3,
+                       SUM(CASE WHEN alert_4_10 = 1 THEN bld ELSE 0 END) as build_fl_4_10,
+                       SUM(CASE WHEN alert_11_30 = 1 THEN bld ELSE 0 END) as build_fl_11_30,
+                       SUM(CASE WHEN alert_1_3 = 1 THEN km2 ELSE 0 END) as km2_fl_1_3,
+                       SUM(CASE WHEN alert_4_10 = 1 THEN km2 ELSE 0 END) as km2_fl_4_10,
+                       SUM(CASE WHEN alert_11_30 = 1 THEN km2 ELSE 0 END) as km2_fl_11_30
+                FROM basin_flood_adm2_overlay_stats
+                GROUP BY basin_id
+            ) sub
+            WHERE b.basin_id = sub.basin_id;
+            """)
+
+            # Execute the update query for basin_summary
+            conn.execute(update_basin_query)
+
+    except Exception as e:
+        print("Error: ", e)
