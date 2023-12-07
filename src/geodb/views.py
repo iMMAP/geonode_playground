@@ -710,5 +710,8 @@ def getLatestGlofasFlood(date, raster_paths, column_names, db_connection_string)
             # Execute the update query for basin_summary
             conn.execute(update_basin_query)
 
+            # Confirmation message
+            print("Basin and Adm2 summary tables updated successfully")
+
     except Exception as e:
         print("Error: ", e)
