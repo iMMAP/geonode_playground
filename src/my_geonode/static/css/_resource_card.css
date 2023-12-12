@@ -121,9 +121,10 @@ p.card-text.gn-card-description.grid{
   color: unset;
 }
 
-.msgapi .gn-menu .gn-primary {
-  /* background-color: var(--gn-primary); */
-}
+/* .msgapi .gn-menu .gn-primary {
+    background-color: var(--gn-primary);
+} */
+
 .gn-menu-container {
   padding: 10px 0px !important;
   /* filter: drop-shadow(0 1px 1px rgb(0 0 0 / 0.05)) !important; */
@@ -139,7 +140,7 @@ p.card-text.gn-card-description.grid{
   background-color: var(--gn-main-variant-bg,#f2f0f0);
   color: #000;
   color: var(--gn-main-variant-color,#000);
-  display: none !important;
+  /* display: none !important; */
 }
 
 @media only screen and (max-width: 640px) {
