@@ -205,3 +205,7 @@ li {
 .panel-default .panel-heading .panel-title a:hover {
   color: #a72824;
 }
+
+div.gn-share-permissions-container ul.gn-share-permissions-list li.gn-share-permissions-pinned div.gn-share-permissions-row:nth-last-child(2) {
+  display: none;
+}
