@@ -202,6 +202,6 @@ li {
   color: #a72824;
 }
 
-div.gn-share-permissions-container ul.gn-share-permissions-list li.gn-share-permissions-pinned div.gn-share-permissions-row:first-child:nth-last-child(2) {
+div.gn-share-permissions-container ul.gn-share-permissions-list li.gn-share-permissions-pinned div.gn-share-permissions-row:nth-last-child(2) {
   display: none;
 }
