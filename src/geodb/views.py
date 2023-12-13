@@ -609,7 +609,7 @@ def getLatestGlofasFlood(date, raster_paths, column_names, db_connection_string)
 
                 # Iterate over points in the GeoDataFrame
             for index, row in glofas_points.iterrows():
-                # Convert the point geometry to raster space
+                # Convert the point geometry to raster spacex
                 row_x, row_y = row.geom.x, row.geom.y
 
                 # Calculate raster indices manually
@@ -635,7 +635,7 @@ def getLatestGlofasFlood(date, raster_paths, column_names, db_connection_string)
 
             # SQL query to update basin_flood_adm2_overlay_stats
             update_query = text("""
-            UPDATE basin_flood_adm2_overlay_stats b
+            UPDATE glofas_join b
             SET alert_1_3 = g.alert_1_3,
                 alert_4_10 = g.alert_4_10,
                 alert_11_30 = g.alert_11_30
@@ -669,7 +669,7 @@ def getLatestGlofasFlood(date, raster_paths, column_names, db_connection_string)
                        SUM(CASE WHEN alert_1_3 = 1 THEN km2 ELSE 0 END) as km2_fl_1_3,
                        SUM(CASE WHEN alert_4_10 = 1 THEN km2 ELSE 0 END) as km2_fl_4_10,
                        SUM(CASE WHEN alert_11_30 = 1 THEN km2 ELSE 0 END) as km2_fl_11_30
-                FROM basin_flood_adm2_overlay_stats
+                FROM glofas_join
                 GROUP BY adm2_pcode
             ) sub
             WHERE a.adm2_pcode = sub.adm2_pcode;
@@ -701,7 +701,7 @@ def getLatestGlofasFlood(date, raster_paths, column_names, db_connection_string)
                        SUM(CASE WHEN alert_1_3 = 1 THEN km2 ELSE 0 END) as km2_fl_1_3,
                        SUM(CASE WHEN alert_4_10 = 1 THEN km2 ELSE 0 END) as km2_fl_4_10,
                        SUM(CASE WHEN alert_11_30 = 1 THEN km2 ELSE 0 END) as km2_fl_11_30
-                FROM basin_flood_adm2_overlay_stats
+                FROM glofas_join
                 GROUP BY basin_id
             ) sub
             WHERE b.basin_id = sub.basin_id;
