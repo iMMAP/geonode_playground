@@ -36,6 +36,13 @@ try:
 except ImportError:
     from geonode.settings import *
 
+# import glofas flood settings
+try:
+    from my_geonode.glofas_settings import *
+except ImportError:
+    pass
+
+from celery.schedules import crontab
 #
 # General Django development settings
 #
@@ -160,6 +167,39 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': timedelta(seconds=1),
         'options': {
             'priority': 1
+        }
+    },
+    # PRODUCTION GLOFAS TASKS
+    # 'get_get_nc_glofas_file_every_at_1_am': {
+    #     'task':'geodb.tasks.getNCGlofasFlood',
+    #     'schedule': crontab(hour=1, minute=0),
+    #     'options': {
+    #         'priority': 2
+    #     }
+    # },
+    
+    # 'get_latest_glofas_flood_every_at_1_am': {
+    #     'task':'geodb.tasks.UpdateLatestGlofasFlood',
+    #     'schedule': crontab(hour=1, minute=0),
+    #     'options': {
+    #         'priority': 3
+    #     }
+    # },
+
+    # DEV GLOFAS TASKS
+    'get_get_nc_glofas_file_every_at_1_am': {
+        'task':'geodb.tasks.getNCGlofasFlood',
+        'schedule': timedelta(seconds=1),
+        'options': {
+            'priority': 2
+        }
+    },
+    
+    'get_latest_glofas_flood_every_at_1_am': {
+        'task':'geodb.tasks.UpdateLatestGlofasFlood',
+        'schedule': timedelta(seconds=1),
+        'options': {
+            'priority': 3
         }
     },
 }

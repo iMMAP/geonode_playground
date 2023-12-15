@@ -63,7 +63,7 @@
                 <div class="gn-menu-content-right">
                     <div class="">
                         <ul class="top_bar_menu_button">
-                            <a class="..." href="/account/login/?next=/"><button class="landing-login-btn">Login<button></a>
+                            <a class="..." href="/account/login/?next={{request.GET.next}}"><button class="landing-login-btn">Login<button></a>
                             <a class="..." href="/account/signup/"><button class="landing-register-btn">Register</button></a>
                         </ul>
                     </div>
@@ -99,7 +99,6 @@
                 </div>
 
                 <div class="flex items-center gap-6">
-
                     <div class="mt-10 w-fit">
                         <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=Gw_39i0qME-FKmS4zgwZ14QONBfARMhDgJ1-pixkQvJUMjI4M1BWSDY3RFJDQVcwSkRaTU1SRDU1WC4u"
                             target="_blank" class="w-fit">

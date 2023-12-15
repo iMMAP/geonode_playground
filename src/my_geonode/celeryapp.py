@@ -27,6 +27,7 @@ from datetime import timedelta
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'my_geonode.settings')
 
 app = Celery('my_geonode')
+app.conf.timezone = 'EET'
 
 # Using a string here means the worker will not have to
 # pickle the object when using Windows.
