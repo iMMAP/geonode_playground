@@ -177,6 +177,10 @@ li {
   margin-bottom: -40px !important;
 }
 
+.msgapi .mapstore-map-footer{
+  margin-bottom: -35px !important;
+}
+
 .msgapi .background-preview-button {
   margin-bottom: 40px !important;
 }
