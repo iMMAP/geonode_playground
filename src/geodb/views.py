@@ -631,7 +631,7 @@ def getLatestGlofasFlood(date, raster_paths, column_names, db_connection_string)
 
                 # Update the specified column with the raster value
                 update_query = f"UPDATE glofas_points_basin SET {column_name} = {raster_value} WHERE id_glofas = {row['id_glofas']}"
-                conn.execute(update_query)
+                conn.execute(text(update_query))
                     
     try:
         # SQLAlchemy connection string
