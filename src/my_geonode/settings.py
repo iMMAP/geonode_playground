@@ -202,7 +202,7 @@ CELERY_BEAT_SCHEDULE = {
 #             'priority': 3
 #         }
 #     },
-# }
+}
 
 CENTRALIZED_DASHBOARD_ENABLED = ast.literal_eval(
     os.getenv('CENTRALIZED_DASHBOARD_ENABLED', 'False'))
