@@ -187,13 +187,13 @@ CELERY_BEAT_SCHEDULE = {
     # },
 
     # DEV GLOFAS TASKS
-    'get_get_nc_glofas_file_every_at_1_am': {
-        'task':'geodb.tasks.getNCGlofasFlood',
-        'schedule': timedelta(minutes=10),
-        'options': {
-            'priority': 2
-        }
-    },
+    # 'get_get_nc_glofas_file_every_at_1_am': {
+    #     'task':'geodb.tasks.getNCGlofasFlood',
+    #     'schedule': timedelta(minutes=10),
+    #     'options': {
+    #         'priority': 2
+    #     }
+    # },
     
     'get_latest_glofas_flood_every_at_1_am': {
         'task':'geodb.tasks.UpdateLatestGlofasFlood',
