@@ -154,7 +154,7 @@ CELERY_TASK_DEFAULT_EXCHANGE_TYPE = "direct"
 
 # Celery Beat Configuration (optional)
 CELERY_BEAT_SCHEDULE = {
-    'get_latest_shakemap_every_1_second': {
+    'get_latest_shakemap_every_10_minutes': {
         'task':'geodb.tasks.updateLatestShakemap',
         'schedule': timedelta(minutes=10),
         'options': {
@@ -162,7 +162,7 @@ CELERY_BEAT_SCHEDULE = {
         }
     },
 
-    'get_latest_earthquake_every_1_second': {
+    'get_latest_earthquake_every_10_minutes': {
         'task':'geodb.tasks.updateLatestEarthQuake',
         'schedule': timedelta(minutes=10),
         'options': {
@@ -195,7 +195,7 @@ CELERY_BEAT_SCHEDULE = {
     #     }
     # },
     
-    'get_latest_glofas_flood_every_at_1_am': {
+    'get_latest_glofas_flood_every_10_minutes': {
         'task':'geodb.tasks.UpdateLatestGlofasFlood',
         'schedule': timedelta(minutes=10),
         'options': {
