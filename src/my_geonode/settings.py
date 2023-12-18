@@ -156,7 +156,7 @@ CELERY_TASK_DEFAULT_EXCHANGE_TYPE = "direct"
 CELERY_BEAT_SCHEDULE = {
     'get_latest_shakemap_every_1_second': {
         'task':'geodb.tasks.updateLatestShakemap',
-        'schedule': timedelta(seconds=1),
+        'schedule': timedelta(minutes=10),
         'options': {
             'priority': 0
         }
@@ -164,15 +164,32 @@ CELERY_BEAT_SCHEDULE = {
 
     'get_latest_earthquake_every_1_second': {
         'task':'geodb.tasks.updateLatestEarthQuake',
-        'schedule': timedelta(seconds=1),
+        'schedule': timedelta(minutes=10),
         'options': {
             'priority': 1
         }
     },
-    # PRODUCTION GLOFAS TASKS
+    # # PRODUCTION GLOFAS TASKS
+    # 'get_get_nc_glofas_file_every_at_1_am': {
+    #     'task':'geodb.tasks.getNCGlofasFlood',
+    #     'schedule': crontab(hour=1, minute=0),
+    #     'options': {
+    #         'priority': 2
+    #     }
+    # },
+    
+    # 'get_latest_glofas_flood_every_at_1_am': {
+    #     'task':'geodb.tasks.UpdateLatestGlofasFlood',
+    #     'schedule': crontab(hour=1, minute=0),
+    #     'options': {
+    #         'priority': 3
+    #     }
+    # },
+
+    DEV GLOFAS TASKS
     'get_get_nc_glofas_file_every_at_1_am': {
         'task':'geodb.tasks.getNCGlofasFlood',
-        'schedule': crontab(hour=1, minute=0),
+        'schedule': timedelta(minutes=10),
         'options': {
             'priority': 2
         }
@@ -180,28 +197,11 @@ CELERY_BEAT_SCHEDULE = {
     
     'get_latest_glofas_flood_every_at_1_am': {
         'task':'geodb.tasks.UpdateLatestGlofasFlood',
-        'schedule': crontab(hour=1, minute=0),
+        'schedule': timedelta(minutes=10),
         'options': {
             'priority': 3
         }
     },
-
-    # DEV GLOFAS TASKS
-#     'get_get_nc_glofas_file_every_at_1_am': {
-#         'task':'geodb.tasks.getNCGlofasFlood',
-#         'schedule': timedelta(seconds=1),
-#         'options': {
-#             'priority': 2
-#         }
-#     },
-    
-#     'get_latest_glofas_flood_every_at_1_am': {
-#         'task':'geodb.tasks.UpdateLatestGlofasFlood',
-#         'schedule': timedelta(seconds=1),
-#         'options': {
-#             'priority': 3
-#         }
-#     },
 }
 
 CENTRALIZED_DASHBOARD_ENABLED = ast.literal_eval(
