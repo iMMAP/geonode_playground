@@ -186,7 +186,7 @@ CELERY_BEAT_SCHEDULE = {
     #     }
     # },
 
-    DEV GLOFAS TASKS
+    # DEV GLOFAS TASKS
     'get_get_nc_glofas_file_every_at_1_am': {
         'task':'geodb.tasks.getNCGlofasFlood',
         'schedule': timedelta(minutes=10),
