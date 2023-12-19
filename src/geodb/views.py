@@ -539,11 +539,16 @@ def getLatestGlofasFlood(date, raster_paths, column_names, db_connection_string)
             server.login(getattr(settings, 'GLOFAS_FTP_UNAME'), getattr(settings, 'GLOFAS_FTP_UPASS'))
             server.cwd("/for_IMMAP/")
             filename = "glofas_areagrid_for_IMMAP_in_Afghanistan_" + date_arr[0] + date_arr[1] + date_arr[2] + "00.nc"
-            local_path = getattr(settings, 'GLOFAS_NC_FILES') + filename
-            with open(local_path, "wb") as file:
-                print(f"Saving file to: {local_path}")
-                server.retrbinary("RETR " + filename, file.write)
-            server.quit()
+
+            file_list = server.nlst()
+            if filename in file_list:
+                local_path = getattr(settings, 'GLOFAS_NC_FILES') + filename
+                with open(local_path, "wb") as file:
+                    print(f"Saving file to: {local_path}")
+                    server.retrbinary("RETR " + filename, file.write)
+                server.quit()
+            else:
+                print("The file does not exist on the FTP server")
             
             # DEV SERVER =================
 
