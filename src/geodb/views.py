@@ -524,8 +524,8 @@ def getLatestGlofasFlood(date, raster_paths, column_names, db_connection_string)
     # Select based on date
     date_arr = date.split('-')
     directory_path = '/home/ubuntu/data/GLOFAS/'
-    input_file = directory_path + "glofas_areagrid_for_IMMAP_in_Afghanistan_" + date_arr[0] + date_arr[1] + date_arr[2] + "00.nc"
-    input_file_fake = directory_path + "glofas_areagrid_for_IMMAP_in_Afghanistan_2023110700_FAKE_QA_VERSION.nc" # Path to the input NetCDF file with discharge data.
+    input_file = directory_path + "glofas_areagrid_for_IMMAP_in_Afghanistan_" + date_arr[0] + date_arr[1] + date_arr[2] + "00.nc"# Path to the input NetCDF file with discharge data.
+    # input_file_fake = directory_path + "glofas_areagrid_for_IMMAP_in_Afghanistan_2023110700_FAKE_QA_VERSION.nc" # Path to the input NetCDF file with discharge data.
 
 
     if os.path.exists(input_file):
@@ -602,7 +602,7 @@ def getLatestGlofasFlood(date, raster_paths, column_names, db_connection_string)
                 save_tif_file(alert_array, output_path, gt, proj, gdal.GDT_Float32, no_data_value)
 
             # Process data and save TIFFs (as before)
-            with Dataset(input_file_fake, 'r') as nc:
+            with Dataset(input_file, 'r') as nc:
                 dis_var = nc.variables['dis']
                 rl2 = nc.variables['rl2'][:]
                 no_data_value = dis_var.getncattr('_FillValue')
