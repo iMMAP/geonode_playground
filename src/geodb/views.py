@@ -722,7 +722,7 @@ def execute_sql_queries(conn):
     print(f"execute_sql_queries Duration: {end_time - start_time}")
 
 # Main Function
-def getLatestGlofasFlood(date, db_config_path, alert_tif_paths, column_names, directory_path):
+def getLatestGlofasFlood(date, db_config_path, alert_tif_paths, discharge_tif_paths, column_names, directory_path):
     config = load_db_config(db_config_path)
     db_connection_string = f"postgresql://{config['username']}:{config['password']}@{config['host']}:{config['port']}/{config['database']}"
 
