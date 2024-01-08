@@ -71,4 +71,4 @@ def UpdateLatestGlofasFlood():
 
     db_connection_string = f"postgresql://{config['username']}:{config['password']}@{config['host']}:{config['port']}/{config['database']}"
 
-    getLatestGlofasFlood(date, db_credential_file, raster_paths, column_names, directory_path)
+    getLatestGlofasFlood(date, db_credential_file, alert_tif_paths, discharge_tif_paths, column_names, directory_path)
