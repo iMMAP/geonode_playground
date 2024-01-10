@@ -501,6 +501,7 @@ def getLatestShakemap():
 
 ## GLOFAS processing functions
 
+
 def load_db_config(config_path):
     with open(config_path, 'r') as f:
         return json.load(f)
@@ -548,6 +549,11 @@ def download_nc_file(directory_path, date):
         print(f"download_nc_file Duration: {end_time - start_time}")
     return local_path
 
+
+# def initialize_paths(directory_path):
+#     discharge_tif_paths = [os.path.join(directory_path, f'discharge_day{days}.tif') for days in ['1_3', '4_10', '11_30']]
+#     alert_tif_paths = [os.path.join(directory_path, f'alert_day{days}.tif') for days in ['1_3', '4_10', '11_30']]
+#     return discharge_tif_paths, alert_tif_paths
 
 def save_tif_file(array, output_path, geotransform, projection, datatype, no_data_value=None):
     start_time = datetime.now()
@@ -606,8 +612,8 @@ def update_glofas_points(conn, alert_tif_paths, column_names, glofas_points):
     start_time = datetime.now()
     print(f"update_glofas_points start time: {start_time}")
 
-    for raster_path, column_name in zip(alert_tif_paths, column_names):
-        with rasterio.open(raster_path) as src:
+    for alert_tif_paths, column_name in zip(alert_tif_paths, column_names):
+        with rasterio.open(alert_tif_paths) as src:
             raster_array = src.read(1)
             transform = src.transform
 
@@ -710,6 +716,7 @@ def execute_sql_queries(conn):
         conn.execute(update_glofas_join)
         conn.execute(update_basin_query)
         conn.execute(update_adm2_query)
+        conn.commit()
 
         # Confirmation message
         print("Glofas_join, Basin and Adm2 summary tables updated successfully")
@@ -721,7 +728,7 @@ def execute_sql_queries(conn):
     print(f"execute_sql_queries end time: {end_time}")
     print(f"execute_sql_queries Duration: {end_time - start_time}")
 
-# Main Function
+# Main Function 
 def getLatestGlofasFlood(date, db_config_path, alert_tif_paths, discharge_tif_paths, column_names, directory_path):
     config = load_db_config(db_config_path)
     db_connection_string = f"postgresql://{config['username']}:{config['password']}@{config['host']}:{config['port']}/{config['database']}"
@@ -730,6 +737,13 @@ def getLatestGlofasFlood(date, db_config_path, alert_tif_paths, discharge_tif_pa
 
     # Download the NetCDF file          # OBS blocking out download function for testing
     input_file = download_nc_file(directory_path, date)
+    #input_file = r'D:\iMMAP\proj\ASDC\data\GLOFAS\v02\glofas_areagrid_for_IMMAP_in_Afghanistan_2023122500.nc'
+    #input_file = r'D:\iMMAP\proj\ASDC\data\GLOFAS\v02\glofas_areagrid_for_IMMAP_in_Afghanistan_2023110700_FAKE_QA_VERSION.nc'
+    #input_file = directory_path + "glofas_areagrid_for_IMMAP_in_Afghanistan_2023110700_FAKE_QA_VERSION.nc"
+    #input_file = directory_path + "glofas_areagrid_for_IMMAP_in_Afghanistan_2024010900.nc"
+
+    # Initialize paths for reference TIFF and output TIFFs
+    #discharge_tif_paths, alert_tif_paths = initialize_paths(directory_path)
     
     # Read geotransform and projection from reference TIFF
     #gt, proj = read_reference_tif(reference_tif_path)
@@ -743,11 +757,21 @@ def getLatestGlofasFlood(date, db_config_path, alert_tif_paths, discharge_tif_pa
     # Process NetCDF data and generate output TIFFs
     process_netcdf_data(input_file, time_ranges, discharge_tif_paths, alert_tif_paths, gt, proj, no_data_value)
 
-    # Create database connection and perform updates
-    engine = create_engine(db_connection_string)
-    with engine.connect() as conn:
-        glofas_points = gpd.read_postgis('SELECT * FROM glofas_points', conn)
-        update_glofas_points(conn, alert_tif_paths, column_names, glofas_points)
-        execute_sql_queries(conn)
+    try:
+        # Create database connection and perform updates
+        engine = create_engine(db_connection_string)
+        with engine.connect() as conn:
+            # Perform a simple test query to check connection
+            test_query = conn.execute(text("SELECT 1"))
+            test_result = test_query.fetchone()
+            if test_result[0] == 1:
+                print("Test query successful")
+                glofas_points = gpd.read_postgis('SELECT * FROM glofas_points', conn)
+                update_glofas_points(conn, alert_tif_paths, column_names, glofas_points)
+                execute_sql_queries(conn)
 
-    print("Glofas Flood Processing Completed")
+        print("Glofas Flood Processing Completed")
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        traceback.print_exc()
