@@ -512,7 +512,7 @@ def generate_file_path(base_path, date):
     return os.path.join(base_path, filename)
 
 def download_nc_file(directory_path, date):
-    start_time = datetime.now()
+    start_time = datetime.datetime.now()
     print(f"download_nc_file start time: {start_time}")
     date_arr = date.split('-')
     filename = f"glofas_areagrid_for_IMMAP_in_Afghanistan_{date_arr[0]}{date_arr[1]}{date_arr[2]}00.nc"
@@ -544,7 +544,7 @@ def download_nc_file(directory_path, date):
             server.quit()
         except Exception as e:
             print(f"Failed to download {filename} from FTP server. Error: {e}")
-        end_time = datetime.now()
+        end_time = datetime.datetime.now()
         print(f"download_nc_file end time: {end_time}")
         print(f"download_nc_file Duration: {end_time - start_time}")
     return local_path
@@ -556,7 +556,7 @@ def download_nc_file(directory_path, date):
 #     return discharge_tif_paths, alert_tif_paths
 
 def save_tif_file(array, output_path, geotransform, projection, datatype, no_data_value=None):
-    start_time = datetime.now()
+    start_time = datetime.datetime.now()
     print(f"save_tif_file start time: {start_time}")
     driver = gdal.GetDriverByName("GTiff")
     y_size, x_size = array.shape
@@ -569,12 +569,12 @@ def save_tif_file(array, output_path, geotransform, projection, datatype, no_dat
     band.WriteArray(array)
     band.FlushCache()
     dataset = None
-    end_time = datetime.now()
+    end_time = datetime.datetime.now()
     print(f"save_tif_file end time: {end_time}")
     print(f"save_tif_file Duration: {end_time - start_time}")
 
 def create_alert_tif(discharge, return_level, output_path, gt, proj, no_data_value):
-    start_time = datetime.now()
+    start_time = datetime.datetime.now()
     print(f"create_alert_tif start time: {start_time}")
     # Initialize an array with the no_data_value where the discharge is no data
     alert_array = np.full(discharge.shape, no_data_value, dtype='float32')
@@ -588,12 +588,12 @@ def create_alert_tif(discharge, return_level, output_path, gt, proj, no_data_val
 
     # Save the alert array to a .tif file
     save_tif_file(alert_array, output_path, gt, proj, gdal.GDT_Float32, no_data_value)
-    end_time = datetime.now()
+    end_time = datetime.datetime.now()
     print(f"create_alert_tif end time: {end_time}")
     print(f"create_alert_tif Duration: {end_time - start_time}")
 
 def process_netcdf_data(input_file, time_ranges, discharge_tif_paths, alert_tif_paths, gt, proj, no_data_value):
-    start_time = datetime.now()
+    start_time = datetime.datetime.now()
     print(f"process_netcdf_data start time: {start_time}")
     with Dataset(input_file, 'r') as nc:
         dis_var = nc.variables['dis']
@@ -604,12 +604,12 @@ def process_netcdf_data(input_file, time_ranges, discharge_tif_paths, alert_tif_
             average_discharge.set_fill_value(no_data_value)
             save_tif_file(average_discharge.filled(), discharge_path, gt, proj, gdal.GDT_Float32, no_data_value)
             create_alert_tif(average_discharge.filled(), rl2, alert_path, gt, proj, no_data_value)
-    end_time = datetime.now()
+    end_time = datetime.datetime.now()
     print(f"process_netcdf_data end time: {end_time}")
     print(f"process_netcdf_data Duration: {end_time - start_time}")
 
 def update_glofas_points(conn, alert_tif_paths, column_names, glofas_points):
-    start_time = datetime.now()
+    start_time = datetime.datetime.now()
     print(f"update_glofas_points start time: {start_time}")
 
     for alert_tif_paths, column_name in zip(alert_tif_paths, column_names):
@@ -631,14 +631,14 @@ def update_glofas_points(conn, alert_tif_paths, column_names, glofas_points):
             update_query = f"UPDATE glofas_points SET {column_name} = data.raster_value FROM (VALUES {values_clause}) AS data (raster_value, id_glofas) WHERE glofas_points.id_glofas = data.id_glofas"
             conn.execute(text(update_query))
 
-    end_time = datetime.now()
+    end_time = datetime.datetime.now()
     print(f"update_glofas_points end time: {end_time}")
     print(f"update_glofas_points Duration: {end_time - start_time}")
 
 
 # Update summary glofas join table (adm2-basin-flood polygons), and aggregate to adm2 and basin level 
 def execute_sql_queries(conn):
-    start_time = datetime.now()
+    start_time = datetime.datetime.now()
     print(f"execute_sql_queries start time: {start_time}")
     
     conn.autocommit = True
@@ -724,7 +724,7 @@ def execute_sql_queries(conn):
     except SQLAlchemyError as e:
         print(f"An error occurred: {e}")
 
-    end_time = datetime.now()
+    end_time = datetime.datetime.now()
     print(f"execute_sql_queries end time: {end_time}")
     print(f"execute_sql_queries Duration: {end_time - start_time}")
 
