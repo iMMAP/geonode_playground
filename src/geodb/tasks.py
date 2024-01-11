@@ -32,7 +32,7 @@ def UpdateLatestGlofasFlood():
 
     current_date = datetime.now().date()
     date = current_date.strftime("%Y-%m-%d")
-    date = "2024-01-07"
+    # date = "2024-01-07"
 
     db_credential_file = r'/home/ubuntu/geonode_playground/src/hsdc_live_db_config.json'
 
