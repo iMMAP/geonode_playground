@@ -202,6 +202,14 @@ CELERY_BEAT_SCHEDULE = {
             'priority': 3
         }
     },
+    
+    'delete_nc_files_every_10_minutes': {
+        'task':'geodb.tasks.RemoveNcFilesFor7Days',
+        'schedule': timedelta(minutes=10),
+        'options': {
+            'priority': 3
+        }
+    },
 }
 
 CENTRALIZED_DASHBOARD_ENABLED = ast.literal_eval(

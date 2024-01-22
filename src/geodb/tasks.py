@@ -1,7 +1,7 @@
 from datetime import datetime
 from celery import shared_task
 from celery.utils.log import get_task_logger
-from geodb.views import getLatestEarthQuake, getLatestShakemap, getLatestGlofasFlood
+from geodb.views import getLatestEarthQuake, getLatestShakemap, getLatestGlofasFlood, RemoveNcFiles
 # from geodb.EarthquakeHistoricalAnalysis import getEarthquakeHistoricalAnalysis
 import os
 import json
@@ -68,3 +68,8 @@ def UpdateLatestGlofasFlood():
     directory_path =  r'/home/ubuntu/data/GLOFAS/'
     #directory_path =  r'D:/iMMAP/proj/ASDC/data/GLOFAS/v02/'
     getLatestGlofasFlood(date, db_credential_file, alert_tif_paths, discharge_tif_paths, column_names, directory_path)
+
+
+@shared_task
+def RemoveNcFilesFor7Days():
+	RemoveNcFiles()
