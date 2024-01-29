@@ -775,3 +775,38 @@ def getLatestGlofasFlood(date, db_config_path, alert_tif_paths, discharge_tif_pa
     except Exception as e:
         print(f"An error occurred: {e}")
         traceback.print_exc()
+
+
+
+
+def RemoveNcFiles():
+    # Specify the target directory where the NetCDF files are located
+    directory_path = '/home/ubuntu/data/GLOFAS/'
+
+    # Get a list of all NetCDF files in the directory
+    nc_files = [filename for filename in os.listdir(directory_path) if filename.endswith(".nc")]
+    
+    # Check if there are files to delete
+    if len(nc_files) == 0:
+        print("No NetCDF files found in the specified directory. Nothing to delete.")
+    else:
+        # Sort the files based on their creation time (modification time)
+        nc_files.sort(key=lambda x: os.path.getmtime(os.path.join(directory_path, x)))
+
+        # Calculate the number of files to keep (latest 7 files)
+        files_to_keep = 7
+
+        # Determine the files to be removed
+        files_to_remove = nc_files[:-files_to_keep]
+
+        # Check if there are files to delete
+        if len(files_to_remove) == 0:
+            print("No files to delete. Keeping the latest 7 files...")
+        else:
+            # Remove the extra files
+            for filename in files_to_remove:
+                file_path = os.path.join(directory_path, filename)
+                os.remove(file_path)
+                print(f"Removed file: {file_path}")
+
+            print("File removal process completed.")
