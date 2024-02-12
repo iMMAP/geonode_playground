@@ -22,6 +22,7 @@ import ast
 
 # Django settings for the GeoNode project.
 import os
+import sentry_sdk
 
 try:
     from urllib.parse import urlparse, urlunparse
@@ -291,3 +292,16 @@ USER_ANALYTICS_ENABLED = ast.literal_eval(os.getenv('USER_ANALYTICS_ENABLED', 'F
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 CELERY_IMPORTS = ('geodb.tasks',)
+
+
+if APP_ENV == 'production':
+    sentry_sdk.init(
+        dsn="https://b384eb8fa97dd85396a43cfcf8c7d837@o4506732599640064.ingest.sentry.io/4506732604030976",
+        # Set traces_sample_rate to 1.0 to capture 100%
+        # of transactions for performance monitoring.
+        traces_sample_rate=1.0,
+        # Set profiles_sample_rate to 1.0 to profile 100%
+        # of sampled transactions.
+        # We recommend adjusting this value in production.
+        profiles_sample_rate=1.0,
+    )
