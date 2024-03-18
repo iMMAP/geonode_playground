@@ -42,7 +42,7 @@
           </p> -->
         </div>
         
-        <form role="form" method="POST" action="{% url 'account_login' %}" autocapitalize="off" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+        <form role="form" id="login-form" method="POST" action="{% url 'account_login' %}" autocapitalize="off" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
           {% csrf_token %}
 
           {% if form.non_field_errors  %}
@@ -128,6 +128,22 @@
      
     </div>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var loginForm = document.getElementById('login-form');
+      loginForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var actionUrl = loginForm.getAttribute('action');
+        var hash = window.location.hash;
+        actionUrl += hash;
+
+        loginForm.setAttribute('action', actionUrl);
+        loginForm.submit();
+      });
+    });
+  </script>
+
 </section>
 
 {% endblock body_outer %}
