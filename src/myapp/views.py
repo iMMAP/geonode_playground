@@ -128,9 +128,12 @@ class CustomSignupView(SignupView):
 
 def landing_redirect(request):
     next_url = request.GET.get('next')
-    if next_url and next_url == '/catalogue/':
+    if next_url == '/':
+        return render(request, 'myapp/landing.html')
+
+    elif next_url and next_url.startswith('/'):
         login_url = f"https://dev.hsdc.immap.org/account/login/?next={next_url}"
-        # login_url = f"https://hsdc.immap.org/account/login/?next={next_url}"
         return redirect(login_url)
+
     else:
         return render(request, 'myapp/landing.html', {'next': next_url})
