@@ -132,8 +132,8 @@ def landing_redirect(request):
         return render(request, 'myapp/landing.html')
 
     elif next_url and next_url.startswith('/'):
-        login_url = f"https://dev.hsdc.immap.org/account/login/?next={next_url}"
-        # login_url = f"https://hsdc.immap.org/account/login/?next={next_url}"
+        # login_url = f"https://dev.hsdc.immap.org/account/login/?next={next_url}"
+        login_url = f"https://hsdc.immap.org/account/login/?next={next_url}"
         return redirect(login_url)
 
     else:
