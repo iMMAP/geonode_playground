@@ -63,7 +63,7 @@
                 <div class="gn-menu-content-right">
                     <div class="">
                         <ul class="top_bar_menu_button">
-                            <a class="..." href="/account/login/?next={{request.GET.next}}"><button class="landing-login-btn">Login<button></a>
+                            <a class="..." id="landing-login-btn" href="/account/login/?next={{request.GET.next}}"><button class="landing-login-btn">Login<button></a>
                             <a class="..." href="/account/signup/"><button class="landing-register-btn">Register</button></a>
                         </ul>
                     </div>
@@ -333,5 +333,19 @@
 
         {% block scripts %}{% endblock %}
     </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var loginBtn = document.getElementById('landing-login-btn');
+            var hash = window.location.hash;
+            if (hash) {
+                var loginUrl = loginBtn.getAttribute('href');
+                loginUrl += hash;
+                loginBtn.setAttribute('href', loginUrl);
+            }
+        });
+    </script>
+
+    
 </body>
 </html>
