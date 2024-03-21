@@ -14,8 +14,9 @@
                     Go to user 
                 </a>
             </button>
-
-            Profile Link: https://{{current_site}}/admin/people/profile/{{from_user.id}}
+            <p>
+                {% trans "Profile Link:" %}: https://{{current_site}}/admin/people/profile/{{from_user.id}}
+            </p>
         {% else %}
         <p>
             {% trans "has created an account and has access to the site." %}
