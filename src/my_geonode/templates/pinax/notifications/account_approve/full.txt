@@ -10,10 +10,12 @@
                 {% trans "You can enable access by setting the user as active on the admin section" %}: 
             </p>
             <button class="btn-primary">
-                <a href="http://{{current_site}}/admin/people/profile/{{from_user.id}}">
+                <a href="https://{{current_site}}/admin/people/profile/{{from_user.id}}">
                     Go to user 
                 </a>
             </button>
+
+            Profile Link: https://{{current_site}}/admin/people/profile/{{from_user.id}}
         {% else %}
         <p>
             {% trans "has created an account and has access to the site." %}
