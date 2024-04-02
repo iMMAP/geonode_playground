@@ -305,3 +305,15 @@ if APP_ENV == 'production':
         # We recommend adjusting this value in production.
         profiles_sample_rate=1.0,
     )
+    
+# PROJECT_ROOT
+# STATIC_URL="static/"
+# STATIC_ROOT="/var/www/html/static_root"
+# STATIC_ROOT= LOCAL_ROOT + "/static_root"
+
+MEDIA_URL="uploaded/"
+MEDIA_ROOT = LOCAL_ROOT + "/uploaded"
+# MEDIA_ROOT="/var/www/html/uploaded"
+
+
+WHITENOISE_MAX_AGE=7200
