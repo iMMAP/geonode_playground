@@ -1,11 +1,8 @@
 {% extends "basic_base.html" %}
 
+{% load static %}
 
-{% load i18n %}
-{% load bootstrap_tags %}
-{% load account socialaccount %}
-
-{% block head_title %}{% trans "Log in" %}{% endblock %}
+{% block head_title %} Log in {% endblock %}
 
 {% block body_outer %}
 
@@ -21,8 +18,8 @@
         <div class=" mb-24">
           <div class="flex items-center mb-16 justify-between">
             <div class="flex items-center">
-              <a href="https://hsdc.immap.org">
-                <img src="../../static/img/immap_logo.png" class="w-auto h-16"  alt="iMMAP LOGO" srcset="">
+              <a href="/">
+                <img src="{% static 'img/immap_logo.png' %}" class="w-auto h-16"  alt="iMMAP LOGO" srcset="">
               </a>
             </div>
             <!-- <h1 class="font-extrabold text-[16px] ml-5">
@@ -107,7 +104,7 @@
               type="submit"
               class="my_primary_btn mb-10 w-full md:w-1/3"
             >
-            {% trans "Sign In" %}
+            Sign In
             </button>
            
             <p class="font-semibold mt-2 pt-1" >
