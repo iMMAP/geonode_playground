@@ -144,9 +144,9 @@ p.card-text.gn-card-description.grid{
 }
 
 
-.gn-add-permissions-entries-container .nav-tabs li:first-child {
+/* .gn-add-permissions-entries-container .nav-tabs li:first-child {
   display: none !important;
-}
+} */
 
 @media only screen and (max-width: 640px) {
   .msgapi .gn-default {
