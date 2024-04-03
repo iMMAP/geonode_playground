@@ -1,248 +1,242 @@
 {% extends "basic_base.html" %}
 
 {% load i18n %}
+{% load static %}
 {% load bootstrap_tags %}
 {% load account socialaccount %}
 
 {% block title %}{% trans "Sign up" %}{% endblock %}
 
 {% block body_outer %}
-    
-<section class="min-h-screen">
-    <div class="h-full text-gray-800">
-      <div
-        class="flex xl:justify-center justify-center items-center flex-wrap h-full gap-20"
-      >
-        
-        <div class="w-4/5">
-          
-          <div class=" mb-24">
+  <section class="min-h-screen">
+      <div class="h-full text-gray-800">
+        <div class="flex xl:justify-center justify-center items-center flex-wrap h-full gap-20">
+          <div class="w-4/5">
+            
+            <div class=" mb-24">
 
-            <div class="flex items-center mb-16 mt-16 justify-between">
-              <div class="flex items-center">
-                <a href="https://hsdc.immap.org">
-                  <img src="../../static/img/immap_logo.png" class="w-auto h-16"  alt="iMMAP LOGO" srcset="">
-                </a>
+              <div class="flex items-center mb-16 mt-16 justify-between">
+                <div class="flex items-center">
+                  <a href="/">
+                    <img src="{% static 'img/immap_logo.png' %}" class="w-auto h-16"  alt="iMMAP LOGO" srcset="">
+                  </a>
+                </div>
+                <!-- <h1 class="font-extrabold text-[16px] ml-5">
+                  ASDC
+                </h1> -->
+                
               </div>
-              <!-- <h1 class="font-extrabold text-[16px] ml-5">
-                ASDC
-              </h1> -->
+              
+              
+    
+              <h2 class="font-extrabold text-[36px] uppercase mb-5 text-primary-900">
+                <!-- Afghanistan Spatial Data Center -->
+                Create an Account
+              </h2>
               
             </div>
-            
-            
-  
-            <h2 class="font-extrabold text-[36px] uppercase mb-5 text-primary-900">
-              <!-- Afghanistan Spatial Data Center -->
-              Create an Account
-            </h2>
-            
-          </div>
 
-          <div class="row">
-            {% get_providers as socialaccount_providers %}
-            {% if socialaccount_providers %}
-                <p>{% blocktrans with site.name as site_name %}Sign up with one
-                    of your existing third party accounts{% endblocktrans %}</p>
-                {% include "socialaccount/snippets/provider_list.html" with process="signup" %}
-                {% include "socialaccount/snippets/login_extra.html" %}
-                <hr>
-            {% endif %}
-          </div>
-
-          {% if account_geonode_local_signup %}
-          <form id="signup_form" method="post" action="{% url "account_signup" %}" autocapitalize="off" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
-              {% csrf_token %}
-    
-              {% if form.non_field_errors  %}
-                  <div class="alert alert-danger">
-                    {{ form.non_field_errors }}
-                  </div>
+            <div class="row">
+              {% get_providers as socialaccount_providers %}
+              {% if socialaccount_providers %}
+                  <p>{% blocktrans with site.name as site_name %}Sign up with one
+                      of your existing third party accounts{% endblocktrans %}</p>
+                  {% include "socialaccount/snippets/provider_list.html" with process="signup" %}
+                  {% include "socialaccount/snippets/login_extra.html" %}
+                  <hr>
               {% endif %}
-
-            <div class="flex flex-col md:flex-row gap-10">
-                  <!-- First Name input -->
-                <div class="mb-10 w-full">
-                  <label for="id_first_name" class="mb-5">First Name</label>
-                  <input
-                    type="text"
-                    class="my_input {% if form.first_name.errors %} input_error_state {% endif %}"
-                    placeholder="First Name"
-                    name="first_name"
-                    id="id_first_name"
-                  />
-                  {% if form.first_name.errors %}
-                    <span class=" alert-danger">
-                        {{ form.first_name.errors }}
-                    </span>
-                  {% endif %}
-                
-                </div>
-
-                <!-- Last Name input -->
-                <div class="mb-10 w-full">
-                  <label for="id_last_name" class="mb-5">Last Name</label>
-                  <input
-                    type="text"
-                    class="my_input {% if form.last_name.errors %} input_error_state {% endif %}"
-                    placeholder="Last Name"
-                    name="last_name"
-                    id="id_last_name"
-                  />
-                  {% if form.last_name.errors %}
-                    <span class=" alert-danger">
-                        {{ form.last_name.errors }}
-                    </span>
-                  {% endif %}
-                </div>
             </div>
 
-
-            <!-- Email input -->
-            <div class="mb-10 w-full">
-                <label for="id_email" class="">Email</label>
-                <p class="mb-5 text-gray-600">
-                  Only formal organization emails addresses are accepted
-                </p>
-                <input
-                  type="email"
-                  class="my_input {% if form.email.errors %} input_error_state {% endif %}"
-                  placeholder="Email"
-                  name="email"
-                  id="id_email"
-                />
-                {% if form.email.errors %}
-                  <span class=" alert-danger">
-                      {{ form.email.errors }}
-                  </span>
-                {% endif %}
-            </div>
-
-            <div class="flex flex-col md:flex-row gap-10">
-                  <!-- Username input -->
-                    <div class="mb-10 w-full">
-                      <label for="id_username" class="mb-5">Username</label>
-                      <input
-                        type="text"
-                        class="my_input {% if form.username.errors %} input_error_state {% endif %}"
-                        placeholder="Username"
-                        name="username"
-                        id="id_username"
-                      />
-                      {% if form.username.errors %}
-                        <span class=" alert-danger">
-                            {{ form.username.errors }}
-                        </span>
-                      {% endif %}
-                    
+            {% if account_geonode_local_signup %}
+            <form id="signup_form" method="post" action="{% url "account_signup" %}" autocapitalize="off" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+                {% csrf_token %}
+      
+                {% if form.non_field_errors  %}
+                    <div class="alert alert-danger">
+                      {{ form.non_field_errors }}
                     </div>
-
-                <!-- ORG input -->
-                <div class="mb-10 w-full">
-                  <label for="id_organization" class="mb-5">Organization</label>
-                  <input
-                    type="text"
-                    class="my_input {% if form.organization.errors %} input_error_state {% endif %}"
-                    placeholder="Organization"
-                    name="organization"
-                    id="id_organization"
-                  />
-                  {% if form.organization.errors %}
-                    <span class=" alert-danger">
-                        {{ form.organization.errors }}
-                    </span>
-                  {% endif %}
-                
-                </div>
-            </div>
-
-              {% comment %} Password Input {% endcomment %}
-            <div class="flex flex-col md:flex-row gap-10">
-              <!-- Password input -->
-              <div class="mb-10 w-full">
-                <label for="password" class="mb-5">Password</label>
-                <input
-                  type="password"
-                  class="my_input {% if form.password1.errors %} input_error_state {% endif %}"
-                  placeholder="Password"
-                  id="id_password1"
-                  name="password1"
-                />
-                {% if form.password1.errors %}
-                  <span class=" alert-danger">
-                      {{ form.password1.errors }}
-                  </span>
                 {% endif %}
+
+              <div class="flex flex-col md:flex-row gap-10">
+                    <!-- First Name input -->
+                  <div class="mb-10 w-full">
+                    <label for="id_first_name" class="mb-5">First Name</label>
+                    <input
+                      type="text"
+                      class="my_input {% if form.first_name.errors %} input_error_state {% endif %}"
+                      placeholder="First Name"
+                      name="first_name"
+                      id="id_first_name"
+                    />
+                    {% if form.first_name.errors %}
+                      <span class=" alert-danger">
+                          {{ form.first_name.errors }}
+                      </span>
+                    {% endif %}
+                  
+                  </div>
+
+                  <!-- Last Name input -->
+                  <div class="mb-10 w-full">
+                    <label for="id_last_name" class="mb-5">Last Name</label>
+                    <input
+                      type="text"
+                      class="my_input {% if form.last_name.errors %} input_error_state {% endif %}"
+                      placeholder="Last Name"
+                      name="last_name"
+                      id="id_last_name"
+                    />
+                    {% if form.last_name.errors %}
+                      <span class=" alert-danger">
+                          {{ form.last_name.errors }}
+                      </span>
+                    {% endif %}
+                  </div>
               </div>
 
-              <!-- Confirm Password input -->
+
+              <!-- Email input -->
               <div class="mb-10 w-full">
-                  <label for="password" class="mb-5">Confirm Password</label>
+                  <label for="id_email" class="">Email</label>
+                  <p class="mb-5 text-gray-600">
+                    Only formal organization emails addresses are accepted
+                  </p>
+                  <input
+                    type="email"
+                    class="my_input {% if form.email.errors %} input_error_state {% endif %}"
+                    placeholder="Email"
+                    name="email"
+                    id="id_email"
+                  />
+                  {% if form.email.errors %}
+                    <span class=" alert-danger">
+                        {{ form.email.errors }}
+                    </span>
+                  {% endif %}
+              </div>
+
+              <div class="flex flex-col md:flex-row gap-10">
+                    <!-- Username input -->
+                      <div class="mb-10 w-full">
+                        <label for="id_username" class="mb-5">Username</label>
+                        <input
+                          type="text"
+                          class="my_input {% if form.username.errors %} input_error_state {% endif %}"
+                          placeholder="Username"
+                          name="username"
+                          id="id_username"
+                        />
+                        {% if form.username.errors %}
+                          <span class=" alert-danger">
+                              {{ form.username.errors }}
+                          </span>
+                        {% endif %}
+                      
+                      </div>
+
+                  <!-- ORG input -->
+                  <div class="mb-10 w-full">
+                    <label for="id_organization" class="mb-5">Organization</label>
+                    <input
+                      type="text"
+                      class="my_input {% if form.organization.errors %} input_error_state {% endif %}"
+                      placeholder="Organization"
+                      name="organization"
+                      id="id_organization"
+                    />
+                    {% if form.organization.errors %}
+                      <span class=" alert-danger">
+                          {{ form.organization.errors }}
+                      </span>
+                    {% endif %}
+                  
+                  </div>
+              </div>
+
+                {% comment %} Password Input {% endcomment %}
+              <div class="flex flex-col md:flex-row gap-10">
+                <!-- Password input -->
+                <div class="mb-10 w-full">
+                  <label for="password" class="mb-5">Password</label>
                   <input
                     type="password"
-                    class="my_input {% if form.password2.errors %} input_error_state {% endif %}"
-                    placeholder="Confirm Password"
-                    id="id_password2"
-                    name="password2"
+                    class="my_input {% if form.password1.errors %} input_error_state {% endif %}"
+                    placeholder="Password"
+                    id="id_password1"
+                    name="password1"
                   />
-                  {% if form.password2.errors %}
+                  {% if form.password1.errors %}
                     <span class=" alert-danger">
-                        {{ form.password2.errors }}
+                        {{ form.password1.errors }}
                     </span>
                   {% endif %}
                 </div>
-            </div>
+
+                <!-- Confirm Password input -->
+                <div class="mb-10 w-full">
+                    <label for="password" class="mb-5">Confirm Password</label>
+                    <input
+                      type="password"
+                      class="my_input {% if form.password2.errors %} input_error_state {% endif %}"
+                      placeholder="Confirm Password"
+                      id="id_password2"
+                      name="password2"
+                    />
+                    {% if form.password2.errors %}
+                      <span class=" alert-danger">
+                          {{ form.password2.errors }}
+                      </span>
+                    {% endif %}
+                  </div>
+              </div>
 
 
-            <!-- Reason input -->
-            <div class="mb-10 w-full">
-                <label for="id_profile" class="">Reason for registering</label>
-                <textarea
-                  class="my_input {% if form.profile.errors %} input_error_state {% endif %}"
-                  placeholder="Please state in a few sentences your reason for registering to HSDC platform."
-                  name="profile"
-                  id="id_profile"
-                   cols="30" rows="3"
-                   required
-                /></textarea>
-                {% if form.profile.errors %}
-                  <span class=" alert-danger">
-                      {{ form.profile.errors }}
-                  </span>
-                {% endif %}
-            </div>
-    
-    
-            <div class="lg:text-left ">
-              
-              <button
-                type="submit"
-                class=" my_primary_btn mb-10 w-full md:w-1/3"
-              >
-                {% trans "Register" %}
-              </button>
-              
-              <p class="font-semibold mt-2 pt-1" >
-                Already have an account?
-                <a
-                  href="/account/login/?next=/"
-                  class="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out ml-5"
-                  >{% trans "Sign In" %}</a
+              <!-- Reason input -->
+              <div class="mb-10 w-full">
+                  <label for="id_profile" class="">Reason for registering</label>
+                  <textarea
+                    class="my_input {% if form.profile.errors %} input_error_state {% endif %}"
+                    placeholder="Please state in a few sentences your reason for registering to HSDC platform."
+                    name="profile"
+                    id="id_profile"
+                    cols="30" rows="3"
+                    required
+                  /></textarea>
+                  {% if form.profile.errors %}
+                    <span class=" alert-danger">
+                        {{ form.profile.errors }}
+                    </span>
+                  {% endif %}
+              </div>
+      
+      
+              <div class="lg:text-left ">
+                
+                <button
+                  type="submit"
+                  class=" my_primary_btn mb-10 w-full md:w-1/3"
                 >
-              </p>
-            </div>
-            {% if redirect_field_value %}
-              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                  {% trans "Register" %}
+                </button>
+                
+                <p class="font-semibold mt-2 pt-1" >
+                  Already have an account?
+                  <a
+                    href="/account/login/?next=/"
+                    class="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out ml-5"
+                    >{% trans "Sign In" %}</a
+                  >
+                </p>
+              </div>
+              {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+              {% endif %}
+            </form>
             {% endif %}
-          </form>
-          {% endif %}
+          </div>
         </div>
-  
-        
       </div>
-    </div>
   </section>
-   
 {% endblock %}
 
 {% block extra_script %}
