@@ -6,6 +6,7 @@
 {% get_menu_json 'TOPBAR_MENU_RIGHT' as TOPBAR_MENU_RIGHT %}
 {% load catalogue_urls %}
 {% get_user_menu as USER_MENU %}
+{% load static %}
 
 <nav id="{{ id|default:'' }}" class="gn-menu shadow  xl:px-16 " data-gn-menu-resize="true">
     <div class="gn-menu-container py-1">
@@ -14,71 +15,60 @@
             <div class="gn-menu-content-side gn-menu-content-left">
                 {% block left_menu %}
                  <!-- The brand logo -->
-                <!-- <div class="">
-                        <ul class="">
-                            <li>
-                                <a href="/">
-                                    {% if custom_theme.logo and custom_theme.logo.url %}
-                                        <img src="{{ custom_theme.logo.url }}" class="w-auto h-16">
-                                    {% else %}
-                                        <img src="../../../static/img/immap_logo.png" class="w-auto h-auto">
-                                    {% endif %}
-                                </a>
-                            </li>
-                        </ul>
-                </div> -->
-                
-                <a href="/" class="my_hidden sm:my_block">
+                <a href="/" class="">
                     {% if custom_theme.logo and custom_theme.logo.url %}
                         <img src="{{ custom_theme.logo.url }}" class="w-auto h-16">
                     {% else %}
-                        <img src="../../../static/img/immap_logo.png" class="w-auto h-16">
+                        <img src="{% static 'img/immap_logo.png' %}" class="w-auto h-16">
                     {% endif %}
                 </a>
                         
                 <!-- The hamburger Menu -->
-                <div class="dropdown">
-                    <button
-                        class="btn btn-primary dropdown-toggle"
-                        type="button"
-                        id="gn-topbar-small-menu"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="true"
-                    >
-                        <i class="fa fa-bars text-black-900"> </i>
-                    </button>
-                    <ul
-                        class="dropdown-menu"
-                        aria-labelledby="gn-topbar-small-menu"
-                    >
+                {% if request.user.is_authenticated %}
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-primary dropdown-toggle"
+                            type="button"
+                            id="gn-topbar-small-menu"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="true"
+                        >
+                            <i class="fa fa-bars text-black-900"> </i>
+                        </button>
+                        <ul
+                            class="dropdown-menu"
+                            aria-labelledby="gn-topbar-small-menu"
+                        >
+                            {% for menu_item in BASE_TOPBAR_MENU_LEFT %}
+                                {% include './menu_item_compact.html' with menu_item=menu_item %}
+                            {% endfor %}
+                            {% for menu_item in TOPBAR_MENU %}
+                                {% include './menu_item_compact.html' with menu_item=menu_item variant='primary' %}
+                            {% endfor %}
+                            {% for menu_item in TOPBAR_MENU_LEFT %}
+                                {% include './menu_item_compact.html' with menu_item=menu_item %}
+                            {% endfor %}
+
+                        </ul>
+                    </div>
+
+                    <ul class="gn-menu-list relative transform-none pl-16">
                         {% for menu_item in BASE_TOPBAR_MENU_LEFT %}
-                            {% include './menu_item_compact.html' with menu_item=menu_item %}
+                            {% include './menu_item.html' with menu_item=menu_item variant='primary' %}
                         {% endfor %}
                         {% for menu_item in TOPBAR_MENU %}
-                            {% include './menu_item_compact.html' with menu_item=menu_item variant='primary' %}
+                            {% include './menu_item.html' with menu_item=menu_item variant='primary' %}
                         {% endfor %}
                         {% for menu_item in TOPBAR_MENU_LEFT %}
-                            {% include './menu_item_compact.html' with menu_item=menu_item %}
+                            {% include './menu_item.html' with menu_item=menu_item variant='primary' %}
                         {% endfor %}
-
                     </ul>
-                </div>
-                <ul class="gn-menu-list relative transform-none pl-16">
-                    {% for menu_item in BASE_TOPBAR_MENU_LEFT %}
-                        {% include './menu_item.html' with menu_item=menu_item variant='primary' %}
-                    {% endfor %}
-                    {% for menu_item in TOPBAR_MENU %}
-                        {% include './menu_item.html' with menu_item=menu_item variant='primary' %}
-                    {% endfor %}
-                    {% for menu_item in TOPBAR_MENU_LEFT %}
-                        {% include './menu_item.html' with menu_item=menu_item variant='primary' %}
-                    {% endfor %}
-                </ul>
+                {% endif %}
+                
+                
                 {% endblock %}
             </div>
-
-          
 
             <div class="gn-menu-content-right flex gap-3 items-center">
                 {% block right_menu %}
