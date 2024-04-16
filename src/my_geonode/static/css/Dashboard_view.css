@@ -283,3 +283,11 @@
             color: #fff !important;
             font-weight: bold;
         }
+
+        .msgapi .gn-share-permissions-head .gn-share-permissions-row .gn-share-permissions-name button, .msgapi .gn-share-permissions-head .gn-share-permissions-row .gn-share-permissions-options button{
+            pointer-events: none;
+        }
+        
+        .msgapi .gn-share-permissions-head .gn-share-permissions-row .gn-share-permissions-name button i, .msgapi .gn-share-permissions-head .gn-share-permissions-row .gn-share-permissions-options button i{
+            Display: none;
+        }
