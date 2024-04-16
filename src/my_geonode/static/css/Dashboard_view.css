@@ -277,3 +277,11 @@
             padding: 0 !important;
             width: 30px;
         }
+
+
+        .msgapi .Select-menu-outer,.msgapi .Select-option {
+            background-color: #fff;
+            background-color: var(--gn-main-bg,#fff);
+            color: #000 !important;
+            color: var(--gn-main-color,#000)
+          }
