@@ -281,7 +281,7 @@
 
         .msgapi .Select-menu-outer,.msgapi .Select-option {
             background-color: #fff;
-            background-color: var(--gn-main-bg,#fff);
-            color: #000 !important;
+            background-color: var(--gn-main-bg,#a72824);
+            color: #fff !important;
             color: var(--gn-main-color,#000)
-          }
+        }
