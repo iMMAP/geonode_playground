@@ -277,10 +277,29 @@
             padding: 0 !important;
             width: 30px;
         }
+
+        .msgapi .Select-menu-outer,.msgapi .Select-option {
+            background-color: #fff !important;
+            background-color: var(--gn-main-bg,#fff) !important;
+            color: #000 !important;
+            color: var(--gn-main-color,#000) !important;
+        }
         
         .msgapi .Select-option.is-selected {
-            background-color: #a72824;
-            background-color: var(--gn-primary,#a72824);
-            color: #fff;
-            color: var(--gn-primary-contrast,#fff)
+            background-color: #a72824 !important;
+            background-color: var(--gn-primary,#a72824) !important;
+            color: #fff !important;
+            color: var(--gn-primary-contrast,#fff) !important;
+        }
+        
+        .msgapi .Select-option.is-focused {
+            background-color: #eee !important;
+            background-color: var(--gn-main-hover-bg,#eee) !important;
+            color: #000 !important;
+            color: var(--gn-main-hover-color,#000) !important;
+        }
+        
+        .msgapi .Select-option.is-disabled {
+            color: #aaa !important;
+            color: var(--gn-disabled-color,#aaa) !important;
         }
