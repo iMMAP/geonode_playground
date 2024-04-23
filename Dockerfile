@@ -27,7 +27,7 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     uwsgi uwsgi-plugin-python3 python3-gdbm python-is-python3 gdal-bin
 
 RUN apt-get install -y devscripts build-essential debhelper pkg-kde-tools sharutils
-RUN apt-get install -y nodejs npm
+# RUN apt-get install -y nodejs npm
 # RUN git clone https://salsa.debian.org/debian-gis-team/proj.git /tmp/proj
 # RUN cd /tmp/proj && debuild -i -us -uc -b && dpkg -i ../*.deb
 
@@ -73,13 +73,17 @@ RUN chmod +x /usr/bin/celery-cmd
 # RUN cd /usr/src/geonode-contribs/geonode-logstash; pip install --upgrade  -e . \
 #     cd /usr/src/geonode-contribs/ldap; pip install --upgrade  -e .
 
+# RUN git config --global core.compression 9
+# RUN git config --global https.postBuffer 5242880000
+# RUN git config --global http.postBuffer 5242880000
+
 RUN pip install --upgrade  --src /usr/src -r requirements.txt
 RUN pip install --upgrade  -e .
 
 # node
-WORKDIR /usr/src/my_geonode/my_geonode/static
-RUN npm install
-RUN npm run tailwind-build
+# WORKDIR /usr/src/my_geonode/my_geonode/static
+# RUN npm install
+# RUN npm run tailwind-build
 
 WORKDIR /usr/src/my_geonode
 # Cleanup apt update lists

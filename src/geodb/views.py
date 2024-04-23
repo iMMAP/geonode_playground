@@ -36,6 +36,8 @@ DB_CREDENTIAL_FILE = "~/geonode_playground/src/hsdc_postgres_db_config.json"
 #DB_CREDENTIAL_FILE = 'D:/iMMAP/code/db_config/hsdc_local_db_config.json'
 TIMEZONE = "Asia/Kabul"
 
+# FIXME do not use absolute paths
+# It gives error in the local environment
 os.chdir(r'/home/ubuntu/data/GLOFAS/alerts/')
 
 

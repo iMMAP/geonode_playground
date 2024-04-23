@@ -68,7 +68,7 @@ WSGI_APPLICATION = "{}.wsgi.application".format(PROJECT_NAME)
 LANGUAGE_CODE = os.getenv('LANGUAGE_CODE', "en")
 
 if PROJECT_NAME not in INSTALLED_APPS:
-    INSTALLED_APPS += (PROJECT_NAME, 'myapp', 'geodb','rangefilter')
+    INSTALLED_APPS += (PROJECT_NAME, "myapp", "geodb", "rangefilter", "import_export")
 
 # Location of url mappings
 ROOT_URLCONF = os.getenv('ROOT_URLCONF', '{}.urls'.format(PROJECT_NAME))
@@ -314,4 +314,4 @@ if APP_ENV == 'production':
 # MEDIA_URL="uploaded/"
 # MEDIA_ROOT = LOCAL_ROOT + "/uploaded"
 # MEDIA_ROOT="/var/www/html/uploaded"
-WHITENOISE_MAX_AGE= os.getenv('WHITENOISE_MAX_AGE', "7200")
+WHITENOISE_MAX_AGE= os.getenv('WHITENOISE_MAX_AGE', "14400")
