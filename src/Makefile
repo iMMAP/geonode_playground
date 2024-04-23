@@ -27,3 +27,9 @@ test:
 reset: down up wait sync
 
 hardreset: pull build reset
+
+tailwind-build:
+	tailwindcss -c ./my_geonode/static/tailwind.config.js --input ./my_geonode/static/css/tailwind.css --output ./my_geonode/static/css/site_base.css --minify
+
+tailwind:
+	tailwindcss -c ./my_geonode/static/tailwind.config.js --input ./my_geonode/static/css/tailwind.css --output ./my_geonode/static/css/site_base.css --watch
