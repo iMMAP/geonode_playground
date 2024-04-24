@@ -46,7 +46,7 @@ def waitfordbs(ctx):
 def waitforgeoserver(ctx):
     print("****************************geoserver********************************")
     # FIXME: geoserver gives 401 error
-    while not _rest_api_availability(f"{os.environ['GEOSERVER_LOCATION']}rest"):
+    while not _rest_api_availability(f"{os.environ['GEOSERVER_LOCATION']}ows"):
         print("Wait for GeoServer API availability...")
     print("GeoServer is available for HTTP calls!")
 
