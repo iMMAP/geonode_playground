@@ -200,7 +200,7 @@ CELERY_BEAT_SCHEDULE = {
         'task':'geodb.tasks.UpdateLatestGlofasFlood',
         'schedule': timedelta(minutes=10),
         'options': {
-            'priority': 3
+            'priority': 2
         }
     },
     

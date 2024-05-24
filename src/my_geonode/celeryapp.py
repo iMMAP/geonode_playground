@@ -35,3 +35,5 @@ app.config_from_object('django.conf:settings', namespace="CELERY")
 
 app.autodiscover_tasks()
 
+# Decrease the max_interval setting to 10 seconds
+app.conf.beat_max_interval = 10
