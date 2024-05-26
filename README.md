@@ -203,10 +203,21 @@ sh ./paver_dev.sh start
 ```
 
 ## Generate STATIC Assets
+You need to have tailwindcss installed golbally.
+```shell
+npm i -g tailwindcss
+```
+Watch for changes
+```shell
+cd src
+make tailwind
+```
 
+Build tailwind
 ```bash
 # Inside the src folder
-cd my_geonode/static
-npm install
-npm run tailwind-watch
+cd src
+make tailwind-build
 ```
+
+

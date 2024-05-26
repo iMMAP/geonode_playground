@@ -13,12 +13,10 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ "master", 2.10.x, 2.6.x, 2.8.x, 3.2.x, 3.3.x, 3.x, 4.x ]
+    branches: [ "master", "develop" ]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ "master" ]
-  schedule:
-    - cron: '38 4 * * 5'
+    branches: [ "master","develop" ]
 
 jobs:
   analyze:
@@ -44,13 +42,16 @@ jobs:
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
       with:
-        languages: $
+        languages: ${{ matrix.language }}
         # If you wish to specify custom queries, you can do so here or in a config file.
         # By default, queries listed here will override any specified in a config file.
         # Prefix the list here with "+" to use these queries and those in the config file.
         
         # Details on CodeQL's query packs refer to : https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
         # queries: security-extended,security-and-quality
+        paths-ignore: |
+          **/node_modules/**
+          **/venv/**
 
         
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
