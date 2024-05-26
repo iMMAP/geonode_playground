@@ -38,7 +38,7 @@ TIMEZONE = "Asia/Kabul"
 
 # FIXME do not use absolute paths
 # It gives error in the local environment
-os.chdir(r'/home/ubuntu/data/GLOFAS/alerts/')
+# os.chdir(r'/home/ubuntu/data/GLOFAS/alerts/')
 
 
 def get_db_connection():
