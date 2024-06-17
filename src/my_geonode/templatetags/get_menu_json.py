@@ -36,14 +36,14 @@ def get_base_left_topbar_menu(context):
             "items": [
                 {
                     "type": "link",
-                    "href": "/catalogue/#/search/?f=dataset",
+                    "href": "/catalogue/#/dataset",
                     "label": "Datasets"
                 },
 
 
                 # {
                 #     "type": "link",
-                #     "href": "/catalogue/#/search/?f=document",
+                #     "href": "/catalogue/#/document",
                 #     "label": "Documents"
                 #}if not is_mobile else None
 
@@ -57,29 +57,29 @@ def get_base_left_topbar_menu(context):
         },
         {
             "type": "dropdown",
-            # "href": "/catalogue/#/search/?f=map",
+            # "href": "/catalogue/#/map",
             "label": "Maps",
             "items": [
                 {
                     "type": "link",
-                    "href": "/catalogue/#/search/?f=map",
+                    "href": "/catalogue/#/map",
                     "label": "Interactive Maps"
                 },
                 {
                     "type": "link",
-                    "href": "/catalogue/#/search/?f=document",
+                    "href": "/catalogue/#/document",
                     "label": "Static Maps"
                 } if not is_mobile else None
             ]
         },
         {
             "type": "dropdown",
-            # "href": "/catalogue/#/search/?f=map",
+            # "href": "/catalogue/#/map",
             "label": "Dashboards",
             "items": [
                 {
                     "type": "link",
-                    "href": "/catalogue/#/search/?f=dashboard",
+                    "href": "/catalogue/#/dashboard",
                     "label": "HSDC Dashboards"
                 },
                 {
@@ -92,13 +92,13 @@ def get_base_left_topbar_menu(context):
     
         # {
         #     "type": "link",
-        #     "href": "/catalogue/#/search/?f=geostory",
+        #     "href": "/catalogue/#/geostory",
         #     "label": "GeoStories"
         # },
 
         {
             "type": "link",
-            "href": "/catalogue/#/search/?f=featured",
+            "href": "/catalogue/#/featured",
             "label": "Featured"
         }
     ]
