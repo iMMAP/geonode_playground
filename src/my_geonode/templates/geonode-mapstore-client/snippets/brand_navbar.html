@@ -6,58 +6,109 @@
 {% endblock %}
 
 <style>
-    #{{ id|default:'' }}-bottom {
+    #{{ id|default:'' }
+    }
+
+    -bottom {
         display: none;
         margin-bottom: 0;
     }
+
     @media (max-width: 748px) {
-        #{{ id|default:'' }} .gn-menu-content-center > * {
-            display: none;
-        }
-        #{{ id|default:'' }}-bottom {
-            display: flex;
-            width: calc(100% - 16px);
-            margin: 8px;
-        }
+        #{{ id|default:'' }
+    }
+
+    .gn-menu-content-center>* {
+        display: none;
+    }
+
+    #{{ id|default:'' }
+    }
+
+    -bottom {
+        display: flex;
+        width: calc(100% - 16px);
+        margin: 8px;
+    }
     }
 </style>
 
 <nav id="{{ id|default:'' }}" class="gn-menu gn-menu-symmetric">
     <div class="gn-menu-container">
         <div class="gn-menu-content">
-            
+
             <!-- The brand logo -->
             <div class="gn-menu-content-left">
                 {% block left_menu %}
-                    <ul class="gn-menu-list">
-                        <li>
-                            <a href="{% block logo_href %}{% catalogue_home %}{% endblock %}">
-                                {% if custom_theme.logo and custom_theme.logo.url %}
-                                    <img src="{{ custom_theme.logo.url }}">
-                                {% else %}
-                                    <img src="{% block logo_src %}/static/mapstore/img/geonode-logo.svg{% endblock %}">
-                                {% endif %}
-                            </a>
-                        </li>
+                <a href="/" class="">
+                    {% if custom_theme.logo and custom_theme.logo.url %}
+                        <img src="{{ custom_theme.logo.url }}" class="w-auto h-16">
+                    {% else %}
+                        <img src="{% static 'img/immap_logo.png' %}" class="w-auto h-16">
+                    {% endif %}
+                </a>
+                        
+                <!-- The hamburger Menu -->
+                {% if request.user.is_authenticated %}
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-primary dropdown-toggle"
+                            type="button"
+                            id="gn-topbar-small-menu"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="true"
+                        >
+                            <i class="fa fa-bars text-black-900"> </i>
+                        </button>
+                        <ul
+                            class="dropdown-menu"
+                            aria-labelledby="gn-topbar-small-menu"
+                        >
+                            {% for menu_item in BASE_TOPBAR_MENU_LEFT %}
+                                {% include './menu_item_compact.html' with menu_item=menu_item %}
+                            {% endfor %}
+                            {% for menu_item in TOPBAR_MENU %}
+                                {% include './menu_item_compact.html' with menu_item=menu_item variant='primary' %}
+                            {% endfor %}
+                            {% for menu_item in TOPBAR_MENU_LEFT %}
+                                {% include './menu_item_compact.html' with menu_item=menu_item %}
+                            {% endfor %}
+
+                        </ul>
+                    </div>
+
+                    <ul class="gn-menu-list relative transform-none pl-16">
+                        {% for menu_item in BASE_TOPBAR_MENU_LEFT %}
+                            {% include './menu_item.html' with menu_item=menu_item variant='primary' %}
+                        {% endfor %}
+                        {% for menu_item in TOPBAR_MENU %}
+                            {% include './menu_item.html' with menu_item=menu_item variant='primary' %}
+                        {% endfor %}
+                        {% for menu_item in TOPBAR_MENU_LEFT %}
+                            {% include './menu_item.html' with menu_item=menu_item variant='primary' %}
+                        {% endfor %}
                     </ul>
+                {% endif %}
+                
                 {% endblock %}
             </div>
 
-            
-            
+
+
             <!-- The search input -->
-            <div class="gn-menu-content-center">
+            <!-- <div class="gn-menu-content-center">
                 {% block center_menu %}
                     {% include './search_bar.html' with search_bar_id='gn-search-bar' %}
                 {% endblock %}
-            </div>
+            </div> -->
 
             <!-- The user profile menu dropdown/The login and Register button -->
             <div class="gn-menu-content-right">
                 {% block right_menu %}
                 <ul class="gn-menu-list">
                     {% for menu_item in USER_MENU %}
-                        {% include './menu_item.html' with menu_item=menu_item align_right=True %}
+                    {% include './menu_item.html' with menu_item=menu_item align_right=True %}
                     {% endfor %}
                 </ul>
                 {% endblock %}
@@ -66,30 +117,30 @@
         </div>
     </div>
 </nav>
-<div id="{{ id|default:'' }}-bottom">
+<!-- <div id="{{ id|default:'' }}-bottom">
     {% block bottom_menu %}
-        {% include './search_bar.html' with search_bar_id='gn-search-bar-bottom' %}
+    {% include './search_bar.html' with search_bar_id='gn-search-bar-bottom' %}
     {% endblock %}
-</div>
+</div> -->
 {% block extra_script %}
-    <script type="text/javascript">
-        (function() {
-            function manageUrlChange() {
-                var signInElement = document.getElementById("sign-in");
-                if (signInElement){
-                    if (window.location.pathname === '/account/login/'){
-                        signInElement.setAttribute("href", window.location.href)
-                    }
-                    else {
-                        var href = signInElement.getAttribute("href").split("next=")[0];
-                        var url_parts = window.location.href.split(window.location.pathname);
-                        var path_name = encodeURIComponent(window.location.pathname + url_parts[url_parts.length-1]);
-                        signInElement.setAttribute("href", href.concat("next=".concat(path_name)));
-                    }
+<script type="text/javascript">
+    (function () {
+        function manageUrlChange() {
+            var signInElement = document.getElementById("sign-in");
+            if (signInElement) {
+                if (window.location.pathname === '/account/login/') {
+                    signInElement.setAttribute("href", window.location.href)
+                }
+                else {
+                    var href = signInElement.getAttribute("href").split("next=")[0];
+                    var url_parts = window.location.href.split(window.location.pathname);
+                    var path_name = encodeURIComponent(window.location.pathname + url_parts[url_parts.length - 1]);
+                    signInElement.setAttribute("href", href.concat("next=".concat(path_name)));
                 }
             }
-            window.addEventListener('DOMContentLoaded', manageUrlChange);
-            window.addEventListener('hashchange', manageUrlChange, false);
-        })();
-    </script>
+        }
+        window.addEventListener('DOMContentLoaded', manageUrlChange);
+        window.addEventListener('hashchange', manageUrlChange, false);
+    })();
+</script>
 {% endblock extra_script %}

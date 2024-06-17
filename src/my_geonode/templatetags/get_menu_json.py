@@ -36,7 +36,7 @@ def get_base_left_topbar_menu(context):
             "items": [
                 {
                     "type": "link",
-                    "href": "/catalogue/#/dataset",
+                    "href": "/catalogue/#/?f=dataset",
                     "label": "Datasets"
                 },
 
@@ -62,12 +62,12 @@ def get_base_left_topbar_menu(context):
             "items": [
                 {
                     "type": "link",
-                    "href": "/catalogue/#/map",
+                    "href": "/catalogue/#/?f=map",
                     "label": "Interactive Maps"
                 },
                 {
                     "type": "link",
-                    "href": "/catalogue/#/document",
+                    "href": "/catalogue/#/?f=document",
                     "label": "Static Maps"
                 } if not is_mobile else None
             ]
@@ -79,7 +79,7 @@ def get_base_left_topbar_menu(context):
             "items": [
                 {
                     "type": "link",
-                    "href": "/catalogue/#/dashboard",
+                    "href": "/catalogue/#/?f=dashboard",
                     "label": "HSDC Dashboards"
                 },
                 {
@@ -98,7 +98,7 @@ def get_base_left_topbar_menu(context):
 
         {
             "type": "link",
-            "href": "/catalogue/#/featured",
+            "href": "/catalogue/#/?f=featured",
             "label": "Featured"
         }
     ]
