@@ -18,7 +18,7 @@
                     {% if custom_theme.logo and custom_theme.logo.url %}
                     <img src="{{ custom_theme.logo.url }}" class="w-auto h-16">
                     {% else %}
-                    <img src="{% static 'img/immap_logo.png' %}" class="w-auto h-16">
+                    <img src="{% static 'img/immap_logo.png' %}" class="w-auto" style="height: 3rem !important">
                     {% endif %}
                 </a>
 
