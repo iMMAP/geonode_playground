@@ -33,32 +33,17 @@
 
             <div class="gn-menu-content-side gn-menu-content-left">
                 {% block left_menu %}
-                <!-- The brand logo -->
+                 <!-- The brand logo -->
                 <a href="/" class="">
                     {% if custom_theme.logo and custom_theme.logo.url %}
-                    <img src="{{ custom_theme.logo.url }}" class="w-auto h-16">
+                        <img src="{{ custom_theme.logo.url }}" class="w-auto h-16">
                     {% else %}
-                    <img src="{% static 'img/immap_logo.png' %}" class="w-auto h-16">
+                        <img src="{% static 'img/immap_logo.png' %}" class="w-auto h-16">
                     {% endif %}
                 </a>
-
-                <div class="gn-menu-content-center">
-                    <ul class="gn-menu-list relative transform-none pl-16" style="gap: 16px">
-                        {% for menu_item in BASE_TOPBAR_MENU_LEFT %}
-                        {% include './menu_item.html' with menu_item=menu_item variant='primary' %}
-                        {% endfor %}
-                        {% for menu_item in TOPBAR_MENU %}
-                        {% include './menu_item.html' with menu_item=menu_item variant='primary' %}
-                        {% endfor %}
-                        {% for menu_item in TOPBAR_MENU_LEFT %}
-                        {% include './menu_item.html' with menu_item=menu_item variant='primary' %}
-                        {% endfor %}
-                    </ul>
-                </div>
-
+                
                 {% endblock %}
             </div>
-
 
             <div class="gn-menu-content-right flex gap-3 items-center">
                 {% block right_menu %}
@@ -67,7 +52,7 @@
                     <!-- <img src="../../../static/img/early_access.png" class="h-16 my_hidden sm:my_block" width="100"> -->
                     <ul class="flex gap-5">
                         {% for menu_item in USER_MENU %}
-                        {% include './menu_item.html' with menu_item=menu_item align_right=True %}
+                            {% include './menu_item.html' with menu_item=menu_item align_right=True %}
                         {% endfor %}
                     </ul>
                 </div>
@@ -78,24 +63,24 @@
 </nav>
 
 {% block extra_script %}
-<script type="text/javascript">
-    (function () {
-        function manageUrlChange() {
-            var signInElement = document.getElementById("sign-in");
-            if (signInElement) {
-                if (window.location.pathname === '/account/login/') {
-                    signInElement.setAttribute("href", window.location.href)
-                }
-                else {
-                    var href = signInElement.getAttribute("href").split("next=")[0];
-                    var url_parts = window.location.href.split(window.location.pathname);
-                    var path_name = encodeURIComponent(window.location.pathname + url_parts[url_parts.length - 1]);
-                    signInElement.setAttribute("href", href.concat("next=".concat(path_name)));
+    <script type="text/javascript">
+        (function() {
+            function manageUrlChange() {
+                var signInElement = document.getElementById("sign-in");
+                if (signInElement){
+                    if (window.location.pathname === '/account/login/'){
+                        signInElement.setAttribute("href", window.location.href)
+                    }
+                    else {
+                        var href = signInElement.getAttribute("href").split("next=")[0];
+                        var url_parts = window.location.href.split(window.location.pathname);
+                        var path_name = encodeURIComponent(window.location.pathname + url_parts[url_parts.length-1]);
+                        signInElement.setAttribute("href", href.concat("next=".concat(path_name)));
+                    }
                 }
             }
-        }
-        window.addEventListener('DOMContentLoaded', manageUrlChange);
-        window.addEventListener('hashchange', manageUrlChange, false);
-    })();
-</script>
+            window.addEventListener('DOMContentLoaded', manageUrlChange);
+            window.addEventListener('hashchange', manageUrlChange, false);
+        })();
+    </script>
 {% endblock extra_script %}
