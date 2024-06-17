@@ -7,67 +7,79 @@
 {% get_user_menu as USER_MENU %}
 {% load static %}
 
-<nav id="{{ id|default:'' }}" class="gn-menu gn-primary" data-gn-menu-resize="true">
-    <div class="gn-menu-container">
+<nav id="{{ id|default:'' }}" class="gn-menu shadow  xl:px-16 " data-gn-menu-resize="true">
+    <div class="gn-menu-container py-1">
         <div class="gn-menu-content">
+
             <div class="gn-menu-content-side gn-menu-content-left">
                 {% block left_menu %}
+                 <!-- The brand logo -->
                 <a href="/" class="">
                     {% if custom_theme.logo and custom_theme.logo.url %}
-                    <img src="{{ custom_theme.logo.url }}" class="w-auto h-16">
+                        <img src="{{ custom_theme.logo.url }}" class="w-auto h-16">
                     {% else %}
-                    <img src="{% static 'img/hsdc-logo.png' %}" class="w-auto h-16">
+                        <img src="{% static 'img/immap_logo.png' %}" class="w-auto h-16">
                     {% endif %}
                 </a>
-                <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="gn-topbar-small-menu"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        <i class="fa fa-bars"> </i>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="gn-topbar-small-menu">
+                        
+                <!-- The hamburger Menu -->
+                {% if request.user.is_authenticated %}
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-primary dropdown-toggle"
+                            type="button"
+                            id="gn-topbar-small-menu"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="true"
+                        >
+                            <i class="fa fa-bars text-black-900"> </i>
+                        </button>
+                        <ul
+                            class="dropdown-menu"
+                            aria-labelledby="gn-topbar-small-menu"
+                        >
+                            {% for menu_item in BASE_TOPBAR_MENU_LEFT %}
+                                {% include './menu_item_compact.html' with menu_item=menu_item %}
+                            {% endfor %}
+                            {% for menu_item in TOPBAR_MENU %}
+                                {% include './menu_item_compact.html' with menu_item=menu_item variant='primary' %}
+                            {% endfor %}
+                            {% for menu_item in TOPBAR_MENU_LEFT %}
+                                {% include './menu_item_compact.html' with menu_item=menu_item %}
+                            {% endfor %}
+
+                        </ul>
+                    </div>
+
+                    <ul class="gn-menu-list relative transform-none pl-16">
                         {% for menu_item in BASE_TOPBAR_MENU_LEFT %}
-                        {% include './menu_item_compact.html' with menu_item=menu_item %}
+                            {% include './menu_item.html' with menu_item=menu_item variant='primary' %}
                         {% endfor %}
                         {% for menu_item in TOPBAR_MENU %}
-                        {% include './menu_item_compact.html' with menu_item=menu_item variant='primary' %}
+                            {% include './menu_item.html' with menu_item=menu_item variant='primary' %}
                         {% endfor %}
                         {% for menu_item in TOPBAR_MENU_LEFT %}
-                        {% include './menu_item_compact.html' with menu_item=menu_item %}
+                            {% include './menu_item.html' with menu_item=menu_item variant='primary' %}
                         {% endfor %}
+                    </ul>
+                {% endif %}
+                
+                
+                {% endblock %}
+            </div>
 
+            <div class="gn-menu-content-right flex gap-3 items-center">
+                {% block right_menu %}
+                <!-- The user profile menu dropdown/The login and Register button -->
+                <div class="flex items-center">
+                    <!-- <img src="../../../static/img/early_access.png" class="h-16 my_hidden sm:my_block" width="100"> -->
+                    <ul class="flex gap-5">
+                        {% for menu_item in USER_MENU %}
+                            {% include './menu_item.html' with menu_item=menu_item align_right=True %}
+                        {% endfor %}
                     </ul>
                 </div>
-                <ul class="gn-menu-list">
-                    {% for menu_item in BASE_TOPBAR_MENU_LEFT %}
-                    {% include './menu_item.html' with menu_item=menu_item variant='primary' %}
-                    {% endfor %}
-                    {% for menu_item in TOPBAR_MENU %}
-                    {% include './menu_item.html' with menu_item=menu_item variant='primary' %}
-                    {% endfor %}
-                    {% for menu_item in TOPBAR_MENU_LEFT %}
-                    {% include './menu_item.html' with menu_item=menu_item variant='primary' %}
-                    {% endfor %}
-                </ul>
-                {% endblock %}
-            </div>
-            <div class="gn-menu-content-center">
-                {% block center_menu %}
-                {% endblock %}
-            </div>
-            <div class="gn-menu-content-right">
-                {% block right_menu %}
-                <ul class="gn-menu-list">
-                    {% for menu_item in BASE_TOPBAR_MENU_RIGHT %}
-                    {% include './menu_item.html' with menu_item=menu_item variant='primary' align_right=True %}
-                    {% endfor %}
-                    {% for menu_item in TOPBAR_MENU_RIGHT %}
-                    {% include './menu_item.html' with menu_item=menu_item variant='primary' align_right=True %}
-                    {% endfor %}
-
-                    {% block language_selector %}
-                    {% include './language_selector.html' with variant='primary' align_right=True %}
-                    {% endblock %}
-                </ul>
                 {% endblock %}
             </div>
         </div>
@@ -91,9 +103,16 @@
                 if (leftSide.clientWidth < leftSideMenuList.clientWidth) {
                     leftSideMenuList.style.visibility = 'hidden';
                     leftSideDropdown.style.visibility = 'visible';
+                    console.log(1)
+
+                    leftSideMenuList.style.display = 'none';
+                    // leftSideDropdown.style.display = 'unset';
                 } else {
                     leftSideMenuList.style.visibility = 'visible';
                     leftSideDropdown.style.visibility = 'hidden';
+                    console.log(2)
+                    leftSideMenuList.style.display = 'flex';
+                    // leftSideDropdown.style.display = 'none';
                 }
             }
 
