@@ -23,6 +23,7 @@ import numpy as np
 import numpy.ma as ma
 from ftplib import FTP
 from django.conf import settings
+import traceback
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
@@ -778,6 +779,48 @@ def getLatestGlofasFlood(date, db_config_path, alert_tif_paths, discharge_tif_pa
 
 
 
+def UpdateLatestGlofasFlood():
+
+    current_date = datetime.datetime.now().date()
+    date = current_date.strftime("%Y-%m-%d")
+    # date = "2024-01-07"
+
+    db_credential_file = r'/home/ubuntu/geonode_playground/src/hsdc_live_db_config.json'
+
+
+    # DEV SERVER =================
+
+    # alert_tif_paths = [
+    #     r'/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmpr6onmi52/alert_day1_3.tif',
+    #     r'/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmpfpvy4t0u/alert_day4_10.tif',
+    #     r'/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmp5_4vilax/alert_day11_30.tif',
+    # ]
+
+    # discharge_tif_paths = [
+    #     r'/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmp0_59ziks/discharge_day1_3.tif',
+    #     r'/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmpt_yo98g6/discharge_day4_10.tif',
+    #     r'/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmpinmh2_mr/discharge_day11_30.tif'
+    # ]
+
+    # # PRODUCTION SERVER =================
+    
+    alert_tif_paths = [
+        r'/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmppqszzhtx/alert_day1_3.tif',
+        r'/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmpidj7p7ir/alert_day4_10.tif',
+        r'/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmpu9hsaucj/alert_day11_30.tif'
+    ]
+    discharge_tif_paths = [
+        r'/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmpmkwaw7sz/discharge_day1_3.tif',
+        r'/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmpkri6v1ve/discharge_day4_10.tif',
+        r'/home/ubuntu/.virtualenvs/hsdc/lib/python3.10/site-packages/geonode/uploaded/tmpeydpsn1v/discharge_day11_30.tif'
+    ]
+
+    column_names = ['alert_1_3', 'alert_4_10', 'alert_11_30']
+    directory_path =  r'/home/ubuntu/data/GLOFAS/'
+    #directory_path =  r'D:/iMMAP/proj/ASDC/data/GLOFAS/v02/'
+    getLatestGlofasFlood(date, db_credential_file, alert_tif_paths, discharge_tif_paths, column_names, directory_path)
+
+
 
 def RemoveNcFiles():
     # Specify the target directory where the NetCDF files are located
@@ -810,3 +853,48 @@ def RemoveNcFiles():
                 print(f"Removed file: {file_path}")
 
             print("File removal process completed.")
+
+
+
+    
+try:
+    print("==================================================================================================")
+    print("RUNNING EPICENTER SCRIPT")
+    print("==================================================================================================")
+    getLatestEarthQuake()
+    print("==================================================================================================")
+    print("EPICENTER SCRIPT DONE")
+    print("==================================================================================================")
+except Exception as e:
+    logging.error(f"Error in getLatestEarthQuake: {str(e)}")
+    
+    
+try:
+    print("==================================================================================================")
+    print("RUNNING SHAKEMAP SCRIPT")
+    print("==================================================================================================")
+    getLatestShakemap()
+    print("==================================================================================================")
+    print("SHAKEMAP SCRIPT DONE")
+    print("==================================================================================================")
+except Exception as e:
+    logging.error(f"Error in getLatestShakemap: {str(e)}")
+
+
+try:
+    print("==================================================================================================")
+    print("RUNNING GLOFAS SCRIPT")
+    print("==================================================================================================")
+    UpdateLatestGlofasFlood()
+    print("------------------------------------------------------------------------")
+    print("REMOVE NC FILE")
+    print("------------------------------------------------------------------------")
+    RemoveNcFiles()
+    print("------------------------------------------------------------------------")
+    print("NC FILE DELETED")
+    print("------------------------------------------------------------------------")
+    print("==================================================================================================")
+    print("GLOFAS SCRIPT DONE")
+    print("==================================================================================================")
+except Exception as e:
+    logging.error(f"Error in UpdateLatestGlofasFlood: {str(e)}")

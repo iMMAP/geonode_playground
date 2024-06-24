@@ -155,21 +155,21 @@ CELERY_TASK_DEFAULT_EXCHANGE_TYPE = "direct"
 
 # Celery Beat Configuration (optional)
 CELERY_BEAT_SCHEDULE = {
-    'get_latest_shakemap_every_10_minutes': {
-        'task':'geodb.tasks.updateLatestShakemap',
-        'schedule': timedelta(minutes=10),
-        'options': {
-            'priority': 0
-        }
-    },
+    # 'get_latest_shakemap_every_10_minutes': {
+    #     'task':'geodb.tasks.updateLatestShakemap',
+    #     'schedule': timedelta(minutes=10),
+    #     'options': {
+    #         'priority': 0
+    #     }
+    # },
 
-    'get_latest_earthquake_every_10_minutes': {
-        'task':'geodb.tasks.updateLatestEarthQuake',
-        'schedule': timedelta(minutes=10),
-        'options': {
-            'priority': 1
-        }
-    },
+    # 'get_latest_earthquake_every_10_minutes': {
+    #     'task':'geodb.tasks.updateLatestEarthQuake',
+    #     'schedule': timedelta(minutes=10),
+    #     'options': {
+    #         'priority': 1
+    #     }
+    # },
     # # PRODUCTION GLOFAS TASKS
     # 'get_get_nc_glofas_file_every_at_1_am': {
     #     'task':'geodb.tasks.getNCGlofasFlood',
@@ -196,21 +196,21 @@ CELERY_BEAT_SCHEDULE = {
     #     }
     # },
     
-    'get_latest_glofas_flood_every_10_minutes': {
-        'task':'geodb.tasks.UpdateLatestGlofasFlood',
-        'schedule': timedelta(minutes=10),
-        'options': {
-            'priority': 2
-        }
-    },
+    # 'get_latest_glofas_flood_every_10_minutes': {
+    #     'task':'geodb.tasks.UpdateLatestGlofasFlood',
+    #     'schedule': timedelta(minutes=10),
+    #     'options': {
+    #         'priority': 2
+    #     }
+    # },
     
-    'delete_nc_files_every_10_minutes': {
-        'task':'geodb.tasks.RemoveNcFilesFor7Days',
-        'schedule': timedelta(minutes=10),
-        'options': {
-            'priority': 3
-        }
-    },
+    # 'delete_nc_files_every_10_minutes': {
+    #     'task':'geodb.tasks.RemoveNcFilesFor7Days',
+    #     'schedule': timedelta(minutes=10),
+    #     'options': {
+    #         'priority': 3
+    #     }
+    # },
 }
 
 CENTRALIZED_DASHBOARD_ENABLED = ast.literal_eval(
