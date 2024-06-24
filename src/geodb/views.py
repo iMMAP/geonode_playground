@@ -24,6 +24,7 @@ import numpy.ma as ma
 from ftplib import FTP
 from django.conf import settings
 import traceback
+import logging
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
