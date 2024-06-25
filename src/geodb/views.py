@@ -14,7 +14,7 @@ import zipfile
 import psycopg2
 from shapely.geometry import Polygon, MultiPolygon, shape
 from osgeo import ogr
-from shapely.wkt import loads
+from shapely import wkb
 import rasterstats
 import rasterio
 from netCDF4 import Dataset
@@ -241,138 +241,144 @@ def getLatestShakemap():
 
                 feature_time_values = attributes['time']
                 query = text(f"SELECT COUNT(*) FROM earthquake_shakemap_all WHERE time = '{feature_time_values}'")
-                conn = con.connect()
-                cursor = conn.execute(query)
-                count = cursor.fetchone()[0]
-                
-                if count > 0:
-                    print('The earthquake shakemap already exist')
-                else:
-                    # Load buildings from database
-                    buildings = gpd.GeoDataFrame.from_postgis('SELECT * from afg_buildings_microsoft_centroids', con, geom_col='geom').to_crs('EPSG:32642')
-
-                    # Create a pandas DataFrame
-                    data = pd.DataFrame(attributes, index=[0])
-                    data['geometry'] = Point(coordinates['coordinates'])
-
-                    # Convert to a GeoDataFrame
-                    epicenter = gpd.GeoDataFrame(data)
-                    epicenter.rename(columns = {'geom':'buildings'}, inplace = True)
-                    #  First define the true original crs
-                    epicenter.crs = "EPSG:4326"
-                    # Reproject to projected crs before calculating shakemap
-                    epicenter = epicenter.to_crs('EPSG:32642')  # +proj=cea
-                    # Create shakemap as donut rings from epicenter
-
-                    def create_donut_rings(center, radii):
-                        # create circles from radii
-                        circles = [center.buffer(radius) for radius in radii]
-                        
-                        # create donut rings by subtracting each inner circle from the outer circle
-                        donut_rings = [circles[i].difference(circles[i-1]) for i in range(1, len(circles))]
-                        
-                        # add the innermost circle
-                        donut_rings.insert(0, circles[0])
-                        
-                        # create a GeoDataFrame with the donut rings and their corresponding radii
-                        donut_rings_gdf = gpd.GeoDataFrame(geometry=donut_rings)
-                        donut_rings_gdf['distance'] = radii
-                        
-                        return donut_rings_gdf
-
-                    # specify radii of circles: 10km, 20km, 30km, 40km, 50km
-                    radii = [10000, 20000, 30000, 40000, 50000]
-
-                    # create a GeoDataFrame of donut rings
-                    donut_rings_gdf = create_donut_rings(epicenter.geometry[0], radii)
-
-                    donut_rings_gdf.crs = "EPSG:32642"  # "+proj=cea"
-
-                    shakemap = donut_rings_gdf
-
-                    # Create list of columns to user for ordering
-                    shakemap_columns = list(shakemap.columns)
-                    epicenter_columns = list(epicenter.drop(columns='geometry').columns)
-                    column_order = epicenter_columns + shakemap_columns
-
-                    # Add a temporary column to both DataFrames with a constant value to create a Cartesian product merge
-                    shakemap['_merge_key'] = 1
-                    epicenter['_merge_key'] = 1
-
-                    # Perform a merge on the temporary column
-                    shakemap = pd.merge(shakemap, epicenter.drop(columns='geometry'), how='outer', on='_merge_key')
-
-                    # Remove the temporary column
-                    shakemap = shakemap.drop(columns='_merge_key')
-
-                    #shakemap = shakemap.reindex(columns=column_order)
-
-                    # Get population raster
-                    pop = r'~/raster/afg_worldpop_2020_UNadj_unconstrained_projUTM_comp.tif' #_projCEA
-                    pop_expanded_path = os.path.expanduser(pop)
-                    # Run zonal statistics
-                    zonal = rasterstats.zonal_stats(shakemap,pop_expanded_path, stats = 'sum')
-                    # Convert to pandas dataframe
-                    df = pd.DataFrame(zonal)
-                    df = df.rename(columns={'sum': 'pop'})
-                    # Drop index column
-                    shakemap = shakemap.reset_index(drop=True)
-                    # Concatenate pop values and shakemap as a pandas dataframe
-                    df_concat = pd.concat([df, shakemap], axis=1)
-                    # Turn pandas dataframe back into a geodataframe
-                    shakemap = gpd.GeoDataFrame(df_concat, geometry=df_concat.geometry) #wkb_geometry
-                    # OBS: change to correct building dataset
-
-                    # Joining the polygon attributes to each point
-                    # Creates a point layer of all buildings with the attributes copied from the interesecting polygon uniquely for each point
-                    joined_df = gpd.sjoin(
-                        buildings,
-                        shakemap,
-                        how='inner',
-                        predicate='intersects')
-                        
-                    # Count number of buildings within admin polygons (i.e. group by adm code)
-                    build_count = joined_df.groupby(
-                        ['distance'],
-                        as_index=False,
-                    )['geom'].count() # column is arbitrary
-
-                    # Change column name to build_count
-                    build_count.rename(columns = {'geom': 'buildings'}, inplace = True)
-                    # Merge build count back on to shakemap
-                    shakemap = shakemap.merge(
-                        build_count,
-                        on=['distance'],
-                        how='left')
-                        
-                    # Get area from a reprojected version of shakemap
-                    #shakemap_repro = shakemap.to_crs('+proj=cea')
-                    shakemap['km2'] = shakemap['geometry'].area.div(1000000)
-                    columns_shakemap = [
-                    'place',
-                    'mag',
-                    'distance',
-                    'pop',
-                    'buildings',
-                    'km2',
-                    'time',
-                    'geometry']
+                with con.connect() as conn:
+                    cursor = conn.execute(query)
+                    count = cursor.fetchone()[0]
                     
-                    new_shakemap = shakemap[columns_shakemap]
-                    # Reproject from +proj=cea to 4326 before saving
-                    new_shakemap = new_shakemap.to_crs('EPSG:4326')
+                    if count > 0:
+                        print('The earthquake shakemap already exist')
+                    else:
+                        # Load buildings from database
+                        # buildings = gpd.GeoDataFrame.from_postgis('SELECT * from afg_buildings_microsoft_centroids', con, geom_col='geom').to_crs('EPSG:32642')
+                        query = text('SELECT * FROM afg_buildings_microsoft_centroids')
+                        result = conn.execute(query)
+                        rows = result.fetchall()
+                        geometries = [wkb.loads(row[0], hex=True) for row in rows]
+                        buildings = gpd.GeoDataFrame(geometry=geometries, columns=result.keys(), crs='EPSG:4326')
+                        buildings = buildings.to_crs('EPSG:32642')
+                        
+                        # Create a pandas DataFrame
+                        data = pd.DataFrame(attributes, index=[0])
+                        data['geometry'] = Point(coordinates['coordinates'])
 
-                    # Convert columns to integers and treating NaN values as None
-                    new_shakemap['pop'] = new_shakemap['pop'].fillna(0).astype(int)
-                    new_shakemap['km2'] = new_shakemap['km2'].fillna(0).astype(int)
-                    new_shakemap['buildings'] = new_shakemap['buildings'].fillna(0).astype(int)
+                        # Convert to a GeoDataFrame
+                        epicenter = gpd.GeoDataFrame(data)
+                        epicenter.rename(columns = {'geom':'buildings'}, inplace = True)
+                        #  First define the true original crs
+                        epicenter.crs = "EPSG:4326"
+                        # Reproject to projected crs before calculating shakemap
+                        epicenter = epicenter.to_crs('EPSG:32642')  # +proj=cea
+                        # Create shakemap as donut rings from epicenter
 
-                    # Saving shakemap to database
-                    new_shakemap.to_postgis('earthquake_shakemap_latest', con, if_exists='replace')
-                    print('Earthquake Shakemap replaced successfully')
+                        def create_donut_rings(center, radii):
+                            # create circles from radii
+                            circles = [center.buffer(radius) for radius in radii]
+                            
+                            # create donut rings by subtracting each inner circle from the outer circle
+                            donut_rings = [circles[i].difference(circles[i-1]) for i in range(1, len(circles))]
+                            
+                            # add the innermost circle
+                            donut_rings.insert(0, circles[0])
+                            
+                            # create a GeoDataFrame with the donut rings and their corresponding radii
+                            donut_rings_gdf = gpd.GeoDataFrame(geometry=donut_rings)
+                            donut_rings_gdf['distance'] = radii
+                            
+                            return donut_rings_gdf
 
-                    new_shakemap.to_postgis("earthquake_shakemap_all", con, if_exists="append")
-                    print('All earthquake Shakemap saved successfully')
+                        # specify radii of circles: 10km, 20km, 30km, 40km, 50km
+                        radii = [10000, 20000, 30000, 40000, 50000]
+
+                        # create a GeoDataFrame of donut rings
+                        donut_rings_gdf = create_donut_rings(epicenter.geometry[0], radii)
+
+                        donut_rings_gdf.crs = "EPSG:32642"  # "+proj=cea"
+
+                        shakemap = donut_rings_gdf
+
+                        # Create list of columns to user for ordering
+                        shakemap_columns = list(shakemap.columns)
+                        epicenter_columns = list(epicenter.drop(columns='geometry').columns)
+                        column_order = epicenter_columns + shakemap_columns
+
+                        # Add a temporary column to both DataFrames with a constant value to create a Cartesian product merge
+                        shakemap['_merge_key'] = 1
+                        epicenter['_merge_key'] = 1
+
+                        # Perform a merge on the temporary column
+                        shakemap = pd.merge(shakemap, epicenter.drop(columns='geometry'), how='outer', on='_merge_key')
+
+                        # Remove the temporary column
+                        shakemap = shakemap.drop(columns='_merge_key')
+
+                        #shakemap = shakemap.reindex(columns=column_order)
+
+                        # Get population raster
+                        pop = r'~/raster/afg_worldpop_2020_UNadj_unconstrained_projUTM_comp.tif' #_projCEA
+                        pop_expanded_path = os.path.expanduser(pop)
+                        # Run zonal statistics
+                        zonal = rasterstats.zonal_stats(shakemap,pop_expanded_path, stats = 'sum')
+                        # Convert to pandas dataframe
+                        df = pd.DataFrame(zonal)
+                        df = df.rename(columns={'sum': 'pop'})
+                        # Drop index column
+                        shakemap = shakemap.reset_index(drop=True)
+                        # Concatenate pop values and shakemap as a pandas dataframe
+                        df_concat = pd.concat([df, shakemap], axis=1)
+                        # Turn pandas dataframe back into a geodataframe
+                        shakemap = gpd.GeoDataFrame(df_concat, geometry=df_concat.geometry) #wkb_geometry
+                        # OBS: change to correct building dataset
+
+                        # Joining the polygon attributes to each point
+                        # Creates a point layer of all buildings with the attributes copied from the interesecting polygon uniquely for each point
+                        joined_df = gpd.sjoin(
+                            buildings,
+                            shakemap,
+                            how='inner',
+                            predicate='intersects')
+                            
+                        # Count number of buildings within admin polygons (i.e. group by adm code)
+                        build_count = joined_df.groupby(
+                            ['distance'],
+                            as_index=False,
+                        )['geom'].count() # column is arbitrary
+
+                        # Change column name to build_count
+                        build_count.rename(columns = {'geom': 'buildings'}, inplace = True)
+                        # Merge build count back on to shakemap
+                        shakemap = shakemap.merge(
+                            build_count,
+                            on=['distance'],
+                            how='left')
+                            
+                        # Get area from a reprojected version of shakemap
+                        #shakemap_repro = shakemap.to_crs('+proj=cea')
+                        shakemap['km2'] = shakemap['geometry'].area.div(1000000)
+                        columns_shakemap = [
+                        'place',
+                        'mag',
+                        'distance',
+                        'pop',
+                        'buildings',
+                        'km2',
+                        'time',
+                        'geometry']
+                        
+                        new_shakemap = shakemap[columns_shakemap]
+                        # Reproject from +proj=cea to 4326 before saving
+                        new_shakemap = new_shakemap.to_crs('EPSG:4326')
+
+                        # Convert columns to integers and treating NaN values as None
+                        new_shakemap['pop'] = new_shakemap['pop'].fillna(0).astype(int)
+                        new_shakemap['km2'] = new_shakemap['km2'].fillna(0).astype(int)
+                        new_shakemap['buildings'] = new_shakemap['buildings'].fillna(0).astype(int)
+
+                        # Saving shakemap to database
+                        new_shakemap.to_postgis('earthquake_shakemap_latest', con, if_exists='replace')
+                        print('Earthquake Shakemap replaced successfully')
+
+                        new_shakemap.to_postgis("earthquake_shakemap_all", con, if_exists="append")
+                        print('All earthquake Shakemap saved successfully')
             else:
                 # Create a pandas DataFrame
                 data = pd.DataFrame(attributes, index=[0])
