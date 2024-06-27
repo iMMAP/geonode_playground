@@ -834,7 +834,7 @@ def RemoveNcAndTiffFiles():
         nc_files.sort(key=lambda x: os.path.getmtime(os.path.join(directory_path, x)))
         tiff_files.sort(key=lambda x: os.path.getmtime(os.path.join(directory_path, x)))
         
-        files_to_keep = 7
+        files_to_keep = 21
         nc_files_to_remove = nc_files[:-files_to_keep]
         tiff_files_to_remove = tiff_files[:-files_to_keep]
 
