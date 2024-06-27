@@ -820,20 +820,17 @@ def UpdateLatestGlofasFlood():
     processGLOFAS(date, db_credential_file, flood_summary_paths, column_names, directory_path)
 
 
-import os
-from datetime import datetime, timedelta
-
 def RemoveNcAndTiffFiles():
 
     directory_path = '/home/ubuntu/data/GLOFAS/'
-    current_date = datetime.now()
+    current_date = datetime.datetime.now()
 
-    cutoff_date = current_date - timedelta(days=7)
+    cutoff_date = current_date - datetime.timedelta(days=7)
     nc_files = [filename for filename in os.listdir(directory_path) if filename.endswith(".nc")]
     tiff_files = [filename for filename in os.listdir(directory_path) if filename.endswith(".tif")]
 
-    nc_files_to_remove = [filename for filename in nc_files if datetime.fromtimestamp(os.path.getmtime(os.path.join(directory_path, filename))) < cutoff_date]
-    tiff_files_to_remove = [filename for filename in tiff_files if datetime.fromtimestamp(os.path.getmtime(os.path.join(directory_path, filename))) < cutoff_date]
+    nc_files_to_remove = [filename for filename in nc_files if datetime.datetime.fromtimestamp(os.path.getmtime(os.path.join(directory_path, filename))) < cutoff_date]
+    tiff_files_to_remove = [filename for filename in tiff_files if datetime.datetime.fromtimestamp(os.path.getmtime(os.path.join(directory_path, filename))) < cutoff_date]
 
     # Check if there are files to delete
     if len(nc_files_to_remove) == 0 and len(tiff_files_to_remove) == 0:
