@@ -820,46 +820,35 @@ def UpdateLatestGlofasFlood():
     processGLOFAS(date, db_credential_file, flood_summary_paths, column_names, directory_path)
 
 
-def RemoveNcAndTiffFiles():
-    directory_path = '/home/ubuntu/data/GLOFAS/'
+import os
+from datetime import datetime, timedelta
 
-    # Get a list of all NetCDF files in the directory
+def RemoveNcAndTiffFiles():
+
+    directory_path = '/home/ubuntu/data/GLOFAS/'
+    current_date = datetime.now()
+
+    cutoff_date = current_date - timedelta(days=7)
     nc_files = [filename for filename in os.listdir(directory_path) if filename.endswith(".nc")]
     tiff_files = [filename for filename in os.listdir(directory_path) if filename.endswith(".tif")]
 
+    nc_files_to_remove = [filename for filename in nc_files if datetime.fromtimestamp(os.path.getmtime(os.path.join(directory_path, filename))) < cutoff_date]
+    tiff_files_to_remove = [filename for filename in tiff_files if datetime.fromtimestamp(os.path.getmtime(os.path.join(directory_path, filename))) < cutoff_date]
+
     # Check if there are files to delete
-    if len(nc_files) == 0 and len(tiff_files) == 0:
-        print("No NetCDF or TIFF files found in the specified directory. Nothing to delete.")
+    if len(nc_files_to_remove) == 0 and len(tiff_files_to_remove) == 0:
+        print(f"No NetCDF or TIFF files older than {cutoff_date.strftime('%Y-%m-%d')} found in the specified directory. Nothing to delete.")
     else:
-        nc_files.sort(key=lambda x: os.path.getmtime(os.path.join(directory_path, x)))
-        tiff_files.sort(key=lambda x: os.path.getmtime(os.path.join(directory_path, x)))
-        
-        files_to_keep = 21
-        nc_files_to_remove = nc_files[:-files_to_keep]
-        tiff_files_to_remove = tiff_files[:-files_to_keep]
+        for filename in nc_files_to_remove:
+            file_path = os.path.join(directory_path, filename)
+            os.remove(file_path)
+            print(f"Removed NetCDF file: {file_path}")
+        for filename in tiff_files_to_remove:
+            file_path = os.path.join(directory_path, filename)
+            os.remove(file_path)
+            print(f"Removed TIFF file: {file_path}")
 
-        # Check if there are nc files to delete
-        if len(nc_files_to_remove) == 0:
-            print("No NetCDF files to delete. Keeping the latest 7 NetCDF files...")
-        else:
-            # Remove the extra nc files
-            for filename in nc_files_to_remove:
-                file_path = os.path.join(directory_path, filename)
-                os.remove(file_path)
-                print(f"Removed NetCDF file: {file_path}")
-
-            print("NetCDF file removal process completed.")
-
-        # Check if there are tiff files to delete
-        if len(tiff_files_to_remove) == 0:
-            print("No TIFF files to delete. Keeping the latest 7 TIFF files...")
-        else:
-            for filename in tiff_files_to_remove:
-                file_path = os.path.join(directory_path, filename)
-                os.remove(file_path)
-                print(f"Removed TIFF file: {file_path}")
-
-            print("TIFF file removal process completed.")
+        print("File removal process completed.")
 
 
     
