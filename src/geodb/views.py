@@ -988,6 +988,7 @@ def update_glofas_points(conn, flood_summary_paths, column_names, glofas_points)
             values_clause = ', '.join(updates)
             update_query = f"UPDATE glofas_points_v06 SET {column_name} = data.raster_value FROM (VALUES {values_clause}) AS data (raster_value, id_glofas) WHERE glofas_points_v06.id_glofas = data.id_glofas"
             conn.execute(text(update_query))
+            conn.commit()
 
     end_time = datetime.datetime.now()
     print(f"update_glofas_points end time: {end_time}")
@@ -1104,6 +1105,7 @@ def execute_sql_queries(conn):
         conn.execute(update_glofas_join)
         conn.execute(update_adm2_query)
         conn.execute(update_basin_query)
+        conn.commit()
         print("Glofas_join, Basin, and Adm2 summary tables updated successfully")
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -1206,23 +1208,23 @@ except Exception as e:
     logging.error(f"Error in getLatestShakemap: {str(e)}")
 
 
-try:
-    print("==================================================================================================")
-    print("RUNNING OLD GLOFAS SCRIPT")
-    print("==================================================================================================")
-    UpdateLatestGlofasFlood()
-    print("------------------------------------------------------------------------")
-    print("REMOVE NC FILE")
-    print("------------------------------------------------------------------------")
-    RemoveNcFiles()
-    print("------------------------------------------------------------------------")
-    print("NC FILE DELETED")
-    print("------------------------------------------------------------------------")
-    print("==================================================================================================")
-    print("OLD GLOFAS SCRIPT DONE")
-    print("==================================================================================================")
-except Exception as e:
-    logging.error(f"Error in UpdateLatestGlofasFlood: {str(e)}")
+# try:
+#     print("==================================================================================================")
+#     print("RUNNING OLD GLOFAS SCRIPT")
+#     print("==================================================================================================")
+#     UpdateLatestGlofasFlood()
+#     print("------------------------------------------------------------------------")
+#     print("REMOVE NC FILE")
+#     print("------------------------------------------------------------------------")
+#     RemoveNcFiles()
+#     print("------------------------------------------------------------------------")
+#     print("NC FILE DELETED")
+#     print("------------------------------------------------------------------------")
+#     print("==================================================================================================")
+#     print("OLD GLOFAS SCRIPT DONE")
+#     print("==================================================================================================")
+# except Exception as e:
+#     logging.error(f"Error in UpdateLatestGlofasFlood: {str(e)}")
 
 
 try:
