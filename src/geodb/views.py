@@ -900,10 +900,12 @@ def download_nc_files(directory_path, date):
                         server.retrbinary("RETR " + filename, file.write)
                     print(f"File {filename} downloaded successfully.")
                 else:
-                    print(f"The file {filename} does not exist on the FTP server.")
+                    raise FileNotFoundError(f"The file {filename} does not exist on the FTP server.")
                 server.quit()
             except Exception as e:
                 print(f"Failed to download {filename} from FTP server. Error: {e}")
+                raise e
+
     end_time = datetime.datetime.now()
     print(f"download_nc_files end time: {end_time}")
     print(f"download_nc_files Duration: {end_time - start_time}")
