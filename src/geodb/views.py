@@ -25,6 +25,14 @@ from ftplib import FTP
 from django.conf import settings
 import traceback
 import logging
+import warnings
+
+# Suppress specific SQLAlchemy warnings
+warnings.filterwarnings("ignore", message="Did not recognize type 'geometry' of column 'location'")
+warnings.filterwarnings("ignore", message="Did not recognize type 'geometry' of column 'the_geom'")
+warnings.filterwarnings("ignore", message="Did not recognize type 'geometry' of column 'geometry'")
+warnings.filterwarnings("ignore", message="Did not recognize type 'geometry' of column 'wkb_geometry'")
+warnings.filterwarnings("ignore", message="Did not recognize type 'geometry' of column 'geom'")
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
