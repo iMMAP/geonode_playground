@@ -303,7 +303,7 @@ CELERY_IMPORTS = ('geodb.tasks',)
 
 if APP_ENV == 'production':
     sentry_sdk.init(
-        dsn="https://4c12b66b6e153acbf499a4783ec82fa7@o4507422988042240.ingest.de.sentry.io/4507606332604496",
+        dsn="https://b384eb8fa97dd85396a43cfcf8c7d837@o4506732599640064.ingest.sentry.io/4506732604030976",
         # Set traces_sample_rate to 1.0 to capture 100%
         # of transactions for performance monitoring.
         traces_sample_rate=1.0,
