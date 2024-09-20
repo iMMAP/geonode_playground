@@ -242,6 +242,12 @@ def get_user_menu(context):
             "label": "Help"
         },
         devider,
+        {
+            "type": "link",
+            "href": "/itt_stats",
+            "label": "ITT Stats Report"
+        },
+        devider,
         logout
     ]
     monitoring = []
