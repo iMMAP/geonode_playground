@@ -291,3 +291,7 @@
         .msgapi .gn-share-permissions-head .gn-share-permissions-row .gn-share-permissions-name button i, .msgapi .gn-share-permissions-head .gn-share-permissions-row .gn-share-permissions-options button i{
             display: none;
         }
+
+        .msgapi .container{
+            width: 1400px !important;
+        }
