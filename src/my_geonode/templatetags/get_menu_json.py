@@ -264,7 +264,7 @@ def get_user_menu(context):
             "type": "link",
             "href": "/geoserver/",
             "label": "GeoServer"
-        }
+        },
         devider,
         {
             "type": "link",
