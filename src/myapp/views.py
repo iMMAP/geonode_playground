@@ -49,6 +49,7 @@ def itt_stats(request):
     month_end = timezone.datetime(now.year, month, last_day, tzinfo=timezone.utc)
 
     active_users = Profile.objects.filter(is_active=True, last_login__range=(month_start, month_end)).count()
+    active_users_list = Profile.objects.filter(is_active=True, last_login__range=(month_start, month_end))
     staff_count = Profile.objects.filter(is_staff=True, last_login__range=(month_start, month_end)).count()
     active_users_current_month = Profile.objects.filter(last_login__range=(month_start, month_end), is_active=True).count()
 
@@ -80,6 +81,7 @@ def itt_stats(request):
 
     context = {
         "active_users": active_users,
+        "active_users_list": active_users_list,
         "staff_count": staff_count,
         "active_users_current_month": active_users_current_month,
         "users_per_position":users_per_position,
