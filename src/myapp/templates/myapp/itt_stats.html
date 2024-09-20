@@ -126,43 +126,49 @@
     </table>
     <hr/>
 
-    <h3>Users Per Position</h3>
-    <table class="min-w-full divide-y divide-gray-200 mb-10">
-        <thead class="bg-gray-50">
-            <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Position</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total User Count</th>
-            </tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
-            {% for user in users_per_position %}
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ user.position }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ user.user_count }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <hr/>
-
+    <div class="flex space-x-4 w-full mb-10">
+        <!-- Users Per Position -->
+        <div class="w-full">
+            <h4 class="font-bold text-lg">Users Per Position</h4>
+            <table class="min-w-full divide-y divide-gray-200 mb-6">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Position</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total User Count</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for user in users_per_position %}
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ user.position }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ user.user_count }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     
-    <h3>Users Per Country</h3>
-    <table class="min-w-full divide-y divide-gray-200 mb-10">
-        <thead class="bg-gray-50">
-            <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Country</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total User Count</th>
-            </tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
-            {% for user in users_per_country %}
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ user.country }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ user.user_count }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        <!-- Users Per Country -->
+        <div class="w-full">
+            <h4 class="font-bold text-lg">Users Per Country</h4>
+            <table class="min-w-full divide-y divide-gray-200 mb-6">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Country</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total User Count</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for user in users_per_country %}
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ user.country }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ user.user_count }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
     <hr/>
 
     <h3>Users Per Organization</h3>
