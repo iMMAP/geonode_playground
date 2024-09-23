@@ -1,7 +1,11 @@
-{% load static %}
 {% load get_menu_json %}
-{% load catalogue_urls %}
+{% get_base_left_topbar_menu as BASE_TOPBAR_MENU_LEFT %}
+{% get_menu_json 'TOPBAR_MENU' as TOPBAR_MENU %}
+{% get_menu_json 'TOPBAR_MENU_LEFT' as TOPBAR_MENU_LEFT %}
+{% get_base_right_topbar_menu as BASE_TOPBAR_MENU_RIGHT %}
+{% get_menu_json 'TOPBAR_MENU_RIGHT' as TOPBAR_MENU_RIGHT %}
 {% get_user_menu as USER_MENU %}
+{% load static %}
 
 {% block extra_style %}
 {% endblock %}
@@ -23,55 +27,41 @@
     }
 </style>
 
-<nav id="{{ id|default:'' }}" class="gn-menu gn-menu-symmetric">
-    <div class="gn-menu-container">
+<nav id="{{ id|default:'' }}" class="gn-menu shadow  xl:px-16 " data-gn-menu-resize="true">
+    <div class="gn-menu-container py-1">
         <div class="gn-menu-content">
-            
-            <!-- The brand logo -->
-            <div class="gn-menu-content-left">
+
+            <div class="gn-menu-content-side gn-menu-content-left">
                 {% block left_menu %}
-                    <ul class="gn-menu-list">
-                        <li>
-                            <a href="{% block logo_href %}{% catalogue_home %}{% endblock %}">
-                                {% if custom_theme.logo and custom_theme.logo.url %}
-                                    <img src="{{ custom_theme.logo.url }}">
-                                {% else %}
-                                    <img src="{% block logo_src %}/static/mapstore/img/geonode-logo.svg{% endblock %}">
-                                {% endif %}
-                            </a>
-                        </li>
-                    </ul>
+                 <!-- The brand logo -->
+                <a href="/" class="">
+                    {% if custom_theme.logo and custom_theme.logo.url %}
+                        <img src="{{ custom_theme.logo.url }}" class="w-auto h-16">
+                    {% else %}
+                        <img src="{% static 'img/immap_logo.png' %}" class="w-auto" style="height: 2.5rem !important">
+                    {% endif %}
+                </a>
+                
                 {% endblock %}
             </div>
 
-            
-            
-            <!-- The search input -->
-            <div class="gn-menu-content-center">
-                {% block center_menu %}
-                    {% include './search_bar.html' with search_bar_id='gn-search-bar' %}
-                {% endblock %}
-            </div>
-
-            <!-- The user profile menu dropdown/The login and Register button -->
-            <div class="gn-menu-content-right">
+            <div class="gn-menu-content-right flex gap-3 items-center">
                 {% block right_menu %}
-                <ul class="gn-menu-list">
-                    {% for menu_item in USER_MENU %}
-                        {% include './menu_item.html' with menu_item=menu_item align_right=True %}
-                    {% endfor %}
-                </ul>
+                <!-- The user profile menu dropdown/The login and Register button -->
+                <div class="flex items-center">
+                    <!-- <img src="../../../static/img/early_access.png" class="h-16 my_hidden sm:my_block" width="100"> -->
+                    <ul class="flex gap-5">
+                        {% for menu_item in USER_MENU %}
+                            {% include './menu_item.html' with menu_item=menu_item align_right=True %}
+                        {% endfor %}
+                    </ul>
+                </div>
                 {% endblock %}
             </div>
-
         </div>
     </div>
 </nav>
-<div id="{{ id|default:'' }}-bottom">
-    {% block bottom_menu %}
-        {% include './search_bar.html' with search_bar_id='gn-search-bar-bottom' %}
-    {% endblock %}
-</div>
+
 {% block extra_script %}
     <script type="text/javascript">
         (function() {

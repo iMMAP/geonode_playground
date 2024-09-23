@@ -36,14 +36,14 @@ def get_base_left_topbar_menu(context):
             "items": [
                 {
                     "type": "link",
-                    "href": "/catalogue/#/search/?f=dataset",
+                    "href": "/catalogue/#/?f=dataset",
                     "label": "Datasets"
                 },
 
 
                 # {
                 #     "type": "link",
-                #     "href": "/catalogue/#/search/?f=document",
+                #     "href": "/catalogue/#/document",
                 #     "label": "Documents"
                 #}if not is_mobile else None
 
@@ -57,29 +57,29 @@ def get_base_left_topbar_menu(context):
         },
         {
             "type": "dropdown",
-            # "href": "/catalogue/#/search/?f=map",
+            # "href": "/catalogue/#/map",
             "label": "Maps",
             "items": [
                 {
                     "type": "link",
-                    "href": "/catalogue/#/search/?f=map",
+                    "href": "/catalogue/#/?f=map",
                     "label": "Interactive Maps"
                 },
                 {
                     "type": "link",
-                    "href": "/catalogue/#/search/?f=document",
+                    "href": "/catalogue/#/?f=document",
                     "label": "Static Maps"
                 } if not is_mobile else None
             ]
         },
         {
             "type": "dropdown",
-            # "href": "/catalogue/#/search/?f=map",
+            # "href": "/catalogue/#/map",
             "label": "Dashboards",
             "items": [
                 {
                     "type": "link",
-                    "href": "/catalogue/#/search/?f=dashboard",
+                    "href": "/catalogue/#/?f=dashboard",
                     "label": "HSDC Dashboards"
                 },
                 {
@@ -92,13 +92,13 @@ def get_base_left_topbar_menu(context):
     
         # {
         #     "type": "link",
-        #     "href": "/catalogue/#/search/?f=geostory",
+        #     "href": "/catalogue/#/geostory",
         #     "label": "GeoStories"
         # },
 
         {
             "type": "link",
-            "href": "/catalogue/#/search/?f=featured",
+            "href": "/catalogue/#/?f=featured",
             "label": "Featured"
         }
     ]
@@ -264,7 +264,13 @@ def get_user_menu(context):
             "type": "link",
             "href": "/geoserver/",
             "label": "GeoServer"
-        }
+        },
+        devider,
+        {
+            "type": "link",
+            "href": "/itt_stats",
+            "label": "ITT Stats Report"
+        },
     ] + monitoring + [devider] + general
 
     if user.is_superuser:
