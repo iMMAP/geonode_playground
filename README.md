@@ -90,6 +90,7 @@ Install all the requirements for the GeoNode-Project and install the GeoNode-Pro
 
 ```bash
 pip install -r requirements.txt --upgrade
+pip install -r requirements_other.txt --upgrade
 
 pip install -e . --upgrade
 
