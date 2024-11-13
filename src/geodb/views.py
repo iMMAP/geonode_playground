@@ -1135,7 +1135,7 @@ def processGLOFAS(date, db_config_path, flood_summary_paths, column_names, direc
             test_result = test_query.fetchone()
             if test_result[0] == 1:
                 print("Test query successful")
-                glofas_points = gpd.read_postgis('SELECT * FROM glofas_points_v06', conn)
+                glofas_points = gpd.read_postgis(text('SELECT * FROM glofas_points_v06'), conn)
                 update_glofas_points(conn, flood_summary_paths, column_names, glofas_points)
                 execute_sql_queries(conn)
 
