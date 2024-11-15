@@ -46,7 +46,7 @@ def itt_stats(request):
 
     _, last_day = monthrange(now.year, month)
     month_start = timezone.datetime(now.year, month, 1, tzinfo=timezone.utc)
-    month_end = timezone.datetime(now.year, month, last_day, tzinfo=timezone.utc)
+    month_end = timezone.datetime(now.year, month, last_day, 23, 59, 59, tzinfo=timezone.utc)
 
     active_users = Profile.objects.filter(is_active=True, last_login__range=(month_start, month_end)).count()
     active_users_list = Profile.objects.filter(is_active=True, last_login__range=(month_start, month_end))
@@ -78,7 +78,27 @@ def itt_stats(request):
     # popular_count(views count), owner
     datasets_in_month = Dataset.objects.prefetch_related('owner').filter(created__range=(month_start, month_end))
     
+    
+    #PERCENTAGE CALCULATION
+    
+    prev_month_start = timezone.make_aware(datetime(previous_year, previous_month, 1), timezone.get_current_timezone())
+    prev_month_end = timezone.make_aware(datetime(previous_year, previous_month, last_day_prev, 23, 59, 59), timezone.get_current_timezone())
+    active_users_last_month = Profile.objects.filter(is_active=True, last_login__range=(prev_month_start, prev_month_end)).count()
+    if active_users_last_month > 0:
+        percent_change = round(((active_users - active_users_last_month) / active_users_last_month) * 100)
+    else:
+        percent_change = 100 if active_users > 0 else 0
+    
+    if percent_change > 100:
+        percent_change = 100
 
+    if percent_change > 0:
+        change_phrase = f"{percent_change}% more than last month"
+    elif percent_change < 0:
+        change_phrase = f"{abs(percent_change)}% less than last month"
+    else:
+        change_phrase = "No change from last month"
+        
     context = {
         "active_users": active_users,
         "active_users_list": active_users_list,
@@ -88,7 +108,8 @@ def itt_stats(request):
         "users_per_country":users_per_country,
         "users_per_org":users_per_org,
         "months": months,
-        "datasets_in_month":datasets_in_month
+        "datasets_in_month":datasets_in_month,
+        "change_phrase": change_phrase,
     }
 
     return render(request, 'myapp/itt_stats.html', context)
