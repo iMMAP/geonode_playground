@@ -1,19 +1,30 @@
 from allauth.account.views import SignupView
 from django.conf import settings
-from django.db.models import Q
+from django.db.models import Q, Max
 from django.shortcuts import render
 from geonode.people.models import Profile
+from geonode.base.models import ResourceBase
 from geonode.layers.models import Dataset
-from .models import OchaDashboard
+from .models import OchaDashboard, UserLoginLog
 from .decorators import staff_or_404
 from django.utils import timezone
 from django.db.models import Count, Case, When, IntegerField, Sum
 from django.shortcuts import redirect
+from django.utils.timezone import localtime
 
 
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from calendar import monthrange
 from datetime import datetime
+from django.core.exceptions import ValidationError
+import traceback
+from django.db.models.functions import TruncMonth
+
+try:
+    from urlparse import urlparse
+except ImportError:
+    from urllib.parse import urlparse
+
 
 
 
@@ -24,6 +35,7 @@ def itt_stats(request):
     
     # Generate month links
     current_month = now.month
+    current_year = now.year
     months = [
         {
             'number': i,
@@ -47,43 +59,65 @@ def itt_stats(request):
     _, last_day = monthrange(now.year, month)
     month_start = timezone.datetime(now.year, month, 1, tzinfo=timezone.utc)
     month_end = timezone.datetime(now.year, month, last_day, 23, 59, 59, tzinfo=timezone.utc)
+    active_users = UserLoginLog.objects.filter(login_time__range=(month_start, month_end)).values('user__username').distinct().count()
+    month_total_logins = UserLoginLog.objects.filter(login_time__range=(month_start, month_end)).count()
 
-    active_users = Profile.objects.filter(is_active=True, last_login__range=(month_start, month_end)).count()
-    active_users_list = Profile.objects.filter(is_active=True, last_login__range=(month_start, month_end))
-    staff_count = Profile.objects.filter(is_staff=True, last_login__range=(month_start, month_end)).count()
-    active_users_current_month = Profile.objects.filter(last_login__range=(month_start, month_end), is_active=True).count()
+    staff_count = UserLoginLog.objects.filter(user__is_staff=True, login_time__range=(month_start, month_end)).values('user__username').distinct().count()
+    recent_user_logs = UserLoginLog.objects.filter(
+        user__is_active=True,
+        login_time__range=(month_start, month_end)
+    ).values('user').annotate(latest_login=Max('login_time')).order_by('-latest_login')
 
-    users_per_position = Profile.objects.filter(last_login__range=(month_start, month_end)).values('position').annotate(user_count=Count('id'))
-    users_per_country = Profile.objects.filter(last_login__range=(month_start, month_end)).values('country').annotate(user_count=Count('id'))
-
-    users_per_org = Profile.objects.filter(last_login__range=(month_start, month_end)).values('organization').annotate(
-        user_count=Count('id'),
-        active_user_count=Sum(
-            Case(
-                When(is_active=True, then=1),
-                default=0,
-                output_field=IntegerField()
-            )
-        ),
-        inactive_user_count=Sum(
-            Case(
-                When(is_active=False, then=1),
-                default=0,
-                output_field=IntegerField()
-            )
-        )
+    active_users_list = UserLoginLog.objects.filter(
+        login_time__range=(month_start, month_end)
+    ).values(
+        'user__id',
+        'user__first_name',
+        'user__last_name',
+        'user__email',
+        'user__organization',
+        'user__country',
+        'user__is_active'
+    ).annotate(
+        last_login=Max('login_time'),
+        login_count=Count('id')
     )
-    
-    # Get all Dataset created in the month range
-    # popular_count(views count), owner
-    datasets_in_month = Dataset.objects.prefetch_related('owner').filter(created__range=(month_start, month_end))
-    
-    
+
+    users_per_position = UserLoginLog.objects.filter(login_time__range=(month_start, month_end)).values('user__position').annotate(last_login=Max('login_time'), user_count=Count('user__id', distinct=True))
+    users_per_country = UserLoginLog.objects.filter(login_time__range=(month_start, month_end)).values('user__country').annotate(last_login=Max('login_time'), user_count=Count('user__id', distinct=True))
+    users_per_org = UserLoginLog.objects.filter(login_time__range=(month_start, month_end)).values('user__organization').annotate(
+        last_login=Max('login_time'),
+        active_user_count=Count(
+            Case(
+                When(user__is_active=True, then="user__id"),
+                output_field=IntegerField()
+            ),
+            distinct=True
+        ),
+        inactive_user_count=Count(
+            Case(
+                When(user__is_active=False, then="user__id"),
+                output_field=IntegerField()
+            ),
+            distinct=True,
+        ),
+    )
+
+    previous_month = month - 1 if month > 1 else 12
+    previous_year = now.year if month > 1 else now.year - 1
+    _, last_day_prev = monthrange(previous_year, previous_month)
+    datasets_in_month = Dataset.objects.prefetch_related('owner').filter(created__range=(month_start, month_end)).values('owner', 'owner__organization', 'name', 'popular_count', 'created')
+    for datasets_in_month_created in datasets_in_month:
+        datasets_in_month_created['created'] = localtime(datasets_in_month_created['created']).strftime('%Y-%m-%d %H:%M:%S')
+
+
     #PERCENTAGE CALCULATION
     
     prev_month_start = timezone.make_aware(datetime(previous_year, previous_month, 1), timezone.get_current_timezone())
     prev_month_end = timezone.make_aware(datetime(previous_year, previous_month, last_day_prev, 23, 59, 59), timezone.get_current_timezone())
-    active_users_last_month = Profile.objects.filter(is_active=True, last_login__range=(prev_month_start, prev_month_end)).count()
+    active_users_last_month = UserLoginLog.objects.filter(user__is_active=True, login_time__range=(prev_month_start, prev_month_end)).distinct().count()
+    # active_users = UserLoginLog.objects.filter(login_time__range=(month_start, month_end)).values('user__username').distinct().count()
+    
     if active_users_last_month > 0:
         percent_change = round(((active_users - active_users_last_month) / active_users_last_month) * 100)
     else:
@@ -98,18 +132,19 @@ def itt_stats(request):
         change_phrase = f"{abs(percent_change)}% less than last month"
     else:
         change_phrase = "No change from last month"
-        
+
     context = {
-        "active_users": active_users,
-        "active_users_list": active_users_list,
-        "staff_count": staff_count,
-        "active_users_current_month": active_users_current_month,
-        "users_per_position":users_per_position,
-        "users_per_country":users_per_country,
-        "users_per_org":users_per_org,
-        "months": months,
-        "datasets_in_month":datasets_in_month,
-        "change_phrase": change_phrase,
+        "months":months,
+        "change_phrase":change_phrase,
+        'active_users': active_users,
+        'month_total_logins': month_total_logins,
+        'staff_count': staff_count,
+        'percent_change': percent_change,
+        'users_per_position': users_per_position,
+        'users_per_country': users_per_country,
+        'users_per_org': users_per_org,
+        'active_users_list': active_users_list,
+        'datasets_in_month': datasets_in_month,
     }
 
     return render(request, 'myapp/itt_stats.html', context)

@@ -61,7 +61,7 @@
     </div> {% endcomment %}
     <hr/>
     
-    <div class="grid grid-cols-3 gap-5 mt-20">
+    <div class="flex grid-cols-4 gap-5 mt-20 mb-20">
         <div class="flex flex-col bg-gray-200 shadow-md rounded-lg p-6 mx-auto w-64">
             <div class="flex justify-between items-center">
                 <div class="text-gray-700 font-bold text-xl">Active Users</div>
@@ -85,17 +85,27 @@
 
         <div class="flex flex-col bg-gray-200 shadow-md rounded-lg p-6 mx-auto w-64">
             <div class="flex justify-between items-center">
+                <div class="text-gray-700 font-bold text-xl">Month Total Logins</div>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 text-gray-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </div>
+            <div class="mt-2 text-3xl font-semibold text-gray-900">{{ month_total_logins }}</div>
+        </div>
+
+        <!-- <div class="flex flex-col bg-gray-200 shadow-md rounded-lg p-6 mx-auto w-64">
+            <div class="flex justify-between items-center">
                 <div class="text-gray-700 font-bold text-xl">Active Users Current Month</div>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 text-gray-500">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
             </div>
             <div class="mt-2 text-3xl font-semibold text-gray-900">{{ active_users_current_month }}</div>
-        </div>
+        </div> -->
     </div>
     <hr/>
 
-    <h3>Month Active Users</h3>
+    <h4 class="font-bold text-lg">Month Active Users</h4>
     <table class="min-w-full divide-y divide-gray-200 mb-10">
         <thead class="bg-gray-50">
             <tr>
@@ -103,19 +113,23 @@
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Name</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Organization</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Country</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Active</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Login</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Login Count</th>
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
             {% for users_list in active_users_list %}
                 <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ users_list.first_name }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ users_list.last_name }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ users_list.email }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ users_list.organization }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ users_list.is_active }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ users_list.user__first_name }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ users_list.user__last_name }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ users_list.user__email }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ users_list.user__organization }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ users_list.user__country }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ users_list.user__is_active }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ users_list.last_login }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ users_list.login_count }}</td>
                 </tr>
             {% empty %}
                 <tr>
@@ -138,10 +152,10 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    {% for user in users_per_position %}
+                    {% for user_position in users_per_position %}
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ user.position }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ user.user_count }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ user_position.user__position }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ user_position.user_count }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -159,10 +173,10 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    {% for user in users_per_country %}
+                    {% for user_country in users_per_country %}
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ user.country }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ user.user_count }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ user_country.user__country }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ user_country.user_count }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -171,36 +185,37 @@
     </div>
     <hr/>
 
-    <h3>Users Per Organization</h3>
+    <h4 class="font-bold text-lg">Users Per Organization</h4>
     <table class="min-w-full divide-y divide-gray-200 mb-10">
         <thead class="bg-gray-50">
             <tr>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Organization</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total User Count</th>
+                <!-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total User Count</th> -->
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Active User Count</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Inactive User Count</th>
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-            {% for org in users_per_org %}
+            {% for user_org in users_per_org %}
                 <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ org.organization }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ org.user_count }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ org.active_user_count }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ org.inactive_user_count }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ user_org.user__organization }}</td>
+                    <!-- <td class="px-6 py-4 whitespace-nowrap">{{ user_org.user_count }}</td> -->
+                    <td class="px-6 py-4 whitespace-nowrap">{{ user_org.active_user_count }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ user_org.inactive_user_count }}</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <h3>Datasets</h3>
+    <h4 class="font-bold text-lg">Datasets</h4>
     <table class="min-w-full divide-y divide-gray-200 mb-10">
         <thead class="bg-gray-50">
             <tr>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Owner</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Owner Organization</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">popular_count</th>  
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Resource Type</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Popular Count</th>  
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>   
             </tr>
         </thead>
@@ -212,7 +227,6 @@
                     <td class="px-6 py-4 whitespace-nowrap">{{ dataset.name }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ dataset.popular_count }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ dataset.created }}</td>
-                    
                 </tr>
             {% endfor %}
         </tbody>
