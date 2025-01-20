@@ -115,6 +115,48 @@
                   {% endif %}
               </div>
 
+
+
+
+              <div class="flex flex-col md:flex-row gap-10">
+                <!-- City input -->
+                  <div class="mb-10 w-full">
+                    <label for="id_city" class="mb-5">City</label>
+                    <input
+                      type="text"
+                      class="my_input {% if form.city.errors %} input_error_state {% endif %}"
+                      placeholder="City"
+                      name="city"
+                      id="id_city"
+                    />
+                    {% if form.city.errors %}
+                      <span class=" alert-danger">
+                          {{ form.city.errors }}
+                      </span>
+                    {% endif %}
+                  
+                  </div>
+
+              <!-- Position input -->
+              <div class="mb-10 w-full">
+                <label for="id_position" class="mb-5">Position</label>
+                <input
+                  type="text"
+                  class="my_input {% if form.position.errors %} input_error_state {% endif %}"
+                  placeholder="Position"
+                  name="position"
+                  id="id_position"
+                />
+                {% if form.position.errors %}
+                  <span class=" alert-danger">
+                      {{ form.position.errors }}
+                  </span>
+                {% endif %}
+              
+              </div>
+          </div>
+
+          
               <div class="flex flex-col md:flex-row gap-10">
                     <!-- Username input -->
                       <div class="mb-10 w-full">
