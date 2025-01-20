@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import OchaDashboard
 from django import forms
-from myapp.models import OchaDashboard,ProfileProxy
+from myapp.models import OchaDashboard, ProfileProxy, UserLoginLog
 from import_export.admin import ExportActionMixin
 from django.utils.translation import gettext_lazy as _
 from django.contrib.admin import DateFieldListFilter
@@ -12,7 +12,7 @@ from rangefilter.filters import (
 
 
 class ProfileProxyAdmin(ExportActionMixin,admin.ModelAdmin):
-    list_display = ("id", "username", "organization", "email", "first_name", "last_name", "is_staff", "is_active","last_login","date_joined")
+    list_display = ("id", "username", "organization", "position", "country", "city", "email", "first_name", "last_name", "is_staff", "is_active","last_login","date_joined")
     list_filter = ("is_staff", "is_superuser", "is_active", "groups",("date_joined", DateRangeFilterBuilder()),('last_login', DateRangeFilterBuilder()))
     search_fields = ("username", "organization", "profile", "first_name", "last_name", "email")
     # readonly_fields = ("groups", )
@@ -47,3 +47,9 @@ class OchaDashboardAdmin(admin.ModelAdmin):
 
 admin.site.register(OchaDashboard,OchaDashboardAdmin)
 
+# class UserLoginLogAdmin(admin.ModelAdmin):
+#     list_display = ('user', 'login_time')
+#     list_filter = ('login_time',)
+#     search_fields = ('user__username', 'user__email')
+
+# admin.site.register(UserLoginLog, UserLoginLogAdmin)

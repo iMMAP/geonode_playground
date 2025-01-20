@@ -2,69 +2,74 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en" class="{% block html_class %}{% endblock %}">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta Http-Equiv="Cache-Control" Content="no-cache">
-    <meta Http-Equiv="Pragma" Content="no-cache">
-    <meta Http-Equiv="Expires" Content="0">
-    <meta Http-Equiv="Pragma-directive: no-cache">
-    <meta Http-Equiv="Cache-directive: no-cache">
 
-    <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta Http-Equiv="Cache-Control" Content="no-cache">
+  <meta Http-Equiv="Pragma" Content="no-cache">
+  <meta Http-Equiv="Expires" Content="0">
+  <meta Http-Equiv="Pragma-directive: no-cache">
+  <meta Http-Equiv="Cache-directive: no-cache">
 
-    <link rel="shortcut icon" href="{% static 'geonode/img/favicon.ico' %}" />
-    <link rel="preload" as="style" href="{% static "geonode/css/font-awesome.min.css" %}" />
+  <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
 
-    {% block head %}
+  <link rel="shortcut icon" href="{% static 'geonode/img/favicon.ico' %}" />
+  <link rel="preload" as="style" href="{% static "geonode/css/font-awesome.min.css" %}" />
 
-      {% if DEBUG_STATIC %}
-          <link href="{% static "lib/css/jquery.dataTables.css" %}" rel="stylesheet" />
-          <link href="{% static "lib/css/select2.css" %}" rel="stylesheet"/>
-          <link href="{% static "lib/css/bootstrap.css" %}" rel="stylesheet"/>
-          <link href="{% static "lib/css/bootstrap-treeview.css" %}" rel="stylesheet"/>
-          <link href="{% static "lib/css/jquery-ui.theme.min.css" %}" rel="stylesheet"/>
-          <link href="{% static "lib/css/jquery-ui.structure.min.css" %}" rel="stylesheet"/>
-          <link href="{% static "lib/css/bootstrap-treeview.css" %}" rel="stylesheet"/>
-      {% else %}
-      <link href="{% static "lib/css/assets.min.css" %}" rel="stylesheet"/>
-      {% endif %}
-      <link href="{% static "geonode/css/base.css" %}" rel="stylesheet"/>
-      <!-- Geonode Project Custom CSS file -->
-      <link href="{% static 'css/site_base.css' %}" rel="stylesheet" /> 
-      {% block extra_head %}
-      {% endblock %}
-    {% endblock %}
-   
-    <script>
-        var siteUrl = '{{ SITEURL }}'.replace(/\/?$/, '/');
-        var staticUrl = '{% static '' %}';
-    </script>
+  {% block head %}
 
-    {% if APP_ENV == "production" %}
-        <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-PEK7L15G1V"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
+  {% if DEBUG_STATIC %}
+  <link href="{% static "lib/css/jquery.dataTables.css" %}" rel="stylesheet" />
+  <link href="{% static "lib/css/select2.css" %}" rel="stylesheet" />
+  <link href="{% static "lib/css/bootstrap.css" %}" rel="stylesheet" />
+  <link href="{% static "lib/css/bootstrap-treeview.css" %}" rel="stylesheet" />
+  <link href="{% static "lib/css/jquery-ui.theme.min.css" %}" rel="stylesheet" />
+  <link href="{% static "lib/css/jquery-ui.structure.min.css" %}" rel="stylesheet" />
+  <link href="{% static "lib/css/bootstrap-treeview.css" %}" rel="stylesheet" />
+  {% else %}
+  <link href="{% static "lib/css/assets.min.css" %}" rel="stylesheet" />
+  {% endif %}
+  <link href="{% static "geonode/css/base.css" %}" rel="stylesheet" />
+  <!-- Geonode Project Custom CSS file -->
+  <link href="{% static 'css/site_base.css' %}" rel="stylesheet" />
+  {% block extra_head %}
+  {% endblock %}
+  {% endblock %}
 
-            gtag('config', 'G-PEK7L15G1V');
-        </script>
-    {% endif %}
-  </head>
+  <script>
+    var siteUrl = '{{ SITEURL }}'.replace(/\/?$/, '/');
+    var staticUrl = '{% static '' %}';
+  </script>
 
-  <body class="{% block body_class %}{% endblock %} {% block body_extra_class %}{% endblock %}">
-    <!-- Loading Mask -->
-    <div class='lmask'></div>
-  
 
-    <div class="alert alert-danger alert-dismissible" role="alert" id="ieflag" style="display:none">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <h1>{% trans "You are using an outdated browser that is not supported by GeoNode." %}</h1>
-      <p>{% trans "Please use a <strong>modern browser</strong> like Mozilla Firefox, Google Chrome or Safari." %}</p>
-    </div>
+  {% if APP_ENV == "production" %}
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PEK7L15G1V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-PEK7L15G1V');
+  </script>
+  {% endif %}
+
+
+</head>
+
+<body class="{% block body_class %}{% endblock %} {% block body_extra_class %}{% endblock %}">
+  <!-- Loading Mask -->
+  <div class='lmask'></div>
+
+
+  <div class="alert alert-danger alert-dismissible" role="alert" id="ieflag" style="display:none">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+        aria-hidden="true">&times;</span></button>
+    <h1>{% trans "You are using an outdated browser that is not supported by GeoNode." %}</h1>
+    <p>{% trans "Please use a <strong>modern browser</strong> like Mozilla Firefox, Google Chrome or Safari." %}</p>
+  </div>
 
   <div id="wrap">
     {% block middle %}
@@ -73,14 +78,14 @@
       {% include "_announcements.html" %}
       {% include "_messages.html" %}
       {% block body_outer %}
-        <div class="row">
-          <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-8">
           {% block body %}{% endblock %}
-          </div>
-          <div class="col-md-4">
-          {% block sidebar %}{% endblock %}
-          </div>
         </div>
+        <div class="col-md-4">
+          {% block sidebar %}{% endblock %}
+        </div>
+      </div>
       {% endblock %}
     </div>
     {% endblock middle %}
@@ -93,19 +98,20 @@
   {% block monitoring %}
   {% endblock %}
 
-    {% if DEBUG_STATIC %}
-    <script src="{% static "lib/js/jquery.js" %}"></script>
-    <script src="{% static "lib/js/select2.full.js" %}"></script>
-    <script src="{% static "lib/js/jquery.timeago.js" %}"></script>
-    <script src="{% static "lib/js/jq-ajax-progress.js" %}"></script>
-    <script src="{% static "lib/js/jquery-ui.js" %}"></script>
-    <script src="{% static "lib/js/bootstrap.js" %}"></script>
-    {% else %}
-    <script src="{% static "lib/js/assets.min.js" %}"></script>
-    {% endif %}
-    <script src="{% static "geonode/js/base/base.js" %}"></script>
-    <script type="text/javascript" src="{% url "javascript-catalog" %}"></script>
-    {% block extra_script %}{% endblock extra_script %}
+  {% if DEBUG_STATIC %}
+  <script src="{% static "lib/js/jquery.js" %}"></script>
+  <script src="{% static "lib/js/select2.full.js" %}"></script>
+  <script src="{% static "lib/js/jquery.timeago.js" %}"></script>
+  <script src="{% static "lib/js/jq-ajax-progress.js" %}"></script>
+  <script src="{% static "lib/js/jquery-ui.js" %}"></script>
+  <script src="{% static "lib/js/bootstrap.js" %}"></script>
+  {% else %}
+  <script src="{% static "lib/js/assets.min.js" %}"></script>
+  {% endif %}
+  <script src="{% static "geonode/js/base/base.js" %}"></script>
+  <script type="text/javascript" src="{% url "javascript-catalog" %}"></script>
+  {% block extra_script %}{% endblock extra_script %}
 
-  </body>
+</body>
+
 </html>
